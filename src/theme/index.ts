@@ -2,12 +2,13 @@
 // 21 January 2020
 
 import { createMuiTheme } from '@material-ui/core/styles';
+import { deepPurple } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#e57373',
-            contrastText: '#333',
+            main: deepPurple[800],
+            contrastText: '#fff',
         },
         secondary: {
             main: '#4CAF50',

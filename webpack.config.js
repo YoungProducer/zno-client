@@ -17,6 +17,7 @@ module.exports = {
       utils: path.resolve(__dirname, 'src/utils'),
       modals: path.resolve(__dirname, 'src/modals'),
       api: path.resolve(__dirname, 'src/api'),
+      theme: path.resolve(__dirname, 'src/theme'),
     }
   },
   output: {

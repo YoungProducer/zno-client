@@ -5,3 +5,7 @@
  * The entry point of SignUp component.
  */
 
+// Application's imports
+import Component from './Component';
+
+export default Component;

@@ -12,9 +12,12 @@ import { ThemeProvider } from '@material-ui/core/styles';
 // Application's imports
 import theme from 'theme';
 
+// Temporary
+import SignUp from './components/SignUp';
+
 const Component = () => (
     <ThemeProvider theme={theme}>
-
+        <SignUp />
     </ThemeProvider>
 );
 
