@@ -15,6 +15,11 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // Define classes as hook
 const useStyles = makeStyles((theme: Theme) => createStyles({
+    backdrop: {
+        background: '#fff',
+        width: '100%',
+        height: '100vh',
+    },
     root: {
         position: 'fixed',
         padding: 15,
@@ -49,52 +54,55 @@ const Component = () => {
     const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value);
 
     return (
-        <Paper
-            className={classes.root}
-            elevation={2}
-            square
-        >
-            <Typography
-                color='primary'
-                variant='h6'
-                align='center'
+        <div className={classes.backdrop}>
+            <Paper
+                className={classes.root}
+                elevation={2}
+                square
             >
-                Реєстрація
-            </Typography>
-            <div className={classes.fields}>
-                <TextField
-                    className={classes.textField}
-                    color='primary'
-                    label='Емеїл'
-                    value={email}
-                    onChange={handleChangeEmail}
-                />
-                <TextField
-                    className={classes.textField}
-                    color='primary'
-                    label='Пароль'
-                    value={password}
-                    onChange={handleChangePassword}
-                />
-            </div>
-            <div className={classes.actions}>
-                <Button
-                    color='primary'
-                    variant='contained'
-                    disableElevation
-                >
-                    Зареєструватися
-                </Button>
-                <Typography>
-                    Вже зареєстровані?
-                </Typography>
                 <Typography
                     color='primary'
+                    variant='h6'
+                    align='center'
                 >
-                    Увійти
+                    Реєстрація
                 </Typography>
-            </div>
-        </Paper>
+                <div className={classes.fields}>
+                    <TextField
+                        className={classes.textField}
+                        color='primary'
+                        label='Емеїл'
+                        value={email}
+                        onChange={handleChangeEmail}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        color='primary'
+                        label='Пароль'
+                        value={password}
+                        onChange={handleChangePassword}
+                    />
+                </div>
+                <div className={classes.actions}>
+                    <Button
+                        color='primary'
+                        variant='contained'
+                        disableElevation
+                    >
+                        Зареєструватися
+                    </Button>
+                    <Typography>
+                        Вже зареєстровані?
+                        <Typography
+                            color='primary'
+                            component='span'
+                        >
+                            Увійти
+                        </Typography>
+                    </Typography>
+                </div>
+            </Paper>
+        </div>
     );
 };
 

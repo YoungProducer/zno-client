@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom';
 
 // Application's imports
 import App from './App';
+import 'public/styles/index.css';
 
 // Get root div
 const root = document.getElementById('root');

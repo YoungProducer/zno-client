@@ -1,0 +1,104 @@
+/**
+ * Created by: Oleksandr Bezrukov
+ * Creation date: 26 February 2020
+ *
+ * Create test suites for auth selectors.
+ */
+
+// External imports
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+// Application's imports
+import {
+    selectSignUpLoading,
+    selectSignUpErrorFields,
+    selectSignUpFieldsMessages,
+} from '../auth';
+import { RootState, ISignUpErrorFields, ISignUpFieldsMessages } from 'store/slices';
+
+// Define middlewares
+const middlewares = [thunk];
+
+// Create function which mock store
+const mockStore = configureMockStore(middlewares);
+
+describe('Auth', () => {
+    describe('SignUp selectors', () => {
+        test('selectSignUpLoading', () => {
+            // Create mocked store
+            const store = mockStore({
+                auth: {
+                    signUp: {
+                        loading: false,
+                    },
+                },
+            });
+
+            // Define expected value
+            const expected: boolean = false;
+
+            // Get result of selector
+            const result = selectSignUpLoading(store.getState() as RootState);
+
+            // Check is result equals to expected value
+            expect(result).toEqual(expected);
+        });
+
+        test('selectSignUpErrorFields', () => {
+            // Create mocked store
+            const store = mockStore({
+                auth: {
+                    signUp: {
+                        errorFields: {
+                            email: true,
+                            password: false,
+                            confPassword: true,
+                        },
+                    },
+                },
+            });
+
+            // Define expected value
+            const expected: ISignUpErrorFields = {
+                email: true,
+                password: false,
+                confPassword: true,
+            };
+
+            // Get result of selector
+            const result = selectSignUpErrorFields(store.getState() as RootState);
+
+            // Check is result equals to expected value
+            expect(result).toEqual(expected);
+        });
+
+        test('selectSignUpErrorFields', () => {
+            // Create mocked store
+            const store = mockStore({
+                auth: {
+                    signUp: {
+                        fieldsMessages: {
+                            email: 'foo',
+                            password: 'bar',
+                            confPassword: '',
+                        },
+                    },
+                },
+            });
+
+            // Define expected value
+            const expected: ISignUpFieldsMessages = {
+                email: 'foo',
+                password: 'bar',
+                confPassword: '',
+            };
+
+            // Get result of selector
+            const result = selectSignUpFieldsMessages(store.getState() as RootState);
+
+            // Check is result equals to expected value
+            expect(result).toEqual(expected);
+        });
+    });
+});
