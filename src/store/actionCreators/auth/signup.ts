@@ -10,7 +10,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 // Application's imports
-import Api from 'api';
+import api from 'api';
 import {
     signUpLoadingAction,
     setSignUpErrorFieldsAction,
@@ -30,13 +30,9 @@ export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) =>
     const invalidData = verifySignUpCredentials(credentials);
 
     if (!invalidData) {
-        const api = new Api();
-
         return await api.signup(_.pick(credentials, ['email', 'password']))
             .then(response => {
                 if (response.status !== 200) {
-                    dispatch(signUpLoadingAction(false));
-
                     throw Error(response.statusText);
                 }
 
@@ -45,9 +41,20 @@ export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) =>
             .then(response => {
                 dispatch(signUpLoadingAction(false));
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                // console.log(error);
+                // const errorData = error.response.data.error.data;
+
+                // if (Object.keys(error.response.data).some(key => key === 'error')) {
+                //     dispatch(setSignUpErrorFieldsAction(errorData.invalidFields));
+                //     dispatch(setSignUpFieldsMessagesAction(errorData.invalidFieldsMessages));
+                // }
+                // dispatch(signUpLoadingAction(false));
+            });
     }
 
     dispatch(signUpLoadingAction(false));
     dispatch(setSignUpErrorFieldsAction(invalidData.invalidFields));
+    dispatch(setSignUpFieldsMessagesAction(invalidData.fieldsMessages));
 };

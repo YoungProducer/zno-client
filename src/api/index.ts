@@ -24,10 +24,11 @@ class Api implements IApi {
         });
     }
 
-    signup = async (credentials: ISignUpCredentials): Promise<AxiosResponse> =>
+    signup = async (credentials: ISignUpCredentials) =>
         await this.axiosInstance.post(
             '/auth/user/signup',
             { ...credentials },
+            { withCredentials: true },
         )
 }
 
@@ -35,6 +36,4 @@ class Api implements IApi {
 export * from './types';
 
 // Export Api class
-export default Api;
-
-export const api = new Api();
+export default new Api();
