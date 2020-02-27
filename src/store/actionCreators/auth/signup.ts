@@ -7,10 +7,15 @@
 
 // External imports
 import { Dispatch } from '@reduxjs/toolkit';
+import _ from 'lodash';
 
 // Application's imports
 import Api from 'api';
-import { signUpLoadingAction } from 'store/slices/auth';
+import {
+    signUpLoadingAction,
+    setSignUpErrorFieldsAction,
+    setSignUpFieldsMessagesAction,
+} from 'store/slices/auth';
 import { verifySignUpCredentials } from 'utils/verify-credentials';
 
 export interface IFetchSignUpActionCredentials {
@@ -19,8 +24,30 @@ export interface IFetchSignUpActionCredentials {
     confPassword: string;
 }
 
-export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) => (dispatch: Dispatch<any>) => {
+export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) => async (dispatch: Dispatch<any>) => {
     dispatch(signUpLoadingAction(true));
 
     const invalidData = verifySignUpCredentials(credentials);
+
+    if (!invalidData) {
+        const api = new Api();
+
+        return await api.signup(_.pick(credentials, ['email', 'password']))
+            .then(response => {
+                if (response.status !== 200) {
+                    dispatch(signUpLoadingAction(false));
+
+                    throw Error(response.statusText);
+                }
+
+                return response;
+            })
+            .then(response => {
+                dispatch(signUpLoadingAction(false));
+            })
+            .catch(error => console.error(error));
+    }
+
+    dispatch(signUpLoadingAction(false));
+    dispatch(setSignUpErrorFieldsAction(invalidData.invalidFields));
 };

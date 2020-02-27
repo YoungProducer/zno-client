@@ -6,13 +6,14 @@
  */
 
 // External imports
-import { AxiosResponse } from 'axios';
-
-export interface IApi {
-    signup(credentials: ISignUpCredentials): Promise<AxiosResponse>;
-}
+import { AxiosResponse, AxiosInstance } from 'axios';
 
 export interface ISignUpCredentials {
     email: string;
     password: string;
+}
+
+export interface IApi {
+    axiosInstance: AxiosInstance;
+    signup(credentials: ISignUpCredentials): Promise<AxiosResponse>;
 }

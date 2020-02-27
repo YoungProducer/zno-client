@@ -36,3 +36,5 @@ export * from './types';
 
 // Export Api class
 export default Api;
+
+export const api = new Api();

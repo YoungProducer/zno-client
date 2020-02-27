@@ -43,9 +43,13 @@ interface ISetSignUpErrorFieldsAction {
 
 // Declare interface for payload for SetSignUpFieldsMessagesAction
 export interface ISetSignUpFieldsMessagesPayload {
-    email?: string;
-    password?: string;
-    confPassword?: string;
+    // email?: string;
+    // password?: string;
+    // confPassword?: string;
+    /**
+     * Any properties with type string.
+     */
+    [attr: string]: string;
 }
 
 // Declare interface for setSignUpFieldsMessagesAction
@@ -70,6 +74,13 @@ export interface ISignUpInitialState {
     fieldsMessages: ISignUpFieldsMessages;
 }
 
+// Define default object for fieldsMessages property
+const defaultFieldsMessages: ISignUpFieldsMessages = {
+    email: '',
+    password: 'Не менше 8 символів.',
+    confPassword: 'Підвердіть ваш пароль.',
+};
+
 // Define initial state for slice
 const initialState: ISignUpInitialState = {
     loading: false,
@@ -78,11 +89,7 @@ const initialState: ISignUpInitialState = {
         password: false,
         confPassword: false,
     },
-    fieldsMessages: {
-        email: '',
-        password: 'Не менше 8 символів.',
-        confPassword: 'Підвердіть ваш пароль.',
-    },
+    fieldsMessages: defaultFieldsMessages,
 };
 
 // Define signUp slice
@@ -134,13 +141,28 @@ const signUp = createSlice({
         setSignUpFieldsMessagesAction: (
             state: ISignUpInitialState,
             { payload }: ISetSignUpFieldsMessagesAction,
-        ) => ({
-            ...state,
-            fieldsMessages: {
-                ...state.fieldsMessages,
-                ...payload,
-            },
-        }),
+        ) => {
+            const { fieldsMessages } = state;
+
+            const newFieldsMessages =
+                Object
+                    .entries(payload)
+                    .reduce((acc, curr) => {
+                        if (Object.keys(fieldsMessages).some(key => key === curr[0])) {
+                            return {
+                                ...acc,
+                                [curr[0]]: curr[1],
+                            };
+                        }
+
+                        return { ...acc };
+                    },      {});
+
+            return {
+                ...state,
+                fieldsMessages: Object.assign({ ...fieldsMessages }, newFieldsMessages),
+            };
+        },
         /**
          * Set error fields to default(all false).
          */
@@ -169,7 +191,7 @@ const signUp = createSlice({
             state: ISignUpInitialState,
         ) => ({
             ...state,
-            fieldsMessages: initialState.fieldsMessages,
+            fieldsMessages: defaultFieldsMessages,
         }),
     },
 });

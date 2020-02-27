@@ -21,6 +21,9 @@ describe('Verify signUp credentials', () => {
         // Define expected value
         const expected = {
             invalidFields: ['email'],
+            fieldsMessages: {
+                email: 'Неправильний шаблон',
+            },
         };
 
         expect(verifySignUpCredentials(input)).toEqual(expected);
@@ -37,6 +40,9 @@ describe('Verify signUp credentials', () => {
         // Define expected value
         const expected = {
             invalidFields: ['password'],
+            fieldsMessages: {
+                password: 'Занад-то короткий пароль',
+            },
         };
 
         expect(verifySignUpCredentials(input)).toEqual(expected);
@@ -53,6 +59,9 @@ describe('Verify signUp credentials', () => {
         // Define expected value
         const expected = {
             invalidFields: ['confPassword'],
+            fieldsMessages: {
+                confPassword: 'Паролі відрізняються',
+            },
         };
 
         expect(verifySignUpCredentials(input)).toEqual(expected);
@@ -69,6 +78,10 @@ describe('Verify signUp credentials', () => {
         // Define expected value
         const expected = {
             invalidFields: ['email', 'password'],
+            fieldsMessages: {
+                email: 'Неправильний шаблон',
+                password: 'Занад-то короткий пароль',
+            },
         };
 
         expect(verifySignUpCredentials(input)).toEqual(expected);
@@ -85,8 +98,24 @@ describe('Verify signUp credentials', () => {
         // Define expected value
         const expected = {
             invalidFields: ['email', 'confPassword'],
+            fieldsMessages: {
+                email: 'Неправильний шаблон',
+                confPassword: 'Паролі відрізняються',
+            },
         };
 
         expect(verifySignUpCredentials(input)).toEqual(expected);
+    });
+
+    test('Verify if all fields filled correctly', () => {
+        // Define input valie
+        const input: IFetchSignUpActionCredentials = {
+            email: 'foo@gmail.com',
+            password: 'barbarbar',
+            confPassword: 'barbarbar',
+        };
+
+        // Check is function returns null
+        expect(verifySignUpCredentials(input)).toEqual(null);
     });
 });

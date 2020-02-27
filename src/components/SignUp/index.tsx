@@ -7,5 +7,7 @@
 
 // Application's imports
 import Component from './Component';
+import container from './container';
 
-export default Component;
+// Connect actions and/or variables from the redux store to the component
+export default container(Component);
