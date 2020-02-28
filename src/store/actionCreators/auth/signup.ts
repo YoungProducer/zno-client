@@ -16,13 +16,10 @@ import {
     setSignUpErrorFieldsAction,
     setSignUpFieldsMessagesAction,
 } from 'store/slices/auth';
-import { verifySignUpCredentials } from 'utils/verify-credentials';
-
-export interface IFetchSignUpActionCredentials {
-    email: string;
-    password: string;
-    confPassword: string;
-}
+import {
+    verifySignUpCredentials,
+    IFetchSignUpActionCredentials,
+} from 'utils/verify-credentials';
 
 export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) => async (dispatch: Dispatch<any>) => {
     dispatch(signUpLoadingAction(true));

@@ -13,7 +13,13 @@ export interface ISignUpCredentials {
     password: string;
 }
 
+export interface ISignInCredentials {
+    email: string;
+    password: string;
+}
+
 export interface IApi {
     axiosInstance: AxiosInstance;
     signup(credentials: ISignUpCredentials): Promise<AxiosResponse>;
+    signin(credentials: ISignInCredentials): Promise<AxiosResponse>;
 }

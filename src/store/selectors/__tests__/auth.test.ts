@@ -14,8 +14,20 @@ import {
     selectSignUpLoading,
     selectSignUpErrorFields,
     selectSignUpFieldsMessages,
+    selectSignInLoading,
+    selectSignInUser,
+    selectSignInErrorFields,
+    selectSignInFieldsMessages,
+    selectIsLoggedIn,
 } from '../auth';
-import { RootState, ISignUpErrorFields, ISignUpFieldsMessages } from 'store/slices';
+import {
+    RootState,
+    ISignUpErrorFields,
+    ISignUpFieldsMessages,
+    ISignInErrorFields,
+    ISignInFieldsMessages,
+    TUser,
+} from 'store/slices';
 
 // Define middlewares
 const middlewares = [thunk];
@@ -99,6 +111,129 @@ describe('Auth', () => {
 
             // Check is result equals to expected value
             expect(result).toEqual(expected);
+        });
+    });
+
+    describe('SignIn selectors', () => {
+        test('selectSignInLoading', () => {
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    signIn: {
+                        loading: false,
+                    },
+                },
+            });
+
+            /** Get result of selector */
+            const result = selectSignInLoading(store.getState() as RootState);
+
+            /** Assert that result equals false */
+            expect(result).toBeFalsy();
+        });
+
+        test('selectSignInUser', () => {
+            /** Create mocked user */
+            const user: TUser = {
+                email: 'foo@gmail.com',
+            };
+
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    signIn: {
+                        user,
+                    },
+                },
+            });
+
+            /** Get result of selector */
+            const result = selectSignInUser(store.getState() as RootState);
+
+            /** Assert that result equals to mocked user */
+            expect(result).toEqual(user);
+        });
+
+        test('selectSignInErrorFields', () => {
+            /** Create mocked error fields */
+            const errorFields: ISignInErrorFields = {
+                email: true,
+                password: false,
+            };
+
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    signIn: {
+                        errorFields,
+                    },
+                },
+            });
+
+            /** Get result of selector */
+            const result = selectSignInErrorFields(store.getState() as RootState);
+
+            /** Assert that result equals to mocked error fields */
+            expect(result).toEqual(errorFields);
+        });
+
+        test('selectSignInFieldsMessages', () => {
+            /** Create mocked fields messages */
+            const fieldsMessages: ISignInFieldsMessages = {
+                email: 'foo',
+                password: 'bar',
+            };
+
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    signIn: {
+                        fieldsMessages,
+                    },
+                },
+            });
+
+            /** Get result of selector */
+            const result = selectSignInFieldsMessages(store.getState() as RootState);
+
+            /** Assert that result equals to mocked error fields */
+            expect(result).toEqual(fieldsMessages);
+        });
+
+        test('selectIsLoggedIn if user data exists', () => {
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    signIn: {
+                        user: {
+                            email: 'foo',
+                        },
+                    },
+                },
+            });
+
+            /** Get result of selector */
+            const result = selectIsLoggedIn(store.getState() as RootState);
+
+            /** Assert that result equals true */
+            expect(result).toBeTruthy();
+        });
+
+        test('selectIsLoggedIn if user is null', () => {
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    signIn: {
+                        user: null,
+                    },
+                },
+            });
+
+            /** Get result of selector */
+            const result = selectIsLoggedIn(store.getState() as RootState);
+
+            /** Assert that result equals false */
+            expect(result).toBeFalsy();
         });
     });
 });

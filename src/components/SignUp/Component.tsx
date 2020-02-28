@@ -6,7 +6,7 @@
  */
 
 // External imports
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect, memo, useMemo } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -33,10 +33,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         width: 'min-content',
     },
     textField: {
-        // marginRight: theme.spacing(3),
-        // '&:last-child': {
-        //     marginRight: 0,
-        // },
         width: 230,
     },
     fields: {
@@ -55,31 +51,98 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
 }));
 
-const Component = ({
-    errorFields,
-    fieldsMessages,
-    loading,
-    fetchSignUp,
-    setSignUpErrorFieldsToDefault,
-    setSignUpFieldsMessagesToDefault,
-}: TSignUpProps) => {
-    // Create object with classes to use its
+/**
+ * Create hook to make component stateless.
+ * Compute all values from text fields.
+ * Returns fields data and button onClick property.
+ */
+const useSignUpElements = (props: TSignUpProps) => {
+    const {
+        errorFields,
+        fieldsMessages,
+        fetchSignUp,
+        setSignUpErrorFieldsToDefault,
+        setSignUpFieldsMessagesToDefault,
+    } = props;
+
+    const clearFields = () => {
+        setSignUpErrorFieldsToDefault();
+        setSignUpFieldsMessagesToDefault();
+    };
+
+    /** User email */
+    const [email, setEmail] = useState<string>('');
+    const handleChangeEmail =
+        useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+            setEmail(event.target.value);
+            if (errorFields.email) {
+                clearFields();
+            }
+        }, [errorFields.email]);
+
+    /** User password */
+    const [password, setPassword] = useState<string>('');
+    const handleChangePassword =
+        useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+            setPassword(event.target.value);
+            if (errorFields.password) {
+                clearFields();
+            }
+        }, [errorFields.password]);
+
+    /** Confirmation password, should be the same to the password */
+    const [confPassword, setConfPassword] = useState<string>('');
+    const handleChangeConfPassword =
+        useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+            setConfPassword(event.target.value);
+            if (errorFields.confPassword) {
+                clearFields();
+            }
+        }, [errorFields.confPassword]);
+
+    /** SignUp button handle */
+    const handleFetchSignUp = useCallback(() => fetchSignUp({
+        email,
+        password,
+        confPassword,
+    }), [email, password, confPassword]);
+
+    return {
+        emailField: {
+            onChange: handleChangeEmail,
+            value: email,
+            error: errorFields.email,
+            helperText: fieldsMessages.email,
+        },
+        passwordField: {
+            onChange: handleChangePassword,
+            value: password,
+            error: errorFields.password,
+            helperText: fieldsMessages.password,
+        },
+        confPasswordField: {
+            onChange: handleChangeConfPassword,
+            value: confPassword,
+            error: errorFields.confPassword,
+            helperText: fieldsMessages.confPassword,
+        },
+        signUpButton: {
+            onClick: handleFetchSignUp,
+        },
+    };
+};
+
+const Component = memo((props: TSignUpProps) => {
+    /** Create object with classes to use them */
     const classes = useStyles({});
 
-    // User email
-    const [email, setEmail] = useState<string>('');
-    const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) =>
-        setEmail(event.target.value);
-
-    // User password
-    const [password, setPassword] = useState<string>('');
-    const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) =>
-        setPassword(event.target.value);
-
-    // Confirmation password, should be the same to the password
-    const [confPassword, setConfPassword] = useState<string>('');
-    const handleChangeConfPassword = (event: React.ChangeEvent<HTMLInputElement>) =>
-        setConfPassword(event.target.value);
+    /** Get fields data from hook */
+    const {
+        emailField,
+        passwordField,
+        confPasswordField,
+        signUpButton,
+    } = useSignUpElements(props);
 
     return (
         <div className={classes.backdrop}>
@@ -114,10 +177,8 @@ const Component = ({
                                 className={classes.textField}
                                 color='primary'
                                 label='Емеїл'
-                                value={email}
-                                onChange={handleChangeEmail}
-                                error={errorFields.email}
-                                helperText={fieldsMessages.email}
+                                type='email'
+                                { ...emailField }
                             />
                         </Grid>
                         <Grid item>
@@ -125,10 +186,8 @@ const Component = ({
                                 className={classes.textField}
                                 color='primary'
                                 label='Пароль'
-                                value={password}
-                                onChange={handleChangePassword}
-                                error={errorFields.password}
-                                helperText={fieldsMessages.password}
+                                type='password'
+                                { ...passwordField }
                             />
                         </Grid>
                     </Grid>
@@ -145,10 +204,8 @@ const Component = ({
                                 className={classes.textField}
                                 color='primary'
                                 label='Пароль підтвердження'
-                                value={confPassword}
-                                onChange={handleChangeConfPassword}
-                                error={errorFields.confPassword}
-                                helperText={fieldsMessages.confPassword}
+                                type='password'
+                                { ...confPasswordField }
                             />
                         </Grid>
                         <Grid item>
@@ -157,26 +214,26 @@ const Component = ({
                                 variant='contained'
                                 disableElevation
                                 className={classes.button}
+                                data-testid='signup-button'
+                                { ...signUpButton }
                             >
                                 Зареєструватися
                             </Button>
                         </Grid>
                     </Grid>
                 </Grid>
-                {/* <div className={classes.actions}> */}
-                    <Typography align='center'>
-                        Вже зареєстровані?
-                        <Typography
-                            color='primary'
-                            component='span'
-                        >
-                            Увійти
-                        </Typography>
+                <Typography align='center'>
+                    Вже зареєстровані?
+                    <Typography
+                        color='primary'
+                        component='span'
+                    >
+                        Увійти
                     </Typography>
-                {/* </div> */}
+                </Typography>
             </Paper>
         </div>
     );
-};
+});
 
 export default Component;

@@ -11,11 +11,14 @@ import { combineReducers } from '@reduxjs/toolkit';
 
 // Application's imports
 import signUp from './signup';
+import signIn from './signin';
 
 // Export all actions from all slices
 export * from './signup';
+export * from './signin';
 
 // Export combined reducer related to auth
 export default combineReducers({
     signUp,
+    signIn,
 });

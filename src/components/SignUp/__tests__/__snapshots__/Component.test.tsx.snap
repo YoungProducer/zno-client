@@ -40,6 +40,7 @@ exports[`SignUp component Is matches snapshot 1`] = `
             helperText=""
             label="Емеїл"
             onChange={[Function]}
+            type="email"
             value=""
           />
         </WithStyles(ForwardRef(Grid))>
@@ -53,6 +54,7 @@ exports[`SignUp component Is matches snapshot 1`] = `
             helperText=""
             label="Пароль"
             onChange={[Function]}
+            type="password"
             value=""
           />
         </WithStyles(ForwardRef(Grid))>
@@ -75,6 +77,7 @@ exports[`SignUp component Is matches snapshot 1`] = `
             helperText=""
             label="Пароль підтвердження"
             onChange={[Function]}
+            type="password"
             value=""
           />
         </WithStyles(ForwardRef(Grid))>
@@ -84,7 +87,9 @@ exports[`SignUp component Is matches snapshot 1`] = `
           <WithStyles(ForwardRef(Button))
             className="makeStyles-button-7"
             color="primary"
+            data-testid="signup-button"
             disableElevation={true}
+            onClick={[Function]}
             variant="contained"
           >
             Зареєструватися

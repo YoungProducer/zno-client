@@ -1,8 +1,8 @@
 /**
  * Created by: Oleksandr Bezrukov
- * Creation date: 26 February 2020
+ * Creation date: 28 February 2020
  *
- * Export all selectors related to auth.
+ * Export all functions, interface, types, etc.
  */
 
 export * from './signup';

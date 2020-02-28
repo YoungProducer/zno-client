@@ -12,6 +12,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import {
     IApi,
     ISignUpCredentials,
+    ISignInCredentials,
 } from './types';
 
 class Api implements IApi {
@@ -27,6 +28,13 @@ class Api implements IApi {
     signup = async (credentials: ISignUpCredentials) =>
         await this.axiosInstance.post(
             '/auth/user/signup',
+            { ...credentials },
+            { withCredentials: true },
+        )
+
+    signin = async (credentials: ISignInCredentials) =>
+        await this.axiosInstance.post(
+            '/auth/user/signin',
             { ...credentials },
             { withCredentials: true },
         )

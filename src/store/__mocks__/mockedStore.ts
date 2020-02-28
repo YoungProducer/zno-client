@@ -34,6 +34,18 @@ const mockedStore = mockStore({
                 confPassword: '',
             },
         },
+        signIn: {
+            loading: false,
+            user: null,
+            errorFields: {
+                email: false,
+                password: false,
+            },
+            fieldsMessages: {
+                email: '',
+                password: '',
+            },
+        },
     },
 });
 
