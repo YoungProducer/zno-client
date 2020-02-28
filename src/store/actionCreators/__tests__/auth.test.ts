@@ -54,15 +54,25 @@ describe('SignUp', () => {
             confPassword: 'barbarbar',
         }) as any)
             .then(() => {
-                // Chech is array of dispatched actions equals to expectedActions
+                // Check is array of dispatched actions equals to expectedActions
                 expect(store.getActions()).toEqual(expectedActions);
             });
     });
 
     test('Fetch signup with success status', () => {
+        // Mock url to get success response
         axiosMock
             .onPost('/auth/user/signup')
             .reply(200, 'Success');
+
+        // Define expected actions
+        const expectedActions = [{
+            type: 'SignUp/signUpLoadingAction',
+            payload: true,
+        }, {
+            type: 'SignUp/signUpLoadingAction',
+            payload: false,
+        }];
 
         return store.dispatch(fetchSignUpAction({
             email: 'foo@gmail.com',
@@ -70,8 +80,8 @@ describe('SignUp', () => {
             confPassword: 'barbarbar',
         }) as any)
             .then(() => {
-                // Chech is array of dispatched actions equals to expectedActions
-                console.log(store.getActions())
+                // Check is array of dispatched actions equals to expectedActions
+                expect(store.getActions()).toEqual(expectedActions);
             });
     });
 });

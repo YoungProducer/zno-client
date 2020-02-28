@@ -18,6 +18,13 @@ const theme = createMuiTheme({
     typography: {
         fontFamily: 'ProductSans-Light, Arial',
     },
+    overrides: {
+        MuiFormHelperText: {
+            root: {
+                fontSize: '0.9rem',
+            },
+        },
+    },
 });
 
 export default theme;

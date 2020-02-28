@@ -16,44 +16,93 @@ exports[`SignUp component Is matches snapshot 1`] = `
     >
       Реєстрація
     </WithStyles(ForwardRef(Typography))>
-    <div
+    <WithStyles(ForwardRef(Grid))
       className="makeStyles-fields-4"
+      container={true}
+      direction="row"
+      spacing={2}
     >
-      <WithStyles(ForwardRef(TextField))
-        className="makeStyles-textField-3"
-        color="primary"
-        label="Емеїл"
-        onChange={[Function]}
-        value=""
-      />
-      <WithStyles(ForwardRef(TextField))
-        className="makeStyles-textField-3"
-        color="primary"
-        label="Пароль"
-        onChange={[Function]}
-        value=""
-      />
-    </div>
-    <div
-      className="makeStyles-actions-5"
-    >
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        disableElevation={true}
-        variant="contained"
+      <WithStyles(ForwardRef(Grid))
+        alignItems="center"
+        className="makeStyles-block-6"
+        container={true}
+        direction="row"
+        item={true}
+        spacing={3}
       >
-        Зареєструватися
-      </WithStyles(ForwardRef(Button))>
-      <WithStyles(ForwardRef(Typography))>
-        Вже зареєстровані?
-        <WithStyles(ForwardRef(Typography))
-          color="primary"
-          component="span"
+        <WithStyles(ForwardRef(Grid))
+          item={true}
         >
-          Увійти
-        </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(TextField))
+            className="makeStyles-textField-3"
+            color="primary"
+            error={false}
+            helperText=""
+            label="Емеїл"
+            onChange={[Function]}
+            value=""
+          />
+        </WithStyles(ForwardRef(Grid))>
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(TextField))
+            className="makeStyles-textField-3"
+            color="primary"
+            error={false}
+            helperText=""
+            label="Пароль"
+            onChange={[Function]}
+            value=""
+          />
+        </WithStyles(ForwardRef(Grid))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        alignItems="center"
+        className="makeStyles-block-6"
+        container={true}
+        direction="row"
+        item={true}
+        spacing={3}
+      >
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(TextField))
+            className="makeStyles-textField-3"
+            color="primary"
+            error={false}
+            helperText=""
+            label="Пароль підтвердження"
+            onChange={[Function]}
+            value=""
+          />
+        </WithStyles(ForwardRef(Grid))>
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(Button))
+            className="makeStyles-button-7"
+            color="primary"
+            disableElevation={true}
+            variant="contained"
+          >
+            Зареєструватися
+          </WithStyles(ForwardRef(Button))>
+        </WithStyles(ForwardRef(Grid))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Typography))
+      align="center"
+    >
+      Вже зареєстровані?
+      <WithStyles(ForwardRef(Typography))
+        color="primary"
+        component="span"
+      >
+        Увійти
       </WithStyles(ForwardRef(Typography))>
-    </div>
+    </WithStyles(ForwardRef(Typography))>
   </WithStyles(ForwardRef(Paper))>
 </div>
 `;
