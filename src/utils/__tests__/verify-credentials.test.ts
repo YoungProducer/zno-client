@@ -10,9 +10,9 @@ import {
     verifySignUpCredentials,
     verifySignInCredentials,
     IFetchSignInActionCredentials,
+    IFetchSignUpActionCredentials,
     TVerifyAuthCredentials,
 } from '../verify-credentials';
-import { IFetchSignUpActionCredentials } from 'store/actionCreators/auth/signup';
 
 describe('Verify auth credentials', () => {
     describe('Verify sign up credentials', () => {

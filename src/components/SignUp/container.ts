@@ -10,7 +10,7 @@
 import { connect } from 'react-redux';
 
 // Application's imports
-import { fetchSignUpAction, IFetchSignUpActionCredentials } from 'store/actionCreators/auth/signup';
+import { fetchSignUpAction } from 'store/actionCreators/auth/signup';
 import {
     setSignUpErrorFieldsToDefaultAction,
     setSignUpFieldsMessagesToDefaultAction,
@@ -22,6 +22,7 @@ import {
     selectSignUpErrorFields,
     selectSignUpFieldsMessages,
 } from 'store/selectors/auth';
+import { IFetchSignUpActionCredentials } from 'utils/verify-credentials';
 import { RootState } from 'store/slices';
 
 /**

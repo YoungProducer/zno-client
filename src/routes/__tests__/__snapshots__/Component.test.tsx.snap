@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Routes component Is match snapshot 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <Switch>
+    <Route
+      exact={true}
+      path="/"
+    >
+      <Redirect
+        to={
+          Object {
+            "pathname": "/auth/signin",
+            "state": Object {
+              "from": "/",
+            },
+          }
+        }
+      />
+    </Route>
+    <Route
+      exact={true}
+      path="/auth/signin"
+    >
+      <Connect(Component) />
+    </Route>
+    <Route
+      exact={true}
+      path="/auth/signup"
+    >
+      <Connect(Component) />
+    </Route>
+  </Switch>
+</Router>
+`;

@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignIn component Is match snapshot 1`] = `
+<div
+  className="makeStyles-backdrop-1"
+>
+  <WithStyles(ForwardRef(Paper))
+    className="makeStyles-root-2"
+    elevation={2}
+    square={true}
+  >
+    <WithStyles(ForwardRef(Typography))
+      align="center"
+      color="primary"
+      variant="h6"
+    >
+      Вхід
+    </WithStyles(ForwardRef(Typography))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-fields-4"
+      container={true}
+      direction="row"
+      spacing={2}
+    >
+      <WithStyles(ForwardRef(Grid))
+        alignItems="center"
+        className="makeStyles-block-6"
+        container={true}
+        direction="row"
+        item={true}
+        spacing={3}
+      >
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(TextField))
+            className="makeStyles-textField-3"
+            color="primary"
+            error={false}
+            helperText="foo"
+            label="Емеїл"
+            onChange={[Function]}
+            type="email"
+            value=""
+          />
+        </WithStyles(ForwardRef(Grid))>
+        <WithStyles(ForwardRef(Grid))
+          item={true}
+        >
+          <WithStyles(ForwardRef(TextField))
+            className="makeStyles-textField-3"
+            color="primary"
+            error={false}
+            helperText="bar"
+            label="Пароль"
+            onChange={[Function]}
+            type="password"
+            value=""
+          />
+        </WithStyles(ForwardRef(Grid))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        alignItems="center"
+        className="makeStyles-buttonBlock-7"
+        container={true}
+        direction="row"
+        item={true}
+        justify="center"
+      >
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-button-8"
+          color="primary"
+          data-testid="signin-button"
+          disableElevation={true}
+          onClick={[Function]}
+          variant="contained"
+        >
+          Увійти
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Typography))
+      align="center"
+    >
+      Не зареєстровані?
+      <WithStyles(ForwardRef(Typography))
+        color="primary"
+        component="span"
+      >
+        Зареєструватися
+      </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Typography))>
+  </WithStyles(ForwardRef(Paper))>
+</div>
+`;

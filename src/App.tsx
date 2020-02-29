@@ -11,16 +11,14 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 // Application's imports
+import Routes from 'routes';
 import theme from 'theme';
 import store from 'store';
-
-// Temporary
-import SignUp from './components/SignUp';
 
 const Component = () => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <SignUp />
+            <Routes />
         </ThemeProvider>
     </Provider>
 );

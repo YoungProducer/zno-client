@@ -73,11 +73,11 @@ describe('SignUp container', () => {
             </Provider>,
         );
 
-        // Extract the setSignUpErrorFieldsToDefault prop
+        // Extract the setSignUpFieldsMessagesToDefault prop
         const { setSignUpFieldsMessagesToDefault } =
             componentWrapper.find('TestComponent').props() as TSignUpProps;
 
-        // Invoke setSignUpErrorFieldsToDefault
+        // Invoke setSignUpFieldsMessagesToDefault
         setSignUpFieldsMessagesToDefault();
 
         // Assert the correct keys have been added to the component

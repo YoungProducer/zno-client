@@ -280,7 +280,7 @@ describe('Auth reducer', () => {
             expect(result.loading).toBeTruthy();
         });
 
-        test('signInLoadingAction toggle to true' , () => {
+        test('signInLoadingAction toggle to false' , () => {
             /** Define initial state */
             const initialState: ISignInInitialState = {
                 loading: true,
