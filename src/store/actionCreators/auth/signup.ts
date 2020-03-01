@@ -29,25 +29,18 @@ export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) =>
     if (!invalidData) {
         return await api.signup(_.pick(credentials, ['email', 'password']))
             .then(response => {
-                if (response.status !== 200) {
-                    throw Error(response.statusText);
-                }
+                dispatch(signUpLoadingAction(false));
 
                 return response;
             })
-            .then(response => {
-                dispatch(signUpLoadingAction(false));
-            })
             .catch(error => {
-                console.error(error);
-                // console.log(error);
                 // const errorData = error.response.data.error.data;
 
                 // if (Object.keys(error.response.data).some(key => key === 'error')) {
                 //     dispatch(setSignUpErrorFieldsAction(errorData.invalidFields));
                 //     dispatch(setSignUpFieldsMessagesAction(errorData.invalidFieldsMessages));
                 // }
-                // dispatch(signUpLoadingAction(false));
+                dispatch(signUpLoadingAction(false));
             });
     }
 

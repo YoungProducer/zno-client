@@ -38,6 +38,12 @@ class Api implements IApi {
             { ...credentials },
             { withCredentials: true },
         )
+
+    subjectsNames = async () =>
+        await this.axiosInstance.get(
+            '/subjects/names',
+            { withCredentials: true },
+        )
 }
 
 // Export all types related to Api

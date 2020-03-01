@@ -81,6 +81,32 @@ describe('Auth async actions', () => {
                     expect(store.getActions()).toEqual(expectedActions);
                 });
         });
+
+        test('Fetch signup with error', () => {
+            // Mock url to get success response
+            axiosMock
+                .onPost('/auth/user/signup')
+                .reply(404);
+
+            // Define expected actions
+            const expectedActions = [{
+                type: 'SignUp/signUpLoadingAction',
+                payload: true,
+            }, {
+                type: 'SignUp/signUpLoadingAction',
+                payload: false,
+            }];
+
+            return store.dispatch(fetchSignUpAction({
+                email: 'foo@gmail.com',
+                password: 'barbarbar',
+                confPassword: 'barbarbar',
+            }) as any)
+                .then(() => {
+                    // Check is array of dispatched actions equals to expectedActions
+                    expect(store.getActions()).toEqual(expectedActions);
+                });
+        });
     });
 
     describe('fetchSignInAction', () => {

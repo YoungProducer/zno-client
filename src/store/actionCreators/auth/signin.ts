@@ -32,10 +32,6 @@ export const fetchSignInAction = (credentials: IFetchSignInActionCredentials) =>
         if (!invalidData) {
             return await api.signin(credentials)
                 .then(response => {
-                    if (response.status !== 200) {
-                        throw Error(response.statusText);
-                    }
-
                     dispatch(signInLoadingAction(false));
 
                     return response;

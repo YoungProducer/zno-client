@@ -51,4 +51,20 @@ describe('Api', () => {
         /** Assert that result has status 200 */
         expect(result.status).toBe(200);
     });
+
+    test('subjectsNames success', async () => {
+        /** Mock '/subjects/names url */
+        mockAxios
+            .onGet('/subjects/names')
+            .reply(200, ['foo']);
+
+        /** Get result of subjectsNames method */
+        const result = await api.subjectsNames();
+
+        /** Assert response has status 200 */
+        expect(result.status).toBe(200);
+
+        /** Assert response data equals ['foo'] */
+        expect(result.data).toEqual(['foo']);
+    });
 });

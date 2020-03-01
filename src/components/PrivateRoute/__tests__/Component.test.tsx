@@ -8,7 +8,10 @@
 
 /** External imports */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { render } from 'react-dom';
+import { shallow } from 'enzyme';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 /** Application's imports */
 import Component from '../Component';
@@ -29,5 +32,49 @@ describe('PrivateRoute component', () => {
 
         /** Assert component matches snapshot */
         expect(root).toMatchSnapshot();
+    });
+
+    test('Check location if user is not logged in', () => {
+        /** Create node */
+        const root = document.createElement('div');
+
+        /** Append node to body */
+        document.body.appendChild(root);
+
+        /** Create history */
+        const history = createMemoryHistory();
+
+        /** Render via react-dom */
+        render(
+            <Router history={history}>
+                <Component {...requiredProps}/>
+            </Router>,
+            root,
+        );
+
+        /** Assert pathname equals '/auth/signin' */
+        expect(history.location.pathname).toEqual('/auth/signin');
+    });
+
+    test('Check location if user is logged in', () => {
+        /** Create node */
+        const root = document.createElement('div');
+
+        /** Append node to body */
+        document.body.appendChild(root);
+
+        /** Create history */
+        const history = createMemoryHistory();
+
+        /** Render via react-dom */
+        render(
+            <Router history={history}>
+                <Component {...requiredProps} isLoggedIn={true}/>
+            </Router>,
+            root,
+        );
+
+        /** Assert pathname equals '/' */
+        expect(history.location.pathname).toEqual('/');
     });
 });
