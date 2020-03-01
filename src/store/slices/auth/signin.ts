@@ -96,7 +96,10 @@ const initialState: ISignInInitialState = {
         password: false,
     },
     fieldsMessages: defaultFieldsMessages,
-    user: null,
+    user: {
+        email: 'foo@gmail.com',
+    },
+    // user: null,
 };
 
 /** Define sign in slice(reducer) */

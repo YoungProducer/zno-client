@@ -1,44 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Routes component Is match snapshot 1`] = `
-<Router
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
->
+<HashRouter>
   <Switch>
-    <Route
+    <Connect(Component)
       exact={true}
       path="/"
     >
-      <Redirect
-        to={
-          Object {
-            "pathname": "/auth/signin",
-            "state": Object {
-              "from": "/",
-            },
-          }
-        }
-      />
-    </Route>
+      <h1>
+        home
+      </h1>
+    </Connect(Component)>
     <Route
       exact={true}
       path="/auth/signin"
@@ -52,5 +24,5 @@ exports[`Routes component Is match snapshot 1`] = `
       <Connect(Component) />
     </Route>
   </Switch>
-</Router>
+</HashRouter>
 `;
