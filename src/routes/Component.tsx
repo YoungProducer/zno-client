@@ -7,13 +7,13 @@
 
 /** External imports */
 import React from 'react';
-import { createBrowserHistory } from 'history';
 import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 /** Application's imports */
+import PrivateRoute from 'components/PrivateRoute';
 import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
-import PrivateRoute from 'components/PrivateRoute';
+import SubjectSelection from './SubjectSelection';
 import { TRoutesProps } from './container';
 import history from './history';
 
@@ -24,6 +24,9 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
             <Switch>
                 <PrivateRoute exact path='/'>
                     <h1>home</h1>
+                </PrivateRoute>
+                <PrivateRoute exact path='/subject-selection'>
+                    <SubjectSelection />
                 </PrivateRoute>
                 <Route exact path='/auth/signin'>
                     { isLoggedIn

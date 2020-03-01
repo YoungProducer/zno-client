@@ -5,6 +5,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: "./src/index.tsx",
   devtool: "source-map",
+  node: {
+    fs: "empty"
+  },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".test.ts", ".test.tsx"],
     alias: {

@@ -11,6 +11,12 @@ exports[`Routes component Is match snapshot 1`] = `
         home
       </h1>
     </Connect(Component)>
+    <Connect(Component)
+      exact={true}
+      path="/subject-selection"
+    >
+      <Component />
+    </Connect(Component)>
     <Route
       exact={true}
       path="/auth/signin"

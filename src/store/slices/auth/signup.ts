@@ -6,7 +6,7 @@
  */
 
 // External imports
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 // Application's imports
 import { ILoadingAction } from 'store/types';

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubjectSelection route Is match snapshot 1`] = `
+<Fragment>
+  <CssBaseline />
+  <WithStyles(ForwardRef(Container))
+    maxWidth="lg"
+  >
+    <WithStyles(Connect(Component)) />
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;

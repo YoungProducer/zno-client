@@ -14,7 +14,9 @@ import { createLogger } from 'redux-logger';
 
 // Application's imports
 import rootReducer from './slices';
+import initialState from './testState';
 
+/** Define middlewares */
 const midlleware = getDefaultMiddleware({
     thunk: true,
     serializableCheck: true,
@@ -28,6 +30,7 @@ const logger = createLogger({
 
 const store = configureStore({
     reducer: rootReducer,
+    preloadedState: initialState,
     middleware: [...midlleware, logger],
 });
 
