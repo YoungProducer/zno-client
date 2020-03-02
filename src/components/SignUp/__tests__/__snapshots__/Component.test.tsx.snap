@@ -73,6 +73,7 @@ exports[`SignUp component Is matches snapshot 1`] = `
           <WithStyles(ForwardRef(TextField))
             className="makeStyles-textField-3"
             color="primary"
+            data-testid="conf-password"
             error={false}
             helperText=""
             label="Пароль підтвердження"

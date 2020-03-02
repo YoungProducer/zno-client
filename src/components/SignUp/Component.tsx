@@ -132,7 +132,7 @@ const useSignUpElements = (props: TSignUpProps) => {
     };
 };
 
-const Component = memo((props: TSignUpProps) => {
+const Component = (props: TSignUpProps) => {
     /** Create object with classes to use them */
     const classes = useStyles({});
 
@@ -206,6 +206,7 @@ const Component = memo((props: TSignUpProps) => {
                                 label='Пароль підтвердження'
                                 type='password'
                                 { ...confPasswordField }
+                                { ...{ 'data-testid': 'conf-password' } }
                             />
                         </Grid>
                         <Grid item>
@@ -234,6 +235,6 @@ const Component = memo((props: TSignUpProps) => {
             </Paper>
         </div>
     );
-});
+};
 
 export default Component;

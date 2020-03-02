@@ -39,7 +39,11 @@ describe('SignUp component', () => {
         loading: false,
     };
 
-    const container = mount(<Component {...requiredProps}/>);
+    beforeEach(() => {
+        (requiredProps.fetchSignUp as jest.Mock).mockReset();
+        (requiredProps.setSignUpErrorFieldsToDefault as jest.Mock).mockReset();
+        (requiredProps.setSignUpFieldsMessagesToDefault as jest.Mock).mockReset();
+    });
 
     test('Is matches snapshot', () => {
         // Render shallow component
@@ -47,6 +51,40 @@ describe('SignUp component', () => {
 
         // Check is component matches snapshot
         expect(root).toMatchSnapshot();
+    });
+
+    test('Is fetchSignUp will be called with right args', () => {
+        /** Mount component */
+        const wrapper = shallow(<Component {...requiredProps}/>);
+
+        /** Simulate onChange events */
+        wrapper
+            .find(`[label='Емеїл']`)
+            .simulate('change', { target: { value: 'foo' } });
+        wrapper
+            .find(`[label='Пароль']`)
+            .simulate('change', { target: { value: 'bar' } });
+        // wrapper
+        //     .find(`[label='Пароль підтвердження']`)
+        //     .simulate('change', { target: { value: 'abc' } });
+
+        wrapper
+            .find(`[data-testid='conf-password']`)
+            .simulate('change', { target: { value: 'abc' } });
+
+        /** Simulate sign up button click */
+        wrapper
+            .find(`[data-testid='signup-button']`)
+            .simulate('click');
+
+        console.log(wrapper.find(`[label='Емеїл']`).props());
+
+        /** Assert fetchSignUp have been called with right args */
+        expect(fetchSignUp).toBeCalledWith({
+            email: 'foo',
+            password: 'bar',
+            confPassword: 'abc',
+        });
     });
 
     test(`Is makes api call to signup endpoint when press button 'Реєстрація'`, () => {

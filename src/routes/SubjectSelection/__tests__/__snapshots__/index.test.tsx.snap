@@ -3,6 +3,7 @@
 exports[`SubjectSelection route Is match snapshot 1`] = `
 <Fragment>
   <CssBaseline />
+  <WithStyles(Component) />
   <WithStyles(ForwardRef(Container))
     maxWidth="lg"
   >
