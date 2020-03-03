@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubjectSelection component Is match snapshot 1`] = `
+<div
+  className="root"
+>
+  <WithStyles(ForwardRef(Grid))
+    container={true}
+    spacing={1}
+  >
+    <Component
+      key="0"
+      subject="foo"
+    />
+  </WithStyles(ForwardRef(Grid))>
+</div>
+`;

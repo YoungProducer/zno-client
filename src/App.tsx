@@ -15,10 +15,7 @@ import Routes from 'routes';
 import theme from 'theme';
 import store from 'store';
 
-// require('dotenv').config();
-
-// console.log(process);
-
+/** Create App component */
 const Component = () => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
