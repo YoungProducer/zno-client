@@ -16,6 +16,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // Application's imports
 import { TSignUpProps } from './container';
+import NavigationLink from 'components/NavigationLink';
 
 // Define classes as hook
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     button: {
         width: 230,
+    },
+    link: {
+        color: theme.palette.primary.main,
     },
 }));
 
@@ -225,12 +229,14 @@ const Component = (props: TSignUpProps) => {
                 </Grid>
                 <Typography align='center'>
                     Вже зареєстровані?
-                    <Typography
-                        color='primary'
-                        component='span'
+                    <NavigationLink
+                        navLink={{
+                            to: '/auth/signin',
+                        }}
+                        className={classes.link}
                     >
                         Увійти
-                    </Typography>
+                    </NavigationLink>
                 </Typography>
             </Paper>
         </div>

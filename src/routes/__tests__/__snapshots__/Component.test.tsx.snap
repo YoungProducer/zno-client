@@ -7,6 +7,7 @@ exports[`Routes component Is match snapshot 1`] = `
       exact={true}
       path="/"
     >
+      <WithStyles(Component) />
       <h1>
         home
       </h1>

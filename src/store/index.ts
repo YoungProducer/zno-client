@@ -14,25 +14,41 @@ import { createLogger } from 'redux-logger';
 
 // Application's imports
 import rootReducer from './slices';
-import initialState from './testState';
+import testState from './testState';
 
-/** Define middlewares */
-const midlleware = getDefaultMiddleware({
-    thunk: true,
-    serializableCheck: true,
-    immutableCheck: true,
-});
+const createStore = () => {
+    /** Extract env variable */
+    const useTestState: boolean = JSON.parse(process.env.REACT_USE_TEST_STATE);
 
-const logger = createLogger({
-    collapsed: true,
-    diff: true,
-});
+    /** Define middlewares */
+    const midlleware = getDefaultMiddleware({
+        thunk: true,
+        serializableCheck: true,
+        immutableCheck: true,
+    });
 
-const store = configureStore({
-    reducer: rootReducer,
-    preloadedState: initialState,
-    middleware: [...midlleware, logger],
-});
+    /** Setup logger middleware */
+    const logger = createLogger({
+        collapsed: true,
+        diff: true,
+    });
+
+    /**
+     * Init preloaded state.
+     * If useTestState equals true load testState
+     * in other case set preloadedState as undefined.
+     */
+    const preloadedState = useTestState ? testState : undefined;
+
+    return configureStore({
+        preloadedState,
+        reducer: rootReducer,
+        middleware: [...midlleware, logger],
+    });
+};
+
+/** Create store */
+const store = createStore();
 
 export type AppDispatch = typeof store.dispatch;
 

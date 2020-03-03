@@ -10,6 +10,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 /** Application's imports */
+import AppBar from 'components/AppBar';
 import PrivateRoute from 'components/PrivateRoute';
 import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
@@ -23,7 +24,10 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
         <Router>
             <Switch>
                 <PrivateRoute exact path='/'>
-                    <h1>home</h1>
+                    <>
+                        <AppBar />
+                        <h1>home</h1>
+                    </>
                 </PrivateRoute>
                 <PrivateRoute exact path='/subject-selection'>
                     <SubjectSelection />
@@ -32,7 +36,7 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
                     { isLoggedIn
                         ? <Redirect
                             to={{
-                                pathname: '/home',
+                                pathname: '/subject-selection',
                                 state: { from: '/auth/signin' },
                             }}
                         />
@@ -43,7 +47,7 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
                     { isLoggedIn
                         ? <Redirect
                             to={{
-                                pathname: '/home',
+                                pathname: '/subject-selection',
                                 state: { from: '/auth/signup' },
                             }}
                         />

@@ -18,4 +18,11 @@ export default {
             'Хімія',
         ],
     },
+    auth: {
+        signIn: {
+            user: {
+                email: 'foo@gmail.com',
+            },
+        },
+    },
 } as RootState;

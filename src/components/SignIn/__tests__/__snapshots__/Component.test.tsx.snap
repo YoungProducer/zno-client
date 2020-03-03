@@ -83,12 +83,16 @@ exports[`SignIn component Is match snapshot 1`] = `
       align="center"
     >
       Не зареєстровані?
-      <WithStyles(ForwardRef(Typography))
-        color="primary"
-        component="span"
+      <NavigationLink
+        className="makeStyles-link-9"
+        navLink={
+          Object {
+            "to": "/auth/signup",
+          }
+        }
       >
         Зареєструватися
-      </WithStyles(ForwardRef(Typography))>
+      </NavigationLink>
     </WithStyles(ForwardRef(Typography))>
   </WithStyles(ForwardRef(Paper))>
 </div>

@@ -15,9 +15,9 @@ import Routes from 'routes';
 import theme from 'theme';
 import store from 'store';
 
-require('dotenv').config();
+// require('dotenv').config();
 
-console.log(process);
+// console.log(process);
 
 const Component = () => (
     <Provider store={store}>
