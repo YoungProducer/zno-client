@@ -77,8 +77,6 @@ describe('SignUp component', () => {
             .find(`[data-testid='signup-button']`)
             .simulate('click');
 
-        console.log(wrapper.find(`[label='Емеїл']`).props());
-
         /** Assert fetchSignUp have been called with right args */
         expect(fetchSignUp).toBeCalledWith({
             email: 'foo',

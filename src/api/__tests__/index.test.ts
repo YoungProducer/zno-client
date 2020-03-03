@@ -67,4 +67,32 @@ describe('Api', () => {
         /** Assert response data equals ['foo'] */
         expect(result.data).toEqual(['foo']);
     });
+
+    test('subjectConfiguration success', async () => {
+        /** Define mocked response */
+        const response = {
+            subject: {
+                name: 'Foo',
+                theme: ['Theme 1', 'Theme 2'],
+                exams: {
+                    trainings: ['Variant 1', 'Variant 2'],
+                    sessions: ['2017', '2018'],
+                },
+            },
+        };
+
+        /** Mock /subjects/configuration/{subject-name} url */
+        mockAxios
+            .onGet('/subjects/configuration/Foo')
+            .reply(200, response);
+
+        /** Get result of subjectConfiguration method */
+        const result = await api.subjectConfiguration({ subjectName: 'Foo' });
+
+        /** Assert response has status 200 */
+        expect(result.status).toBe(200);
+
+        /** Assert response data equals mocked response */
+        expect(result.data).toEqual(response);
+    });
 });

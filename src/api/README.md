@@ -6,7 +6,7 @@ Api response for **/subjects/configuration/{subject-name}**
 when subject can be divided for subjects, for example:
 Math can be divided to Algebra and Geomtery.
 ```javascript
-body: {
+data: {
     subject: {
         name: 'Math',
         subSubjects: [
@@ -30,7 +30,7 @@ body: {
 Api response for **/subjects/configuration/{subject-name}**
 when subject doesn't have sub subjects.
 ```javascript
-body: {
+data: {
     subject: {
         name: 'Math',
         theme: ['Theme 1', 'Theme 2'],

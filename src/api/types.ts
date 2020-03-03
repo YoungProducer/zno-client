@@ -18,9 +18,14 @@ export interface ISignInCredentials {
     password: string;
 }
 
+export interface ISubjectConfigurationCredentials {
+    subjectName: string;
+}
+
 export interface IApi {
     axiosInstance: AxiosInstance;
     signup(credentials: ISignUpCredentials): Promise<AxiosResponse>;
     signin(credentials: ISignInCredentials): Promise<AxiosResponse>;
     subjectsNames(): Promise<AxiosResponse>;
+    subjectConfiguration(credentials: ISubjectConfigurationCredentials): Promise<AxiosResponse>;
 }

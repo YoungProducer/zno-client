@@ -13,6 +13,7 @@ import {
     IApi,
     ISignUpCredentials,
     ISignInCredentials,
+    ISubjectConfigurationCredentials,
 } from './types';
 
 class Api implements IApi {
@@ -42,6 +43,15 @@ class Api implements IApi {
     subjectsNames = async () =>
         await this.axiosInstance.get(
             '/subjects/names',
+            { withCredentials: true },
+        )
+
+    /**
+     * @value (String) subject name.
+     */
+    subjectConfiguration = async (credentials: ISubjectConfigurationCredentials) =>
+        await this.axiosInstance.get(
+            `/subjects/configuration/${credentials.subjectName}`,
             { withCredentials: true },
         )
 }
