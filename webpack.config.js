@@ -26,7 +26,11 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, "/build"),
-    filename: "bundle.min.js"
+    filename: "bundle.min.js",
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   module: {
     rules: [

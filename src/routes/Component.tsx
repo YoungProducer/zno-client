@@ -7,7 +7,7 @@
 
 /** External imports */
 import React from 'react';
-import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 /** Application's imports */
 import AppBar from 'components/AppBar';

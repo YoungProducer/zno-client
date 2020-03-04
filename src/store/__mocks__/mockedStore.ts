@@ -51,6 +51,11 @@ const mockedStore = mockStore({
         loading: false,
         subjectsList: [],
     },
+    subjectConfiguration: {
+        loading: false,
+        dialogVisible: false,
+        subjectConfig: null,
+    },
 });
 
 export default mockedStore;
