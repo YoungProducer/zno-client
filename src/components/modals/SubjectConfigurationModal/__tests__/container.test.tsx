@@ -16,7 +16,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 /** Application's imports */
-import container, { TSubjectConfigurationDialogProps } from '../container';
+import container, { TSubjectConfigurationModalProps } from '../container';
 import { fetchSubjectConfigurationAction } from 'store/actionCreators/subjectConfiguration';
 import { toggleSubjectConfigurationDialogAction } from 'store/slices/subjectConfiguration';
 import {
@@ -75,7 +75,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract fetchSubjectConfiguration prop */
         const { fetchSubjectConfiguration }
-            = componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            = componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Invoke fetchSubjectConfiguration */
         fetchSubjectConfiguration({ subjectName: 'foo' });
@@ -107,7 +107,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract toggleSubjectConfigurationDialog prop */
         const { toggleSubjectConfigurationDialog }
-            = componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            = componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Invoke toggleSubjectConfigurationDialog */
         toggleSubjectConfigurationDialog(true);
@@ -137,7 +137,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { loading } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(loading).toEqual(MOCK_SELECTOR);
@@ -164,7 +164,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { dialogVisible } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(dialogVisible).toEqual(MOCK_SELECTOR);
@@ -191,7 +191,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { subjectName } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(subjectName).toEqual(MOCK_SELECTOR);
@@ -218,7 +218,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { subjectThemes } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(subjectThemes).toEqual(MOCK_SELECTOR);
@@ -245,7 +245,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { subjectExams } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(subjectExams).toEqual(MOCK_SELECTOR);
@@ -272,7 +272,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { subSubjectsNames } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(subSubjectsNames).toEqual(MOCK_SELECTOR);
@@ -299,7 +299,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Extract loading prop */
         const { subSubjectsThemes } =
-            componentWrapper.find('TestComponent').props() as TSubjectConfigurationDialogProps;
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
         expect(subSubjectsThemes).toEqual(MOCK_SELECTOR);

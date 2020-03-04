@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
+<WithStyles(ForwardRef(Dialog))
+  aria-describedby=""
+  aria-labelledby="subject-config-title"
+  onClose={[Function]}
+  open={true}
+>
+  <WithStyles(Component)
+    id="subject-config-title"
+  >
+    Налаштування тесту
+  </WithStyles(Component)>
+  <WithStyles(WithStyles(ForwardRef(DialogContent)))>
+    <WithStyles(ForwardRef(FormControl))
+      component="fieldset"
+    >
+      <WithStyles(ForwardRef(FormLabel))
+        component="legend"
+      >
+        Оберіть тип тесту
+      </WithStyles(ForwardRef(FormLabel))>
+      <ForwardRef(RadioGroup)
+        aria-label="select-test-type"
+        data-testid="select-test-type"
+        name="select-test-type"
+        onChange={[Function]}
+        value=""
+      >
+        <WithStyles(ForwardRef(FormControlLabel))
+          control={
+            <WithStyles(ForwardRef(Radio))
+              color="primary"
+            />
+          }
+          label="Вибір теми"
+          labelPlacement="end"
+          value="Вибір теми"
+        />
+        <WithStyles(ForwardRef(FormControlLabel))
+          control={
+            <WithStyles(ForwardRef(Radio))
+              color="primary"
+            />
+          }
+          label="Тренувальні варіанти ЗНО"
+          labelPlacement="end"
+          value="Тренувальні варіанти ЗНО"
+        />
+      </ForwardRef(RadioGroup)>
+    </WithStyles(ForwardRef(FormControl))>
+  </WithStyles(WithStyles(ForwardRef(DialogContent)))>
+</WithStyles(ForwardRef(Dialog))>
+`;

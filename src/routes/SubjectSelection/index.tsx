@@ -12,7 +12,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 /** Application's imports */
 import AppBar from 'components/AppBar';
-import SubjectsSelection from 'components/SubjectSelection';
+import SubjectSelection from 'components/SubjectSelection';
+import SubjectConfiguration from 'components/modals/SubjectConfigurationModal';
 
 /** Create component */
 const Component = () => (
@@ -20,7 +21,8 @@ const Component = () => (
         <CssBaseline />
         <AppBar />
         <Container maxWidth='lg'>
-            <SubjectsSelection />
+            <SubjectConfiguration />
+            <SubjectSelection />
         </Container>
     </React.Fragment>
 );

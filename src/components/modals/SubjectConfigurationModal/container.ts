@@ -27,6 +27,13 @@ import {
 import { RootState } from 'store/slices';
 import { ISubjectConfigurationCredentials } from 'api';
 
+/** Define types for test configuration */
+export type TTestTypes = 'Вибір теми' | 'Тренувальні варіанти ЗНО';
+export const enum ETestTypes {
+    THEMES = 'Вибір теми',
+    EXAMS = 'Тренувальні варіанти ЗНО',
+}
+
 /** Props which component get from the parent */
 interface IOwnProps {}
 
@@ -53,7 +60,7 @@ interface IDispatchProps {
 }
 
 /** Declare type which describe all props pushed to the component */
-export type TSubjectConfigurationDialogProps =
+export type TSubjectConfigurationModalProps =
     IOwnProps
     & IStateProps
     & IDispatchProps;
