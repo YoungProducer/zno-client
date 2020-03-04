@@ -2,13 +2,14 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 3 March 2020
  *
- * Create tests suites for subjectConfiguration slice.
+ * Create test suites for subjectConfiguration slice.
  */
 
 /** Application's imports */
 import subjectConfiguration, {
     setSubjectConfigAction,
-    subjectsConfigurationLoadingAction,
+    toggleSubjectConfigurationDialogAction,
+    subjectConfigurationLoadingAction,
     ISubjectConfigurationInitialState,
     TSubjectConfig,
 } from '../subjectConfiguration';
@@ -21,7 +22,7 @@ describe('SubjectConfiguration slice', () => {
         } as ISubjectConfigurationInitialState;
 
         /** Get result of dispatched action */
-        const result = subjectConfiguration(initialState, subjectsConfigurationLoadingAction(true));
+        const result = subjectConfiguration(initialState, subjectConfigurationLoadingAction(true));
 
         /** Assert loading equals true */
         expect(result.loading).toBeTruthy();
@@ -34,10 +35,36 @@ describe('SubjectConfiguration slice', () => {
         } as ISubjectConfigurationInitialState;
 
         /** Get result of dispatched action */
-        const result = subjectConfiguration(initialState, subjectsConfigurationLoadingAction(false));
+        const result = subjectConfiguration(initialState, subjectConfigurationLoadingAction(false));
 
         /** Assert loading equals false */
         expect(result.loading).toBeFalsy();
+    });
+
+    test('toggleSubjectConfigurationDialogAction open', () => {
+        /** Define initial state */
+        const initialState = {
+            dialogVisible: false,
+        } as ISubjectConfigurationInitialState;
+
+        /** Get result of dispatched action */
+        const result = subjectConfiguration(initialState, toggleSubjectConfigurationDialogAction(true));
+
+        /** Assert loading equals false */
+        expect(result.dialogVisible).toBeTruthy();
+    });
+
+    test('toggleSubjectConfigurationDialogAction close', () => {
+        /** Define initial state */
+        const initialState = {
+            dialogVisible: true,
+        } as ISubjectConfigurationInitialState;
+
+        /** Get result of dispatched action */
+        const result = subjectConfiguration(initialState, toggleSubjectConfigurationDialogAction(false));
+
+        /** Assert loading equals false */
+        expect(result.dialogVisible).toBeFalsy();
     });
 
     test('setSubjectConfigAction with payload', () => {
@@ -48,10 +75,8 @@ describe('SubjectConfiguration slice', () => {
 
         /** Define payload for setSubjectConfigAction */
         const payload: TSubjectConfig = {
-            subject: {
-                name: 'foo',
-                themes: ['bar'],
-            },
+            name: 'foo',
+            themes: ['bar'],
         };
 
         /** Get result of action */
@@ -65,9 +90,7 @@ describe('SubjectConfiguration slice', () => {
         /** Define initial state */
         const initialState = {
             subjectConfig: {
-                subject: {
-                    name: 'foo',
-                },
+                name: 'foo',
             },
         } as ISubjectConfigurationInitialState;
 

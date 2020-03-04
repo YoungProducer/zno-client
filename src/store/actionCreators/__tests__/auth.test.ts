@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 27 Ferbruary 2020
  *
- * Create tests suites for async action
+ * Create test suites for async action
  * which make api call to 'signup' endpoint.
  */
 

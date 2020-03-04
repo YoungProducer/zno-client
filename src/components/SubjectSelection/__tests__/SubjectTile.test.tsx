@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 1 March 2020
  *
- * Create tests suites for SubjectTile component.
+ * Create test suites for SubjectTile component.
  */
 
 /** External imports */

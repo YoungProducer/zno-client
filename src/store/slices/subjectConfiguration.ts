@@ -35,12 +35,21 @@ interface ISetSubjectConfigAction {
     payload: TSubjectConfig;
 }
 
+/** Declare interface for toggleSubjectConfigurationDialogAction */
+interface IToggleSubjectConfigurationDialogAction {
+    payload: boolean;
+}
+
 /** Declare interface for initial state */
 export interface ISubjectConfigurationInitialState {
     /**
      * Toggles when request will be sent and response will be gotten.
      */
     loading: boolean;
+    /**
+     * Display or hide subject configuration dialog.
+     */
+    dialogVisible: boolean;
     /**
      * Contain full subject config.
      */
@@ -50,6 +59,7 @@ export interface ISubjectConfigurationInitialState {
 /** Create initial state */
 const initialState: ISubjectConfigurationInitialState = {
     loading: false,
+    dialogVisible: false,
     subjectConfig: null,
 };
 
@@ -58,12 +68,23 @@ const subjectConfiguration = createSlice({
     initialState,
     name: 'SubjectConfiguration',
     reducers: {
-        subjectsConfigurationLoadingAction: (
+        subjectConfigurationLoadingAction: (
             state: ISubjectConfigurationInitialState,
             { payload }: ILoadingAction,
         ) => ({
             ...state,
             loading: payload,
+        }),
+        /**
+         * Allows to toggle dialogVisible value
+         * to open or close subject configuration dialog.
+         */
+        toggleSubjectConfigurationDialogAction: (
+            state: ISubjectConfigurationInitialState,
+            { payload }: IToggleSubjectConfigurationDialogAction,
+        ) => ({
+            ...state,
+            dialogVisible: payload,
         }),
         /**
          * Set subject config.
@@ -87,7 +108,8 @@ const subjectConfiguration = createSlice({
 /** Export actions */
 export const {
     setSubjectConfigAction,
-    subjectsConfigurationLoadingAction,
+    toggleSubjectConfigurationDialogAction,
+    subjectConfigurationLoadingAction,
 } = subjectConfiguration.actions;
 
 /** Export reducer */

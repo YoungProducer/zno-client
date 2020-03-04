@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 2 March 2020
  *
- * Create tests suites for NavigationLink component.
+ * Create test suites for NavigationLink component.
  */
 
 /** External imports */

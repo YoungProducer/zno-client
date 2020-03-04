@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 29 February 2020
  *
- * Create tests suites for container for routes component.
+ * Create test suites for container for routes component.
  * @jest-environment jsdom
  */
 

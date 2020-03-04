@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 1 March 2020
  *
- * Create tests suites for subjects slice.
+ * Create test suites for subjects slice.
  */
 
 /** Application's imports */

@@ -2,17 +2,18 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 3 March 2020
  *
- * Create tests suites for subjectConfiguration selectors.
+ * Create test suites for subjectConfiguration selectors.
  */
 
 /** Application's imports */
 import {
     selectSubjectConfigurationLoading,
+    selectSubjectConfigurationDialogVisible,
     selectSubjectConfig,
     selectSubjectConfigSubjectName,
     selectSubjectConfigThemes,
     selectSubjectConfigExams,
-    selectSubjectConfigSubSubjectNames,
+    selectSubjectConfigSubSubjectsNames,
     selectSubjectConfigSubSubjectsThemes,
 } from 'store/selectors/subjectConfiguration';
 import { RootState } from 'store/slices';
@@ -30,6 +31,21 @@ describe('SubjectConfiguration selectors', () => {
         const result = selectSubjectConfigurationLoading(MOCK_STATE);
 
         /** Assert result equals false */
+        expect(result).toBeFalsy();
+    });
+
+    test('selectSubjectConfigurationDialogVisible', () => {
+        /** Create mocked state */
+        const MOCK_STATE = {
+            subjectConfiguration: {
+                dialogVisible: false,
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectSubjectConfigurationDialogVisible(MOCK_STATE);
+
+        /** Assert result has correct value */
         expect(result).toBeFalsy();
     });
 
@@ -174,16 +190,12 @@ describe('SubjectConfiguration selectors', () => {
 
         /** Assert selectors returns objects with right keys */
         expect(result_1).toEqual({
-            exams: {
-                trainings: ['foo'],
-                sessions: null,
-            },
+            trainings: ['foo'],
+            sessions: null,
         });
         expect(result_2).toEqual({
-            exams: {
-                trainings: ['foo'],
-                sessions: null,
-            },
+            trainings: ['foo'],
+            sessions: null,
         });
     });
 
@@ -216,16 +228,12 @@ describe('SubjectConfiguration selectors', () => {
 
         /** Assert selectors returns objects with right keys */
         expect(result_1).toEqual({
-            exams: {
-                trainings: null,
-                sessions: ['foo'],
-            },
+            trainings: null,
+            sessions: ['foo'],
         });
         expect(result_2).toEqual({
-            exams: {
-                trainings: null,
-                sessions: ['foo'],
-            },
+            trainings: null,
+            sessions: ['foo'],
         });
     });
 
@@ -247,14 +255,12 @@ describe('SubjectConfiguration selectors', () => {
 
         /** Assert selector returns object with both filled properties */
         expect(result).toEqual({
-            exams: {
-                trainings: ['bar'],
-                sessions: ['foo'],
-            },
+            trainings: ['bar'],
+            sessions: ['foo'],
         });
     });
 
-    test(`selectSubjectConfigSubSubjectNames when property 'subSubjects' doesn't exist or it is an empty array`, () => {
+    test(`selectSubjectConfigSubSubjectsNames when property 'subSubjects' doesn't exist or it is an empty array`, () => {
         /** Create mocked states */
         const MOCK_STATE_1 = {
             subjectConfiguration: {
@@ -271,15 +277,15 @@ describe('SubjectConfiguration selectors', () => {
         } as RootState;
 
         /** Get selectors' results */
-        const result_1 = selectSubjectConfigSubSubjectNames(MOCK_STATE_1);
-        const result_2 = selectSubjectConfigSubSubjectNames(MOCK_STATE_2);
+        const result_1 = selectSubjectConfigSubSubjectsNames(MOCK_STATE_1);
+        const result_2 = selectSubjectConfigSubSubjectsNames(MOCK_STATE_2);
 
         /** Assert results equal null */
         expect(result_1).toBeNull();
         expect(result_2).toBeNull();
     });
 
-    test(`selectSubjectConfigSubSubjectNames when property 'subSubjects' exists and has elements inside of array`, () => {
+    test(`selectSubjectConfigSubSubjectsNames when property 'subSubjects' exists and has elements inside of array`, () => {
         /** Create mocked state */
         const MOCK_STATE = {
             subjectConfiguration: {
@@ -294,7 +300,7 @@ describe('SubjectConfiguration selectors', () => {
         } as RootState;
 
         /** Get selector's result */
-        const result = selectSubjectConfigSubSubjectNames(MOCK_STATE);
+        const result = selectSubjectConfigSubSubjectsNames(MOCK_STATE);
 
         /** Assert selector return array with right values */
         expect(result).toHaveLength(2);

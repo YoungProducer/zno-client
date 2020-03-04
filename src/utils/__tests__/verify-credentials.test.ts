@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 26 February 2020
  *
- * Create tests suites for credentials verifying functions.
+ * Create test suites for credentials verifying functions.
  */
 
 // Application's imports

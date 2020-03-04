@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 3 March 2020
  *
- * Create tests suites for SubjectSelection component.
+ * Create test suites for SubjectSelection component.
  */
 
 /** External imports */

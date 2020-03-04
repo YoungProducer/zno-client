@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 1 March 2020
  *
- * Create tests suites for SubjectSelection container.
+ * Create test suites for SubjectSelection container.
  * @jest-environment jsdom
  */
 

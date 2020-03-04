@@ -14,6 +14,9 @@ import { RootState } from 'store/slices';
 export const selectSubjectConfigurationLoading = (state: RootState) =>
     state.subjectConfiguration.loading;
 
+export const selectSubjectConfigurationDialogVisible = (state: RootState) =>
+    state.subjectConfiguration.dialogVisible;
+
 export const selectSubjectConfig = (state: RootState) =>
     state.subjectConfiguration.subjectConfig;
 
@@ -34,7 +37,7 @@ export const selectSubjectConfigSubjectName = createSelector(
  * if some object doesn't have property 'name'
  * then this object will be skiped.
  */
-export const selectSubjectConfigSubSubjectNames = createSelector(
+export const selectSubjectConfigSubSubjectsNames = createSelector(
     selectSubjectConfig,
     (subjectConfig) => {
         /** Extract subSubjects from config */
@@ -157,22 +160,21 @@ export const selectSubjectConfigExams = createSelector(
         /** Check is one of properties doesn't exist or empty array */
         if (!exams.sessions || exams.sessions.length === 0) {
             return {
-                exams: {
-                    trainings: exams.trainings,
-                    sessions: null,
-                },
+                trainings: exams.trainings,
+                sessions: null,
             };
         }
 
         if (!exams.trainings || exams.trainings.length === 0) {
             return {
-                exams: {
-                    trainings: null,
-                    sessions: exams.sessions,
-                },
+                trainings: null,
+                sessions: exams.sessions,
             };
         }
 
-        return { exams };
+        return {
+            trainings: exams.trainings,
+            sessions: exams.sessions,
+        };
     },
 );

@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 1 March 2020
  *
- * Create tests suites for subjetcs selectors.
+ * Create test suites for subjetcs selectors.
  */
 
 /** Application's imports */

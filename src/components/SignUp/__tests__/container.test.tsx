@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 27 February 2020
  *
- * Create tests suites for SignUp container.
+ * Create test suites for SignUp container.
  * @jest-environment jsdom
  */
 

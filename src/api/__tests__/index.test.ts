@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 28 Feburary 2020
  *
- * Create tests suites for api class.
+ * Create test suites for api class.
  */
 
 /** External imports */

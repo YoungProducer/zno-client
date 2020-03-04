@@ -25,4 +25,18 @@ export default {
             },
         },
     },
+    subjectConfiguration: {
+        loading: false,
+        dialogVisible: false,
+        subjectConfig: {
+            name: 'Математика',
+            subSubjects: [{
+                name: 'Алгбера',
+                themes: ['1', '2'],
+            }, {
+                name: 'Геометрія',
+                themes: ['1', '2'],
+            }],
+        },
+    },
 } as RootState;
