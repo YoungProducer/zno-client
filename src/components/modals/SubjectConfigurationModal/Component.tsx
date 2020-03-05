@@ -99,6 +99,19 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
             setTheme(event.target.value),
         []);
 
+    /** Change theme value when */
+    useEffect(() => {
+        if (testType === ETestTypes.THEMES) {
+            if (subjectThemes !== null) {
+                setTheme(subjectThemes[0] || '');
+            }
+
+            if (subSubject !== '' && subSubjectsThemes !== null) {
+                setTheme(subSubjectsThemes[subSubject] ? subSubjectsThemes[subSubject][0] : '');
+            }
+        }
+    }, [subSubjectsThemes, subjectThemes, subSubject, testType]);
+
     /** Memoized value which returns list of sub-subjects */
     const subSubjects = useMemo(() => {
         if (subSubjectsNames === null || testType !== ETestTypes.THEMES) return null;
@@ -123,11 +136,11 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
          * then this function will returns themes list for selected subSubject.
          */
         if (subSubjectsThemes !== null && subSubject !== '' && testType === ETestTypes.THEMES) {
-            return subSubjectsThemes[subSubject].map(theme => (
+            return subSubjectsThemes[subSubject] ? subSubjectsThemes[subSubject].map(theme => (
                 <MenuItem key={theme} value={theme}>
                     {theme}
                 </MenuItem>
-            )) || null;
+            )) : null;
         }
 
         /**
@@ -148,8 +161,8 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     /** Responsible for displaying of theme selection */
     const displayThemeSelection = useMemo(() =>
-        subjectThemes !== null && testType === ETestTypes.THEMES,
-    [testType, subjectThemes]);
+        (subSubjectsThemes !== null || subjectThemes !== null) && testType === ETestTypes.THEMES,
+    [testType, subjectThemes, subSubjectsThemes]);
 
     return {
         displayThemeSelection,
@@ -231,7 +244,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                             {...selectSubSubjectField}
                             margin='none'
                             variant='outlined'
-                            data-testid='select-sub-subject'
+                            {...{ 'data-testid': 'select-sub-subject' }}
                         >
                             {subSubjects}
                         </TextField>
@@ -247,7 +260,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                             {...selectThemeField}
                             margin='none'
                             variant='outlined'
-                            data-testid='select-subject-theme'
+                            {...{ 'data-testid': 'select-subject-theme' }}
                         >
                             {themes}
                         </TextField>

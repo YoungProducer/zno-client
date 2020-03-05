@@ -10,6 +10,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Backdrop from '@material-ui/core/Backdrop';
+import MenuItem from '@material-ui/core/MenuItem';
 
 /** Application's imports */
 import Component from '../Component';
@@ -188,5 +189,41 @@ describe('SubjectConfigurationModal component', () => {
 
         /** Assert select-subject-theme text field has correct value */
         expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('bar');
+    });
+
+    test(`If subSubjectThemes is not null and testType equals 'Themes' component should display theme selection`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subSubjectsNames={['foo']}
+                subSubjectsThemes={{ foo: ['bar'] }}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert select-subject-theme selection text-field exists */
+        expect(tree.exists(`[data-testid='select-subject-theme']`)).toBeTruthy();
+    });
+
+    test(`If subSubjectName doesn't exist in subSubjectThemes`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subSubjectsNames={['foo']}
+                subSubjectsThemes={{ zoo: ['bar'] }}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert select-subject-theme selection text-field exists */
+        expect(tree.exists(`[data-testid='select-subject-theme']`)).toBeTruthy();
     });
 });
