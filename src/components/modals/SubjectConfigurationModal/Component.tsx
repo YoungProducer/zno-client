@@ -25,8 +25,8 @@ import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/s
 
 /** Application's imports */
 import {
-    TTestTypes,
     ETestTypes,
+    EExamTypes,
     TSubjectConfigurationModalProps,
 } from './container';
 
@@ -73,6 +73,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     const {
         dialogVisible,
         subjectThemes,
+        subjectExams,
         subSubjectsNames,
         subSubjectsThemes,
         toggleSubjectConfigurationDialog,
@@ -80,37 +81,81 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     /** Responsible for themes or exams selection */
     const [testType, setTestType] = useState<ETestTypes>('' as ETestTypes);
-    const handleChangeTestType = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) =>
-            setTestType(event.target.value as ETestTypes),
-        []);
 
     /** Responsible for theme selection of specific sub-subject */
     const [subSubject, setSubSubject] = useState<string>(subSubjectsNames !== null ? subSubjectsNames[0] : '');
-    const handleChageSubSubject = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) =>
-            setSubSubject(event.target.value),
-        []);
 
     /** Responsible for theme selection */
     const [theme, setTheme] = useState<string>(subjectThemes !== null ? subjectThemes[0] : '');
+
+    /** Responsible for exam type selection */
+    const [examType, setExamType] = useState<EExamTypes>('' as EExamTypes);
+
+    /** Respobsible for exam selection */
+    const [exam, setExam] = useState<string>('');
+
+    /**
+     * Handle onChange event of test-type field.
+     * If value equals THEMES
+     * then update property 'theme'.
+     */
+    const handleChangeTestType = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setTestType(event.target.value as ETestTypes);
+
+            if (event.target.value === ETestTypes.THEMES) {
+                if (subjectThemes !== null) {
+                    setTheme(subjectThemes[0]);
+                }
+
+                if (subSubject !== '' && subSubjectsThemes !== null) {
+                    setTheme(subSubjectsThemes[subSubject] ? subSubjectsThemes[subSubject][0] : '');
+                }
+            }
+        }, [subjectThemes, subSubject, subSubjectsThemes]);
+
+    /** Handle onChange event of sub-subject text-field */
+    const handleChangeSubSubject = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const value = event.target.value;
+
+            setSubSubject(value);
+
+            if (testType === ETestTypes.THEMES && subSubjectsThemes !== null) {
+                setTheme(subSubjectsThemes[value] ? subSubjectsThemes[value][0] : '');
+            } else setTheme('');
+        }, [subSubjectsThemes, testType]);
+
+    /** Handle onChange evenet of theme text-field */
     const handleChangeTheme = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) =>
             setTheme(event.target.value),
         []);
 
-    /** Change theme value when */
-    useEffect(() => {
-        if (testType === ETestTypes.THEMES) {
-            if (subjectThemes !== null) {
-                setTheme(subjectThemes[0] || '');
-            }
+    /**
+     * Handle onChange event of exam-type field.
+     * Update exam value if 'testType' equals EXAMS.
+     */
+    const handleChangeExamType = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setExamType(event.target.value as EExamTypes);
 
-            if (subSubject !== '' && subSubjectsThemes !== null) {
-                setTheme(subSubjectsThemes[subSubject] ? subSubjectsThemes[subSubject][0] : '');
+            if (testType === ETestTypes.EXAMS && subjectExams !== null) {
+                if (event.target.value === EExamTypes.SESSIONS) {
+                    setExam(subjectExams.sessions !== null ? subjectExams.sessions[0] : '');
+                }
+
+                if (event.target.value === EExamTypes.TRAININGS) {
+                    setExam(subjectExams.trainings !== null ? subjectExams.trainings[0] : '');
+                }
             }
-        }
-    }, [subSubjectsThemes, subjectThemes, subSubject, testType]);
+        }, [subjectExams, testType]);
+
+    /** Handle onChange event of exam text field */
+    const handleChangeExam = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) =>
+            setExam(event.target.value),
+        []);
 
     /** Memoized value which returns list of sub-subjects */
     const subSubjects = useMemo(() => {
@@ -164,11 +209,59 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         (subSubjectsThemes !== null || subjectThemes !== null) && testType === ETestTypes.THEMES,
     [testType, subjectThemes, subSubjectsThemes]);
 
+    /**
+     * Responsible for displaying radio group
+     * which allows to select which type of exams you want to choose
+     * 'sessions' or 'trainings'
+     */
+    const displayExamTypeSelection = useMemo(() =>
+        testType === ETestTypes.EXAMS && subjectExams !== null,
+    [testType, subjectExams]);
+
+    /**
+     * Memoized value which returns list of exams
+     * from sessions or traingings
+     */
+    const exams = useMemo(() => {
+        /** Check is 'testType' equals 'EXAMS' and 'subjectExams' is not null */
+        if (testType === ETestTypes.EXAMS && subjectExams !== null) {
+            /**
+             * If 'examType' equals 'TRAININGS'
+             * and 'trainings' is not null
+             * then return list trainings exams.
+             */
+            if (examType === EExamTypes.TRAININGS && subjectExams.trainings !== null) {
+                return subjectExams.trainings.map(exam => (
+                    <MenuItem key={exam} value={exam}>
+                        {exam}
+                    </MenuItem>
+                ));
+            }
+
+            /**
+             * If 'examType' equals 'SESSIONS'
+             * and 'sessions' is not null
+             * then return list sessions exams.
+             */
+            if (examType === EExamTypes.SESSIONS && subjectExams.sessions !== null) {
+                return subjectExams.sessions.map(exam => (
+                    <MenuItem key={exam} value={exam}>
+                        {exam}
+                    </MenuItem>
+                ));
+            }
+        }
+
+        return null;
+    }, [subjectExams, testType, examType]);
+
     return {
         displayThemeSelection,
         displaySubSubjectSelection,
+        displayExamTypeSelection,
         subSubjects,
         themes,
+        exams,
         dialog: {
             open: dialogVisible,
             onClose: () => toggleSubjectConfigurationDialog(false),
@@ -179,11 +272,19 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         },
         selectSubSubjectField: {
             value: subSubject,
-            onChange: handleChageSubSubject,
+            onChange: handleChangeSubSubject,
         },
         selectThemeField: {
             value: theme,
             onChange: handleChangeTheme,
+        },
+        selectExamTypeField: {
+            value: examType,
+            onChange: handleChangeExamType,
+        },
+        selectExamField: {
+            value: exam,
+            onChange: handleChangeExam,
         },
     };
 };
@@ -195,11 +296,15 @@ const Component = (props: TSubjectConfigurationModalProps) => {
         dialog,
         themes,
         subSubjects,
+        exams,
         selectTypeField,
         selectThemeField,
         selectSubSubjectField,
+        selectExamTypeField,
+        selectExamField,
         displayThemeSelection,
         displaySubSubjectSelection,
+        displayExamTypeSelection,
     } = useSubjectConfigurationElements(props);
 
     return (
@@ -252,7 +357,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                 )}
 
                 { displayThemeSelection && (
-                    <FormControl component='div'>
+                    <FormControl component='div' data-testid='abc'>
                         <FormLabel component='legend'>Оберіть тему</FormLabel>
                         <TextField
                             id='standard-select-currency'
@@ -265,6 +370,55 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                             {themes}
                         </TextField>
                     </FormControl>
+                )}
+
+                { displayExamTypeSelection && (
+                    <>
+                        <FormControl component='fieldset'>
+                            <FormLabel component='legend'>Оберіть тип тесту</FormLabel>
+                            <RadioGroup
+                                aria-label='position'
+                                name='position'
+                                {...selectExamTypeField}
+                                data-testid='select-exam-type'
+                            >
+                                <FormControlLabel
+                                    value={EExamTypes.TRAININGS}
+                                    control={<Radio color='primary' />}
+                                    label={EExamTypes.TRAININGS}
+                                    labelPlacement='end'
+                                />
+                                <FormControlLabel
+                                    value={EExamTypes.SESSIONS}
+                                    control={<Radio color='primary' />}
+                                    label={EExamTypes.SESSIONS}
+                                    labelPlacement='end'
+                                />
+                            </RadioGroup>
+                        </FormControl>
+
+                        <FormControl component='div'>
+                            <FormLabel
+                                component='legend'
+                                data-testid='select-exam-title'
+                            >
+                                { selectExamTypeField.value === EExamTypes.TRAININGS
+                                    ? 'Виберіть тренувальний варіант'
+                                    : 'Виберіть варіант ЗНО'
+                                }
+                            </FormLabel>
+                            <TextField
+                                id='standard-select-currency'
+                                select={true}
+                                {...selectExamField}
+                                margin='none'
+                                variant='outlined'
+                                {...{ 'data-testid': 'select-exam' }}
+                            >
+                                {exams}
+                            </TextField>
+                        </FormControl>
+                    </>
                 )}
             </DialogContent>
         </Dialog>

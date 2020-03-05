@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 /** Application's imports */
 import Component from '../Component';
-import { ETestTypes, TSubjectConfigurationModalProps } from '../container';
+import { ETestTypes, TSubjectConfigurationModalProps, EExamTypes } from '../container';
 
 describe('SubjectConfigurationModal component', () => {
     /** Create mocked functions for props */
@@ -209,6 +209,41 @@ describe('SubjectConfigurationModal component', () => {
         expect(tree.exists(`[data-testid='select-subject-theme']`)).toBeTruthy();
     });
 
+    test(`If 'subjectThemes' exists after selection of test type, theme selection text field should set '0' el of array as default`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectThemes={['foo', 'bar']}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert select-subject-theme text field has right value */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('foo');
+    });
+
+    test(`If 'subSubjectThemes' exists, after selecto of the test type, theme selection text field should set '0' el of array as default value`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subSubjectsNames={['foo']}
+                subSubjectsThemes={{ foo: ['bar', 'abc'] }}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert select-subject-theme text field has right value */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('bar');
+    });
+
     test(`If subSubjectName doesn't exist in subSubjectThemes`, () => {
         /** Render component */
         const tree = shallow(
@@ -225,5 +260,256 @@ describe('SubjectConfigurationModal component', () => {
 
         /** Assert select-subject-theme selection text-field exists */
         expect(tree.exists(`[data-testid='select-subject-theme']`)).toBeTruthy();
+    });
+
+    test(`If 'subjectExams' exists select exam type if test type equals 'THEMES'`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    sessions: ['foo'],
+                    trainings: ['bar'],
+                }}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Assert select-test-type field has value 'EXAMS' */
+        expect(tree.find(`[data-testid='select-test-type']`).props().value).toBe(ETestTypes.EXAMS);
+
+        /** Assert select-exam-type field exists */
+        expect(tree.exists(`[data-testid='select-exam-type']`)).toBeTruthy();
+
+        /** Simulate onChange event in select-exam-type text field */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.TRAININGS } });
+
+        /** Assert select-exam-type field has value 'TRAININGS' */
+        expect(tree.find(`[data-testid='select-exam-type']`).props().value).toBe(EExamTypes.TRAININGS);
+    });
+
+    test(`If 'subjectExams' doesn't exist component shouldn't display exam type selection`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={null}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Assert select-test-type field has value 'EXAMS' */
+        expect(tree.find(`[data-testid='select-test-type']`).props().value).toBe(ETestTypes.EXAMS);
+
+        /** Assert select-exam-type field doesn't exist */
+        expect(tree.exists(`[data-testid='select-exam-type']`)).toBeFalsy();
+    });
+
+    test(`Check is select-exam label has right value`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    trainings: ['foo'],
+                    sessions: ['bar'],
+                }}
+            />,
+        );
+
+        /** Select 'EXAMS' test type */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select 'TRAININGS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.TRAININGS } });
+
+        /** Assert select-exam label has right value */
+        expect(tree.find(`[data-testid='select-exam-title']`).props().children).toBe('Виберіть тренувальний варіант');
+
+        /** Select 'SESSIONS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.SESSIONS } });
+
+        expect(tree.find(`[data-testid='select-exam-title']`).props().children).toBe('Виберіть варіант ЗНО');
+    });
+
+    test(`Check is after exam type selection select-exam text field should has right value`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    trainings: ['foo'],
+                    sessions: ['bar'],
+                }}
+            />,
+        );
+
+        /** Select 'EXAMS' test type */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select 'TRAININGS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.TRAININGS } });
+
+        /** Assert select-exam text field has right value */
+        expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('foo');
+
+        /** Select 'SESSIONS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.SESSIONS } });
+
+        /** Assert select-exam text field has right value */
+        expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('bar');
+    });
+
+    test(`If property 'trainings' is null exam value should be ''`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    trainings: null,
+                    sessions: ['bar'],
+                }}
+            />,
+        );
+
+        /** Select 'EXAMS' test type */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select 'TRAININGS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.TRAININGS } });
+
+        /** Assert select-exam text field has right value */
+        expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('');
+    });
+
+    test(`If property 'sessions' is null exam value should be ''`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    trainings: ['foo'],
+                    sessions: null,
+                }}
+            />,
+        );
+
+        /** Select 'EXAMS' test type */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select 'SESSIONS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.SESSIONS } });
+
+        /** Assert select-exam text field has right value */
+        expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('');
+    });
+
+    test(`Check is after exam selection select-exam field has right value`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    trainings: ['foo'],
+                    sessions: ['bar'],
+                }}
+            />,
+        );
+
+        /** Select 'EXAMS' test type */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select 'SESSIONS' exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.SESSIONS } });
+
+        /** Simulate onChange event in select-exam text field */
+        tree.find(`[data-testid='select-exam']`)
+            .simulate('change', { target: { value: 'bar' } });
+
+        /** Assert select-exam texi field has right value */
+        expect(tree.find(`[data-testid='select-exam']`).props().value).toBe('bar');
+    });
+
+    test('Check is after sub-subject selection select-subject-theme has right value', () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subSubjectsNames={['foo', 'abc']}
+                subSubjectsThemes={{ foo: ['bar'], abc: ['123', '456'] }}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert select-subject-theme text field has right value */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('bar');
+
+        /** Select 'abc' sub-subject */
+        tree.find(`[data-testid='select-sub-subject']`)
+            .simulate('change', { target: { value: 'abc' } });
+
+        /** Assert select-sub-subject has value 'abc' */
+        expect(tree.find(`[data-testid='select-sub-subject']`).props().value).toBe('abc');
+
+        /** Select second element in 'abc' array */
+        tree.find(`[data-testid='select-subject-theme']`)
+            .simulate('change', { target: { value: '456' } });
+
+        /** Assert select-subject-theme text field has value '456' */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('456');
+
+        /** Select 'foo' sub-subject */
+        tree.find(`[data-testid='select-sub-subject']`)
+            .simulate('change', { target: { value: 'foo' } });
+
+        /** Assert select-subject-theme text field value is first element of 'foo' array - 'bar' */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('bar');
+    });
+
+    test(`If 'subSubject' doesn't exist in subSubjectThemes, select-subject-theme value should be ''`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subSubjectsNames={['foo', 'abc']}
+                subSubjectsThemes={{ foo: ['bar'], abcd: ['123', '456'] }}
+            />,
+        );
+
+        /** Simulate onChange event in select-test-type text field */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert select-subject-theme text field has right value */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('bar');
+
+        /** Select 'abc' sub-subjec */
+        tree.find(`[data-testid='select-sub-subject']`)
+            .simulate('change', { target: { value: 'abc' } });
+
+        /** Assert select-subject-theme text field has empty value */
+        expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('');
     });
 });

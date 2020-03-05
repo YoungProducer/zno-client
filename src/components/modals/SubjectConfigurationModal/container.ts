@@ -28,10 +28,14 @@ import { RootState } from 'store/slices';
 import { ISubjectConfigurationCredentials } from 'api';
 
 /** Define types for test configuration */
-export type TTestTypes = 'Вибір теми' | 'Тренувальні варіанти ЗНО';
 export const enum ETestTypes {
     THEMES = 'Вибір теми',
     EXAMS = 'Тренувальні варіанти ЗНО',
+}
+
+export const enum EExamTypes {
+    SESSIONS = 'ОСНОВНА СЕССІЯ ЗНО',
+    TRAININGS = 'ТРЕНУВАЛЬНІ ВАРІАНТИ',
 }
 
 /** Props which component get from the parent */
