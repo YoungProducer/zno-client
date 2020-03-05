@@ -7,6 +7,7 @@
 
 /** External imports */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
 }));
 
-export interface ISubjectProps {
+export interface ISubjectTileProps {
     /**
      * Subject name.
      */
@@ -34,13 +35,25 @@ export interface ISubjectProps {
 }
 
 /** Create component */
-const Component = ({ subject }: ISubjectProps) => {
+const Component = ({ subject }: ISubjectTileProps) => {
     /** Create classes variable */
     const classes = useStyles({});
 
+    const history = useHistory();
+
+    const clickHandle = () => {
+        history.push(`/subject-selection/subject-configuration?subject=${subject}`);
+    };
+
     return (
         <Grid item xs={3}>
-            <Button className={classes.button}>{subject}</Button>
+            <Button
+                className={classes.button}
+                onClick={clickHandle}
+                data-testid='subject-tile-button'
+            >
+                {subject}
+            </Button>
         </Grid>
     );
 };

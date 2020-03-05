@@ -27,7 +27,7 @@ export default {
     },
     subjectConfiguration: {
         loading: false,
-        dialogVisible: true,
+        dialogVisible: false,
         subjectConfig: {
             name: 'Математика',
             subSubjects: [{

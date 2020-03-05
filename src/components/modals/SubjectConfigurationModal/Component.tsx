@@ -8,6 +8,7 @@
 
 /** External imports */
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -78,6 +79,19 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         subSubjectsThemes,
         toggleSubjectConfigurationDialog,
     } = props;
+
+    const location = useLocation();
+    const history = useHistory();
+
+    /**
+     * Automaticaly open this dialog.
+     * Now user can copy and paste url of current dialog
+     * and open this dialog in other bookmark automaticaly
+     * or share this url with other user.
+     */
+    useEffect(() => {
+        toggleSubjectConfigurationDialog(true);
+    }, []);
 
     /** Responsible for themes or exams selection */
     const [testType, setTestType] = useState<ETestTypes>('' as ETestTypes);
@@ -255,6 +269,12 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         return null;
     }, [subjectExams, testType, examType]);
 
+    /** Handler for dialog onClose event */
+    const handleOnClose = () => {
+        toggleSubjectConfigurationDialog(false);
+        history.push('/subject-selection');
+    };
+
     return {
         displayThemeSelection,
         displaySubSubjectSelection,
@@ -264,7 +284,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         exams,
         dialog: {
             open: dialogVisible,
-            onClose: () => toggleSubjectConfigurationDialog(false),
+            onClose: handleOnClose,
         },
         selectTypeField: {
             value: testType,

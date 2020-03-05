@@ -16,6 +16,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Component from '../Component';
 import { ETestTypes, TSubjectConfigurationModalProps, EExamTypes } from '../container';
 
+const push = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    useLocation: () => ({
+        pathname: '/subject-selection',
+    }),
+    useHistory: jest.fn(() => ({
+        push,
+    })),
+}));
+
 describe('SubjectConfigurationModal component', () => {
     /** Create mocked functions for props */
     const fetchSubjectConfiguration = jest.fn();

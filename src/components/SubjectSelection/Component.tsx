@@ -27,7 +27,10 @@ const Component = (props: TSubjectSelectionProps) => {
         <div className={classes.root}>
             <Grid container spacing={1}>
                 {subjectsList.map((subject, index) => (
-                    <SubjectTile subject={subject} key={index} />
+                    <SubjectTile
+                        key={index}
+                        subject={subject}
+                    />
                 ))}
             </Grid>
         </div>

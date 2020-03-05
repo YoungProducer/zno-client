@@ -2,7 +2,7 @@
  * Created by: Oleksandr Bezrukov
  * Creation date: 1 March 2020
  *
- * Component for SubjectsSelection route.
+ * Component for SubjectConfiguration route.
  */
 
 /** External imports */
@@ -21,7 +21,7 @@ const Component = () => (
         <CssBaseline />
         <AppBar />
         <Container maxWidth='lg'>
-            {/* <SubjectConfiguration /> */}
+            <SubjectConfiguration />
             <SubjectSelection />
         </Container>
     </React.Fragment>

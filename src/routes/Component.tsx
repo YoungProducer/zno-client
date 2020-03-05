@@ -7,7 +7,7 @@
 
 /** External imports */
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { Router as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 /** Application's imports */
 import AppBar from 'components/AppBar';
@@ -15,13 +15,14 @@ import PrivateRoute from 'components/PrivateRoute';
 import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
 import SubjectSelection from './SubjectSelection';
+import SubjectConfiguration from './SubjectConfiguration';
 import { TRoutesProps } from './container';
 import history from './history';
 
 /** Create component */
 const Component = ({ isLoggedIn }: TRoutesProps) => {
     return (
-        <Router>
+        <Router history={history}>
             <Switch>
                 <PrivateRoute exact path='/'>
                     <>
@@ -31,6 +32,9 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
                 </PrivateRoute>
                 <PrivateRoute exact path='/subject-selection'>
                     <SubjectSelection />
+                </PrivateRoute>
+                <PrivateRoute exact path='/subject-selection/subject-configuration'>
+                    <SubjectConfiguration />
                 </PrivateRoute>
                 <Route exact path='/auth/signin'>
                     { isLoggedIn
