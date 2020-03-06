@@ -1,62 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Routes component Is match snapshot 1`] = `
-<Router
-  history={
-    Object {
-      "action": "POP",
-      "block": [Function],
-      "createHref": [Function],
-      "go": [Function],
-      "goBack": [Function],
-      "goForward": [Function],
-      "length": 1,
-      "listen": [Function],
-      "location": Object {
-        "hash": "",
-        "pathname": "/",
-        "search": "",
-        "state": undefined,
-      },
-      "push": [Function],
-      "replace": [Function],
-    }
-  }
->
-  <Switch>
-    <Connect(Component)
-      exact={true}
-      path="/"
-    >
-      <WithStyles(Component) />
-      <h1>
-        home
-      </h1>
-    </Connect(Component)>
-    <Connect(Component)
-      exact={true}
-      path="/subject-selection"
-    >
-      <Component />
-    </Connect(Component)>
-    <Connect(Component)
-      exact={true}
-      path="/subject-selection/subject-configuration"
-    >
-      <Component />
-    </Connect(Component)>
-    <Route
-      exact={true}
-      path="/auth/signin"
-    >
-      <Connect(Component) />
-    </Route>
-    <Route
-      exact={true}
-      path="/auth/signup"
-    >
-      <Connect(Component) />
-    </Route>
-  </Switch>
-</Router>
+<Switch>
+  <Connect(Component)
+    exact={true}
+    path="/"
+  >
+    <WithStyles(Component) />
+    <h1>
+      home
+    </h1>
+  </Connect(Component)>
+  <Connect(Component)
+    exact={true}
+    path="/subject-selection"
+  >
+    <Component />
+  </Connect(Component)>
+  <Connect(Component)
+    exact={true}
+    path="/subject-selection/subject-configuration"
+  >
+    <Component />
+  </Connect(Component)>
+  <Route
+    exact={true}
+    path="/auth/signin"
+  >
+    <Connect(Component) />
+  </Route>
+  <Route
+    exact={true}
+    path="/auth/signup"
+  >
+    <Connect(Component) />
+  </Route>
+</Switch>
 `;

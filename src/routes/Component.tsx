@@ -17,12 +17,11 @@ import SignUp from 'components/SignUp';
 import SubjectSelection from './SubjectSelection';
 import SubjectConfiguration from './SubjectConfiguration';
 import { TRoutesProps } from './container';
-import history from './history';
 
 /** Create component */
 const Component = ({ isLoggedIn }: TRoutesProps) => {
     return (
-        <Router history={history}>
+        // <Router history={history}>
             <Switch>
                 <PrivateRoute exact path='/'>
                     <>
@@ -59,7 +58,7 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
                     }
                 </Route>
             </Switch>
-        </Router>
+        // </Router>
     );
 };
 

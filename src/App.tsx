@@ -7,11 +7,13 @@
 
 // External imports
 import React from 'react';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 // Application's imports
 import Routes from 'routes';
+import history from 'routes/history';
 import theme from 'theme';
 import store from 'store';
 
@@ -19,7 +21,9 @@ import store from 'store';
 const Component = () => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <Routes />
+            <Router history={history}>
+                <Routes />
+            </Router>
         </ThemeProvider>
     </Provider>
 );
