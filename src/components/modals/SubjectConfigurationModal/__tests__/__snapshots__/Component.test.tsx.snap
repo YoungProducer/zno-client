@@ -2,6 +2,11 @@
 
 exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
 <WithStyles(ForwardRef(Dialog))
+  PaperProps={
+    Object {
+      "className": "makeStyles-dialogPaper-3",
+    }
+  }
   aria-describedby=""
   aria-labelledby="subject-config-title"
   onClose={[Function]}
@@ -14,6 +19,7 @@ exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
   </WithStyles(Component)>
   <WithStyles(WithStyles(ForwardRef(DialogContent)))>
     <WithStyles(ForwardRef(FormControl))
+      className="makeStyles-block-1"
       component="fieldset"
     >
       <WithStyles(ForwardRef(FormLabel))
@@ -31,7 +37,7 @@ exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
         <WithStyles(ForwardRef(FormControlLabel))
           control={
             <WithStyles(ForwardRef(Radio))
-              color="primary"
+              color="secondary"
             />
           }
           label="Вибір теми"
@@ -41,7 +47,7 @@ exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
         <WithStyles(ForwardRef(FormControlLabel))
           control={
             <WithStyles(ForwardRef(Radio))
-              color="primary"
+              color="secondary"
             />
           }
           label="Тренувальні варіанти ЗНО"
@@ -51,5 +57,24 @@ exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
       </ForwardRef(RadioGroup)>
     </WithStyles(ForwardRef(FormControl))>
   </WithStyles(WithStyles(ForwardRef(DialogContent)))>
+  <WithStyles(WithStyles(ForwardRef(DialogActions)))>
+    <WithStyles(ForwardRef(Button))
+      color="secondary"
+      data-testid="go-to-test"
+      disabled={true}
+      variant="text"
+    >
+      Розпочати тест
+    </WithStyles(ForwardRef(Button))>
+    <WithStyles(ForwardRef(Button))
+      className="makeStyles-declineButton-4"
+      color="primary"
+      data-testid="close-subject-conf-button"
+      onClick={[Function]}
+      variant="text"
+    >
+      Скасувати
+    </WithStyles(ForwardRef(Button))>
+  </WithStyles(WithStyles(ForwardRef(DialogActions)))>
 </WithStyles(ForwardRef(Dialog))>
 `;

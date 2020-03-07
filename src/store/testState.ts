@@ -37,6 +37,10 @@ export default {
                 name: 'Геометрія',
                 themes: ['1', '2'],
             }],
+            exams: {
+                sessions: ['foo'],
+                trainings: ['bar'],
+            },
         },
     },
 } as RootState;

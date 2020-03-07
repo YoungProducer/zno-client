@@ -84,6 +84,18 @@ describe('SubjectConfigurationModal component', () => {
         expect(toggleSubjectConfigurationDialog).toHaveBeenCalledWith(false);
     });
 
+    test('Dialog close button handler', () => {
+        /** Render component */
+        const tree = shallow(<Component {...requiredProps} />);
+
+        /** Simulate click on 'close' button */
+        tree.find(`[data-testid='close-subject-conf-button']`)
+            .simulate('click');
+
+        /** Assert 'toggleSubjectConfigurationDialog' function has been called */
+        expect(toggleSubjectConfigurationDialog).toHaveBeenCalled();
+    });
+
     test(`If subSubjectsNames is not null and testType equals 'THEMES' component should render sub-subject selection text-field`, () => {
         /** Render component */
         const tree = shallow(
@@ -522,5 +534,57 @@ describe('SubjectConfigurationModal component', () => {
 
         /** Assert select-subject-theme text field has empty value */
         expect(tree.find(`[data-testid='select-subject-theme']`).props().value).toBe('');
+    });
+
+    test(`If theme or exam is not selected 'go-to-test' button should be disabled`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectThemes={['foo', 'bar']}
+            />,
+        );
+
+        /** Assert 'go-to-test' button is disabled */
+        expect(tree.find(`[data-testid='go-to-test']`).props().disabled).toBeTruthy();
+    });
+
+    test(`If theme or exam is selected 'go-to-test' butotn shouldn't be disabled`, () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectThemes={['foo', 'bar']}
+                subjectExams={{
+                    sessions: ['foo123'],
+                    trainings: ['bar456'],
+                }}
+            />,
+        );
+
+        /** Select test type 'THEMES' */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Assert 'go-to-test' button is active */
+        expect(tree.find(`[data-testid='go-to-test']`).props().disabled).toBeFalsy();
+
+        /** Select test type 'EXAMS' */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.SESSIONS } });
+
+        /** Assert 'go-to-test' button is active */
+        expect(tree.find(`[data-testid='go-to-test']`).props().disabled).toBeFalsy();
+
+        /** Select exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.TRAININGS } });
+
+        /** Assert 'go-to-test' button is active */
+        expect(tree.find(`[data-testid='go-to-test']`).props().disabled).toBeFalsy();
     });
 });

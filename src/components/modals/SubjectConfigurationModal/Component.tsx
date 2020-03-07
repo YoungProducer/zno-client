@@ -22,7 +22,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 
 /** Application's imports */
 import {
@@ -32,6 +33,31 @@ import {
 } from './container';
 
 /** Define Material UI styles as hook */
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    block: {
+        display: 'block',
+        marginBottom: theme.spacing(3),
+        '&:last-child': {
+            marginBottom: 0,
+        },
+    },
+    textField: {
+        minWidth: 240,
+        '& .MuiInputBase-root': {
+            borderRadius: 0,
+        },
+    },
+    dialogPaper: {
+        borderRadius: 0,
+    },
+    declineButton: {
+        backgroundColor: red[500],
+        color: theme.palette.getContrastText(red[500]),
+        '&:hover': {
+            backgroundColor: red[600],
+        },
+    },
+}));
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -64,6 +90,14 @@ const DialogContent = withStyles((theme: Theme) => ({
     },
 }))(MuiDialogContent);
 
+const DialogActions = withStyles((theme: Theme) => ({
+    root: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+}))(MuiDialogActions);
+
 /**
  * Define custom hook to save state of configuration.
  * This hook returns object with settings
@@ -78,6 +112,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         subSubjectsNames,
         subSubjectsThemes,
         toggleSubjectConfigurationDialog,
+        fetchSubjectConfiguration,
     } = props;
 
     const location = useLocation();
@@ -90,7 +125,14 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
      * or share this url with other user.
      */
     useEffect(() => {
+        /** Get subject name from url search */
+        const subjectName = new URLSearchParams(location.search).get('subject');
+
+        /** Open dialog */
         toggleSubjectConfigurationDialog(true);
+
+        /** Get subject configuration by subject name */
+        fetchSubjectConfiguration({ subjectName });
     }, []);
 
     /** Responsible for themes or exams selection */
@@ -269,11 +311,26 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         return null;
     }, [subjectExams, testType, examType]);
 
+    /** */
+    const allowGoToTest = useMemo(() =>
+        testType !== '' as ETestTypes
+        && ((theme !== '' && displayThemeSelection)
+        || (exam !== '' && displayExamTypeSelection)),
+    [testType, exam, theme]);
+
     /** Handler for dialog onClose event */
     const handleOnClose = () => {
         toggleSubjectConfigurationDialog(false);
         history.push('/subject-selection');
     };
+
+    /** Handler for 'go-to-test' button onClick event */
+    const handleGoToTest = useCallback(() => {
+        /** Check is allowGoToTest is true */
+        if (allowGoToTest) {
+            history.push('/test');
+        }
+    }, [allowGoToTest]);
 
     return {
         displayThemeSelection,
@@ -282,6 +339,8 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         subSubjects,
         themes,
         exams,
+        allowGoToTest,
+        handleGoToTest,
         dialog: {
             open: dialogVisible,
             onClose: handleOnClose,
@@ -311,6 +370,8 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
 /** Create component */
 const Component = (props: TSubjectConfigurationModalProps) => {
+    const classes = useStyles({});
+
     /** Get elements from custom hook */
     const {
         dialog,
@@ -325,6 +386,8 @@ const Component = (props: TSubjectConfigurationModalProps) => {
         displayThemeSelection,
         displaySubSubjectSelection,
         displayExamTypeSelection,
+        allowGoToTest,
+        handleGoToTest,
     } = useSubjectConfigurationElements(props);
 
     return (
@@ -332,12 +395,15 @@ const Component = (props: TSubjectConfigurationModalProps) => {
             {...dialog}
             aria-labelledby='subject-config-title'
             aria-describedby=''
+            PaperProps={{
+                className: classes.dialogPaper,
+            }}
         >
             <DialogTitle id='subject-config-title'>
                 Налаштування тесту
             </DialogTitle>
             <DialogContent>
-                <FormControl component='fieldset'>
+                <FormControl component='fieldset' className={classes.block}>
                     <FormLabel component='legend'>Оберіть тип тесту</FormLabel>
                     <RadioGroup
                         aria-label='select-test-type'
@@ -347,13 +413,13 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     >
                         <FormControlLabel
                             value={ETestTypes.THEMES}
-                            control={<Radio color='primary' />}
+                            control={<Radio color='secondary' />}
                             label={ETestTypes.THEMES}
                             labelPlacement='end'
                         />
                         <FormControlLabel
                             value={ETestTypes.EXAMS}
-                            control={<Radio color='primary' />}
+                            control={<Radio color='secondary' />}
                             label={ETestTypes.EXAMS}
                             labelPlacement='end'
                         />
@@ -361,14 +427,16 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                 </FormControl>
 
                 { displaySubSubjectSelection && (
-                    <FormControl component='div'>
+                    <FormControl component='div' className={classes.block}>
                         <FormLabel component='legend'>Оберіть предмет</FormLabel>
                         <TextField
                             id='standard-select-currency'
+                            className={classes.textField}
                             select={true}
+                            color='secondary'
                             {...selectSubSubjectField}
                             margin='none'
-                            variant='outlined'
+                            variant='standard'
                             {...{ 'data-testid': 'select-sub-subject' }}
                         >
                             {subSubjects}
@@ -377,14 +445,16 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                 )}
 
                 { displayThemeSelection && (
-                    <FormControl component='div' data-testid='abc'>
+                    <FormControl component='div' className={classes.block}>
                         <FormLabel component='legend'>Оберіть тему</FormLabel>
                         <TextField
                             id='standard-select-currency'
+                            className={classes.textField}
                             select={true}
                             {...selectThemeField}
                             margin='none'
-                            variant='outlined'
+                            variant='standard'
+                            color='secondary'
                             {...{ 'data-testid': 'select-subject-theme' }}
                         >
                             {themes}
@@ -394,7 +464,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
 
                 { displayExamTypeSelection && (
                     <>
-                        <FormControl component='fieldset'>
+                        <FormControl component='fieldset' className={classes.block}>
                             <FormLabel component='legend'>Оберіть тип тесту</FormLabel>
                             <RadioGroup
                                 aria-label='position'
@@ -404,20 +474,20 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                             >
                                 <FormControlLabel
                                     value={EExamTypes.TRAININGS}
-                                    control={<Radio color='primary' />}
+                                    control={<Radio color='secondary' />}
                                     label={EExamTypes.TRAININGS}
                                     labelPlacement='end'
                                 />
                                 <FormControlLabel
                                     value={EExamTypes.SESSIONS}
-                                    control={<Radio color='primary' />}
+                                    control={<Radio color='secondary' />}
                                     label={EExamTypes.SESSIONS}
                                     labelPlacement='end'
                                 />
                             </RadioGroup>
                         </FormControl>
 
-                        <FormControl component='div'>
+                        <FormControl component='div' className={classes.block}>
                             <FormLabel
                                 component='legend'
                                 data-testid='select-exam-title'
@@ -429,11 +499,13 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                             </FormLabel>
                             <TextField
                                 id='standard-select-currency'
+                                className={classes.textField}
                                 select={true}
                                 {...selectExamField}
                                 margin='none'
                                 variant='outlined'
                                 {...{ 'data-testid': 'select-exam' }}
+                                color='secondary'
                             >
                                 {exams}
                             </TextField>
@@ -441,6 +513,27 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     </>
                 )}
             </DialogContent>
+
+            <DialogActions>
+                <Button
+                    disabled={!allowGoToTest}
+                    variant='text'
+                    color='secondary'
+                    data-testid='go-to-test'
+                >
+                    Розпочати тест
+                </Button>
+                <Button
+                    variant='text'
+                    color='primary'
+                    className={classes.declineButton}
+                    onClick={dialog.onClose}
+                    data-testid='close-subject-conf-button'
+                    onClick={handleGoToTest}
+                >
+                    Скасувати
+                </Button>
+            </DialogActions>
         </Dialog>
     );
 };

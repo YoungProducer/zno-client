@@ -2,7 +2,7 @@
 // 21 January 2020
 
 import { createMuiTheme } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
+import { deepPurple, green } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
     palette: {
@@ -11,7 +11,7 @@ const theme = createMuiTheme({
             contrastText: '#fff',
         },
         secondary: {
-            main: '#4CAF50',
+            main: green.A700,
             contrastText: '#fff',
         },
     },
