@@ -66,7 +66,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         width: 'max-content',
     },
     button: {
-        marginTop: theme.spacing(3),
         filter: `drop-shadow(0px 3px 2.5px rgba(0,0,0,0.16))`,
     },
     link: {
