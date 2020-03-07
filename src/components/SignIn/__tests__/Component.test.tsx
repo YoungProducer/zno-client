@@ -54,13 +54,13 @@ describe('SignIn component', () => {
         const tree = shallow(<Component {...requiredProps}/>);
 
         /** Simulate onChange events*/
-        tree.find(`[label='Емеїл']`).simulate('change', {
+        tree.find(`[data-testid='signin-email-input']`).simulate('change', {
             target: {
                 value: 'bar',
             },
         });
 
-        tree.find(`[label='Пароль']`).simulate('change', {
+        tree.find(`[data-testid='signin-password-input']`).simulate('change', {
             target: {
                 value: 'foo',
             },
@@ -91,7 +91,7 @@ describe('SignIn component', () => {
         />);
 
         /** Simulate onChange event */
-        tree.find(`[label='Емеїл']`).simulate('change', {
+        tree.find(`[data-testid='signin-email-input']`).simulate('change', {
             target: {
                 value: 'bar',
             },
@@ -121,7 +121,7 @@ describe('SignIn component', () => {
         />);
 
         /** Simulate onChange event */
-        tree.find(`[label='Пароль']`).simulate('change', {
+        tree.find(`[data-testid='signin-password-input']`).simulate('change', {
             target: {
                 value: 'bar',
             },
@@ -152,11 +152,11 @@ describe('SignIn component', () => {
         />);
 
         /** Assert that both text fields have errors */
-        expect((tree.find(`[label='Емеїл']`).props() as any).error).toBeTruthy();
-        expect((tree.find(`[label='Пароль']`).props() as any).error).toBeTruthy();
+        expect((tree.find(`[data-testid='signin-email-input']`).props() as any).error).toBeTruthy();
+        expect((tree.find(`[data-testid='signin-password-input']`).props() as any).error).toBeTruthy();
 
         /** Simulate onChange event */
-        tree.find(`[label='Емеїл']`).simulate('change', { target: { value: 'foo' } });
+        tree.find(`[data-testid='signin-email-input']`).simulate('change', { target: { value: 'foo' } });
 
         /** Assert functions for setting errors to default have been called */
         expect(setSignInErrorFieldsToDefault).toHaveBeenCalled();

@@ -12,7 +12,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
-      "*": ["src/*", "node_modules/*"],
+      "*": ["src/*", "node_modules/*", "public/*"],
     },
     "typeRoots" : ["./src/typings", "./node_modules/@types"]
   },

@@ -520,6 +520,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     variant='text'
                     color='secondary'
                     data-testid='go-to-test'
+                    onClick={handleGoToTest}
                 >
                     Розпочати тест
                 </Button>
@@ -529,7 +530,6 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     className={classes.declineButton}
                     onClick={dialog.onClose}
                     data-testid='close-subject-conf-button'
-                    onClick={handleGoToTest}
                 >
                     Скасувати
                 </Button>

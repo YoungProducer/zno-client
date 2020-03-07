@@ -7,16 +7,20 @@
 
 // External imports
 import React, { useState, useCallback, useEffect, memo, useMemo } from 'react';
+import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import EmailIcon from '@material-ui/icons/Email';
+import LockIcon from '@material-ui/icons/Lock';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // Application's imports
 import { TSignUpProps } from './container';
 import NavigationLink from 'components/NavigationLink';
+import Input from 'components/Input';
+import Logo from 'img/logo';
 
 // Define classes as hook
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -25,13 +29,27 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         width: '100%',
         height: '100vh',
     },
+    container: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: '100%',
+    },
     root: {
-        position: 'fixed',
-        padding: 15,
-        left: '50%',
-        top: '50%',
-        transform: `translate(-50%, -50%)`,
         width: 'min-content',
+        borderRadius: 4,
+        filter: `drop-shadow(2.828px 2.828px 3.5px rgba(227,207,207,0.9))`,
+        backgroundColor: '#ffffff',
+        textAlign: 'center',
+    },
+    innerContainer: {
+        borderRadius: 4,
+        backgroundColor: '#f4f5f7',
+        padding: theme.spacing(4),
+    },
+    logoContainer: {
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
     },
     textField: {
         width: 230,
@@ -48,10 +66,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         width: 'max-content',
     },
     button: {
-        width: 230,
+        marginTop: theme.spacing(3),
+        filter: `drop-shadow(0px 3px 2.5px rgba(0,0,0,0.16))`,
     },
     link: {
         color: theme.palette.primary.main,
+    },
+    icon: {
+        color: '#555',
     },
 }));
 
@@ -149,96 +171,90 @@ const Component = (props: TSignUpProps) => {
     } = useSignUpElements(props);
 
     return (
-        <div className={classes.backdrop}>
-            <Paper
-                className={classes.root}
-                elevation={2}
-                square
-            >
-                <Typography
-                    color='primary'
-                    variant='h6'
-                    align='center'
+        <div className='auth-background'>
+            <Container maxWidth='lg' className={classes.container}>
+
+                <Paper
+                    className={classes.root}
+                    elevation={2}
+                    square
                 >
-                    Реєстрація
-                </Typography>
-                <Grid
-                    container
-                    direction='row'
-                    spacing={2}
-                    className={classes.fields}
-                >
-                    <Grid
-                        container
-                        direction='row'
-                        alignItems='center'
-                        item
-                        spacing={3}
-                        className={classes.block}
-                    >
-                        <Grid item>
-                            <TextField
-                                className={classes.textField}
-                                color='primary'
-                                label='Емеїл'
-                                type='email'
-                                { ...emailField }
-                            />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                className={classes.textField}
-                                color='primary'
-                                label='Пароль'
-                                type='password'
-                                { ...passwordField }
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid
-                        container
-                        direction='row'
-                        alignItems='center'
-                        item
-                        spacing={3}
-                        className={classes.block}
-                    >
-                        <Grid item>
-                            <TextField
-                                className={classes.textField}
-                                color='primary'
-                                label='Пароль підтвердження'
-                                type='password'
-                                { ...confPasswordField }
-                                { ...{ 'data-testid': 'conf-password' } }
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                color='primary'
-                                variant='contained'
-                                disableElevation
-                                className={classes.button}
-                                data-testid='signup-button'
-                                { ...signUpButton }
+                    <div className={classes.logoContainer}>
+                        <Logo />
+                    </div>
+                    <div className={classes.innerContainer}>
+                        <Grid
+                            container
+                            direction='row'
+                            spacing={2}
+                            className={classes.fields}
+                        >
+                            <Grid
+                                container
+                                direction='column'
+                                alignItems='center'
+                                item
+                                spacing={3}
+                                className={classes.block}
                             >
-                                Зареєструватися
-                            </Button>
+                                <Grid item>
+                                    <Input
+                                        color='primary'
+                                        type='email'
+                                        placeholder='Емеїл'
+                                        data-testid='signup-email-input'
+                                        startAdornment={<EmailIcon className={classes.icon}/>}
+                                        { ...emailField }
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Input
+                                        color='primary'
+                                        type='password'
+                                        placeholder='Пароль'
+                                        data-testid='signup-password-input'
+                                        startAdornment={<LockIcon className={classes.icon}/>}
+                                        { ...passwordField }
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Input
+                                        color='primary'
+                                        type='password'
+                                        placeholder='Пароль підтвердження'
+                                        data-testid='signup-conf-password-input'
+                                        startAdornment={<LockIcon className={classes.icon}/>}
+                                        { ...confPasswordField }
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        color='primary'
+                                        variant='contained'
+                                        disableElevation
+                                        className={classes.button}
+                                        data-testid='signup-button'
+                                        { ...signUpButton }
+                                    >
+                                        Зареєструватися
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Typography align='center'>
-                    Вже зареєстровані?
-                    <NavigationLink
-                        navLink={{
-                            to: '/auth/signin',
-                        }}
-                        className={classes.link}
-                    >
-                        Увійти
-                    </NavigationLink>
-                </Typography>
-            </Paper>
+                        <Typography align='center'>
+                            Вже зареєстровані?
+                            <NavigationLink
+                                navLink={{
+                                    to: '/auth/signin',
+                                }}
+                                className={classes.link}
+                            >
+                                Увійти
+                            </NavigationLink>
+                        </Typography>
+                    </div>
+                </Paper>
+            </Container>
         </div>
     );
 };

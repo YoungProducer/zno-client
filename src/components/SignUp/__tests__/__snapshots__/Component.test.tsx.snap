@@ -2,117 +2,129 @@
 
 exports[`SignUp component Is matches snapshot 1`] = `
 <div
-  className="makeStyles-backdrop-1"
+  className="auth-background"
 >
-  <WithStyles(ForwardRef(Paper))
-    className="makeStyles-root-2"
-    elevation={2}
-    square={true}
+  <WithStyles(ForwardRef(Container))
+    className="makeStyles-container-2"
+    maxWidth="lg"
   >
-    <WithStyles(ForwardRef(Typography))
-      align="center"
-      color="primary"
-      variant="h6"
+    <WithStyles(ForwardRef(Paper))
+      className="makeStyles-root-3"
+      elevation={2}
+      square={true}
     >
-      Реєстрація
-    </WithStyles(ForwardRef(Typography))>
-    <WithStyles(ForwardRef(Grid))
-      className="makeStyles-fields-4"
-      container={true}
-      direction="row"
-      spacing={2}
-    >
-      <WithStyles(ForwardRef(Grid))
-        alignItems="center"
-        className="makeStyles-block-6"
-        container={true}
-        direction="row"
-        item={true}
-        spacing={3}
+      <div
+        className="makeStyles-logoContainer-5"
+      >
+        <Component />
+      </div>
+      <div
+        className="makeStyles-innerContainer-4"
       >
         <WithStyles(ForwardRef(Grid))
-          item={true}
+          className="makeStyles-fields-7"
+          container={true}
+          direction="row"
+          spacing={2}
         >
-          <WithStyles(ForwardRef(TextField))
-            className="makeStyles-textField-3"
-            color="primary"
-            error={false}
-            helperText=""
-            label="Емеїл"
-            onChange={[Function]}
-            type="email"
-            value=""
-          />
-        </WithStyles(ForwardRef(Grid))>
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(TextField))
-            className="makeStyles-textField-3"
-            color="primary"
-            error={false}
-            helperText=""
-            label="Пароль"
-            onChange={[Function]}
-            type="password"
-            value=""
-          />
-        </WithStyles(ForwardRef(Grid))>
-      </WithStyles(ForwardRef(Grid))>
-      <WithStyles(ForwardRef(Grid))
-        alignItems="center"
-        className="makeStyles-block-6"
-        container={true}
-        direction="row"
-        item={true}
-        spacing={3}
-      >
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(TextField))
-            className="makeStyles-textField-3"
-            color="primary"
-            data-testid="conf-password"
-            error={false}
-            helperText=""
-            label="Пароль підтвердження"
-            onChange={[Function]}
-            type="password"
-            value=""
-          />
-        </WithStyles(ForwardRef(Grid))>
-        <WithStyles(ForwardRef(Grid))
-          item={true}
-        >
-          <WithStyles(ForwardRef(Button))
-            className="makeStyles-button-7"
-            color="primary"
-            data-testid="signup-button"
-            disableElevation={true}
-            onClick={[Function]}
-            variant="contained"
+          <WithStyles(ForwardRef(Grid))
+            alignItems="center"
+            className="makeStyles-block-9"
+            container={true}
+            direction="column"
+            item={true}
+            spacing={3}
           >
-            Зареєструватися
-          </WithStyles(ForwardRef(Button))>
+            <WithStyles(ForwardRef(Grid))
+              item={true}
+            >
+              <Component
+                color="primary"
+                data-testid="signup-email-input"
+                error={false}
+                helperText=""
+                onChange={[Function]}
+                placeholder="Емеїл"
+                startAdornment={
+                  <Memo(EmailIcon)
+                    className="makeStyles-icon-12"
+                  />
+                }
+                type="email"
+                value=""
+              />
+            </WithStyles(ForwardRef(Grid))>
+            <WithStyles(ForwardRef(Grid))
+              item={true}
+            >
+              <Component
+                color="primary"
+                data-testid="signup-password-input"
+                error={false}
+                helperText=""
+                onChange={[Function]}
+                placeholder="Пароль"
+                startAdornment={
+                  <Memo(LockIcon)
+                    className="makeStyles-icon-12"
+                  />
+                }
+                type="password"
+                value=""
+              />
+            </WithStyles(ForwardRef(Grid))>
+            <WithStyles(ForwardRef(Grid))
+              item={true}
+            >
+              <Component
+                color="primary"
+                data-testid="signup-conf-password-input"
+                error={false}
+                helperText=""
+                onChange={[Function]}
+                placeholder="Пароль підтвердження"
+                startAdornment={
+                  <Memo(LockIcon)
+                    className="makeStyles-icon-12"
+                  />
+                }
+                type="password"
+                value=""
+              />
+            </WithStyles(ForwardRef(Grid))>
+            <WithStyles(ForwardRef(Grid))
+              item={true}
+            >
+              <WithStyles(ForwardRef(Button))
+                className="makeStyles-button-10"
+                color="primary"
+                data-testid="signup-button"
+                disableElevation={true}
+                onClick={[Function]}
+                variant="contained"
+              >
+                Зареєструватися
+              </WithStyles(ForwardRef(Button))>
+            </WithStyles(ForwardRef(Grid))>
+          </WithStyles(ForwardRef(Grid))>
         </WithStyles(ForwardRef(Grid))>
-      </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
-    <WithStyles(ForwardRef(Typography))
-      align="center"
-    >
-      Вже зареєстровані?
-      <NavigationLink
-        className="makeStyles-link-8"
-        navLink={
-          Object {
-            "to": "/auth/signin",
-          }
-        }
-      >
-        Увійти
-      </NavigationLink>
-    </WithStyles(ForwardRef(Typography))>
-  </WithStyles(ForwardRef(Paper))>
+        <WithStyles(ForwardRef(Typography))
+          align="center"
+        >
+          Вже зареєстровані?
+          <NavigationLink
+            className="makeStyles-link-11"
+            navLink={
+              Object {
+                "to": "/auth/signin",
+              }
+            }
+          >
+            Увійти
+          </NavigationLink>
+        </WithStyles(ForwardRef(Typography))>
+      </div>
+    </WithStyles(ForwardRef(Paper))>
+  </WithStyles(ForwardRef(Container))>
 </div>
 `;

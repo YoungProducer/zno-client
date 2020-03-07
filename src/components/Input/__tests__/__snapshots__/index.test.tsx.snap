@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component Is match snapshot 1`] = `
+<WithStyles(ForwardRef(InputBase))
+  className="makeStyles-root-1"
+  inputProps={
+    Object {
+      "className": "makeStyles-input-3",
+    }
+  }
+/>
+`;

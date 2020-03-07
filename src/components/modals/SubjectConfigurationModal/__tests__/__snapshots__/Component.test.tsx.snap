@@ -62,6 +62,7 @@ exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
       color="secondary"
       data-testid="go-to-test"
       disabled={true}
+      onClick={[Function]}
       variant="text"
     >
       Розпочати тест

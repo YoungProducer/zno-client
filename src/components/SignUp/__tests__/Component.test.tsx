@@ -59,17 +59,13 @@ describe('SignUp component', () => {
 
         /** Simulate onChange events */
         wrapper
-            .find(`[label='Емеїл']`)
+            .find(`[data-testid='signup-email-input']`)
             .simulate('change', { target: { value: 'foo' } });
         wrapper
-            .find(`[label='Пароль']`)
+            .find(`[data-testid='signup-password-input']`)
             .simulate('change', { target: { value: 'bar' } });
-        // wrapper
-        //     .find(`[label='Пароль підтвердження']`)
-        //     .simulate('change', { target: { value: 'abc' } });
-
         wrapper
-            .find(`[data-testid='conf-password']`)
+            .find(`[data-testid='signup-conf-password-input']`)
             .simulate('change', { target: { value: 'abc' } });
 
         /** Simulate sign up button click */
