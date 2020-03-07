@@ -175,7 +175,7 @@ const Component = (props: TSignUpProps) => {
 
                 <Paper
                     className={classes.root}
-                    elevation={2}
+                    elevation={0}
                     square
                 >
                     <div className={classes.logoContainer}>
@@ -184,73 +184,68 @@ const Component = (props: TSignUpProps) => {
                     <div className={classes.innerContainer}>
                         <Grid
                             container
-                            direction='row'
-                            spacing={2}
-                            className={classes.fields}
+                            direction='column'
+                            alignItems='center'
+                            item
+                            spacing={3}
+                            className={classes.block}
                         >
-                            <Grid
-                                container
-                                direction='column'
-                                alignItems='center'
-                                item
-                                spacing={3}
-                                className={classes.block}
-                            >
-                                <Grid item>
-                                    <Input
-                                        color='primary'
-                                        type='email'
-                                        placeholder='Емеїл'
-                                        data-testid='signup-email-input'
-                                        startAdornment={<EmailIcon className={classes.icon}/>}
-                                        { ...emailField }
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <Input
-                                        color='primary'
-                                        type='password'
-                                        placeholder='Пароль'
-                                        data-testid='signup-password-input'
-                                        startAdornment={<LockIcon className={classes.icon}/>}
-                                        { ...passwordField }
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <Input
-                                        color='primary'
-                                        type='password'
-                                        placeholder='Пароль підтвердження'
-                                        data-testid='signup-conf-password-input'
-                                        startAdornment={<LockIcon className={classes.icon}/>}
-                                        { ...confPasswordField }
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        color='primary'
-                                        variant='contained'
-                                        disableElevation
-                                        className={classes.button}
-                                        data-testid='signup-button'
-                                        { ...signUpButton }
+                            <Grid item>
+                                <Input
+                                    color='primary'
+                                    type='email'
+                                    placeholder='Емеїл'
+                                    data-testid='signup-email-input'
+                                    startAdornment={<EmailIcon className={classes.icon}/>}
+                                    { ...emailField }
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Input
+                                    color='primary'
+                                    type='password'
+                                    placeholder='Пароль'
+                                    data-testid='signup-password-input'
+                                    startAdornment={<LockIcon className={classes.icon}/>}
+                                    { ...passwordField }
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Input
+                                    color='primary'
+                                    type='password'
+                                    placeholder='Пароль підтвердження'
+                                    data-testid='signup-conf-password-input'
+                                    startAdornment={<LockIcon className={classes.icon}/>}
+                                    { ...confPasswordField }
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    disableElevation
+                                    className={classes.button}
+                                    data-testid='signup-button'
+                                    { ...signUpButton }
+                                >
+                                    Зареєструватися
+                                </Button>
+                            </Grid>
+                            <Grid>
+                                <Typography align='center'>
+                                    Вже зареєстровані?
+                                    <NavigationLink
+                                        navLink={{
+                                            to: '/auth/signin',
+                                        }}
+                                        className={classes.link}
                                     >
-                                        Зареєструватися
-                                    </Button>
-                                </Grid>
+                                        Увійти
+                                    </NavigationLink>
+                                </Typography>
                             </Grid>
                         </Grid>
-                        <Typography align='center'>
-                            Вже зареєстровані?
-                            <NavigationLink
-                                navLink={{
-                                    to: '/auth/signin',
-                                }}
-                                className={classes.link}
-                            >
-                                Увійти
-                            </NavigationLink>
-                        </Typography>
                     </div>
                 </Paper>
             </Container>

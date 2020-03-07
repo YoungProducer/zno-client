@@ -168,70 +168,56 @@ const Component = (props: TSignInProps) => {
                     <div className={classes.innerContainer}>
                         <Grid
                             container
-                            direction='row'
-                            spacing={2}
-                            className={classes.fields}
+                            direction='column'
+                            alignItems='center'
+                            item
+                            spacing={3}
+                            className={classes.block}
                         >
-                            <Grid
-                                container
-                                direction='column'
-                                alignItems='center'
-                                item
-                                spacing={3}
-                                className={classes.block}
-                            >
-                                <Grid item>
-                                    <Input
-                                        color='primary'
-                                        placeholder='Емеїл'
-                                        startAdornment={<EmailIcon className={classes.icon}/>}
-                                        data-testid='signin-email-input'
-                                        {...emailField}
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <Input
-                                        color='primary'
-                                        placeholder='Пароль'
-                                        startAdornment={<LockIcon className={classes.icon}/>}
-                                        data-testid='signin-password-input'
-                                        {...passwordField}
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        color='primary'
-                                        variant='contained'
-                                        disableElevation
-                                        className={classes.button}
-                                        data-testid='signin-button'
-                                        { ...signInButton }
-                                    >
-                                        Увійти
-                                    </Button>
-                                </Grid>
+                            <Grid item>
+                                <Input
+                                    color='primary'
+                                    placeholder='Емеїл'
+                                    startAdornment={<EmailIcon className={classes.icon}/>}
+                                    data-testid='signin-email-input'
+                                    {...emailField}
+                                />
                             </Grid>
-                            <Grid
-                                container
-                                direction='row'
-                                alignItems='center'
-                                justify='center'
-                                item
-                                className={classes.buttonBlock}
-                            >
+                            <Grid item>
+                                <Input
+                                    color='primary'
+                                    placeholder='Пароль'
+                                    startAdornment={<LockIcon className={classes.icon}/>}
+                                    data-testid='signin-password-input'
+                                    {...passwordField}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    disableElevation
+                                    className={classes.button}
+                                    data-testid='signin-button'
+                                    { ...signInButton }
+                                >
+                                    Увійти
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <Typography align='center'>
+                                    Не зареєстровані?
+                                    <NavigationLink
+                                        navLink={{
+                                            to: '/auth/signup',
+                                        }}
+                                        className={classes.link}
+                                    >
+                                        Зареєструватися
+                                    </NavigationLink>
+                                </Typography>
                             </Grid>
                         </Grid>
-                        <Typography align='center'>
-                            Не зареєстровані?
-                            <NavigationLink
-                                navLink={{
-                                    to: '/auth/signup',
-                                }}
-                                className={classes.link}
-                            >
-                                Зареєструватися
-                            </NavigationLink>
-                        </Typography>
                     </div>
                 </Paper>
             </Container>

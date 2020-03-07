@@ -16,9 +16,14 @@ describe('Input component', () => {
     /** Define required props */
     const requiredProps: TInputBaseProps = {};
 
+    /** Define non-required props */
+    const props: TInputBaseProps = {
+        helperText: 'foo',
+    };
+
     test('Is match snapshot', () => {
         /** Render component */
-        const tree = shallow(<Component {...requiredProps}/>);
+        const tree = shallow(<Component {...requiredProps} {...props}/>);
 
         /** Assert component matches snapshot */
         expect(tree).toMatchSnapshot();

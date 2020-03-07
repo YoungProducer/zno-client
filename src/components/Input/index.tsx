@@ -75,8 +75,10 @@ const Component = (props: TInputBaseProps) => {
                         tooltip: classes.tooltip,
                     }}
                     aria-label='helper-text'
+                    data-testid='input-tooltip'
                 >
                     <ErrorIcon
+                        data-testid='error-icon'
                         className={classNames(classes.helperIcon, {
                             [classes.helperIconError]: error,
                         })}
