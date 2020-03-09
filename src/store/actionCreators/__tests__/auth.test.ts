@@ -246,9 +246,6 @@ describe('Auth async actions', () => {
             }, {
                 type: 'Me/meLoadingAction',
                 payload: false,
-            }, {
-                type: 'SignIn/setUserDataAction',
-                payload: null,
             }];
 
             return store.dispatch(fetchMeAction() as any)
@@ -256,6 +253,31 @@ describe('Auth async actions', () => {
                     /** Assert array of dispatched actions equals to expectedActions */
                     expect(store.getActions()).toEqual(expectedActions);
                 });
+        });
+
+        test('Fetch with status 401(Unathorized)', () => {
+            /** Mock '/auth/user/me' url */
+            axiosMock
+                .onGet('/auth/user/me')
+                .reply(401);
+
+            /** Define expected actions */
+            const expectedActions = [{
+                type: 'Me/meLoadingAction',
+                payload: true,
+            }, {
+                type: 'Me/meLoadingAction',
+                payload: false,
+            }, {
+                type: 'SignIn/setUserDataAction',
+                payload: null,
+            }];
+
+            return store.dispatch(fetchMeAction() as any)
+            .then(() => {
+                /** Assert array of dispatched actions equals to expectedActions */
+                expect(store.getActions()).toEqual(expectedActions);
+            });
         });
     });
 });
