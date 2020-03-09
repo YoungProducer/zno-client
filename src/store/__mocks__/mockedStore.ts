@@ -46,6 +46,12 @@ const mockedStore = mockStore({
                 password: '',
             },
         },
+        me: {
+            loading: false,
+        },
+        refresh: {
+            loading: false,
+        },
     },
     subjects: {
         loading: false,

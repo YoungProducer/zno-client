@@ -20,8 +20,14 @@ export default {
     },
     auth: {
         signIn: {
-            user: {
-                email: 'foo@gmail.com',
+            user: null,
+            errorFields: {
+                email: false,
+                password: false,
+            },
+            fieldsMessages: {
+                email: '',
+                password: '',
             },
         },
     },

@@ -24,6 +24,7 @@ import {
     selectSubjectConfigSubSubjectsNames,
     selectSubjectConfigSubSubjectsThemes,
 } from 'store/selectors/subjectConfiguration';
+import { selectIsLoggedIn } from 'store/selectors/auth/signin';
 import { RootState } from 'store/slices';
 import { ISubjectConfigurationCredentials } from 'api';
 
@@ -43,6 +44,7 @@ interface IOwnProps {}
 
 /** Props which component select from the redux-store */
 interface IStateProps {
+    isLoggedIn: boolean;
     loading: boolean;
     dialogVisible: boolean;
     subjectName: string;
@@ -71,6 +73,7 @@ export type TSubjectConfigurationModalProps =
 
 /** Select variables from the redux-store */
 const mapStateToProps = (state: RootState): IStateProps => ({
+    isLoggedIn: selectIsLoggedIn(state),
     loading: selectSubjectConfigurationLoading(state),
     dialogVisible: selectSubjectConfigurationDialogVisible(state),
     subjectName: selectSubjectConfigSubjectName(state),

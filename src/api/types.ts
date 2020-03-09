@@ -28,4 +28,5 @@ export interface IApi {
     signin(credentials: ISignInCredentials): Promise<AxiosResponse>;
     subjectsNames(): Promise<AxiosResponse>;
     subjectConfiguration(credentials: ISubjectConfigurationCredentials): Promise<AxiosResponse>;
+    me(): Promise<AxiosResponse>;
 }

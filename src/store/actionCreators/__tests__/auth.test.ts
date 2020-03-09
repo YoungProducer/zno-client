@@ -15,6 +15,7 @@ import store from 'store/__mocks__/mockedStore';
 import {
     fetchSignUpAction,
     fetchSignInAction,
+    fetchMeAction,
 } from 'store/actionCreators/auth';
 
 describe('Auth async actions', () => {
@@ -192,6 +193,67 @@ describe('Auth async actions', () => {
             }) as any)
                 .then(() => {
                     /** Assert that array of dispatched actions equals to expectedActions */
+                    expect(store.getActions()).toEqual(expectedActions);
+                });
+        });
+    });
+
+    describe('fetchMeAction', () => {
+        afterEach(() => {
+            axiosMock.reset();
+            store.clearActions();
+        });
+
+        test('Fetch with success response', () => {
+            /** Mock '/auth/user/me' url */
+            axiosMock
+                .onGet('/auth/user/me')
+                .reply(200, {
+                    email: 'foo@gmail.com',
+                });
+
+            /** Define expected actions */
+            const expectedActions = [{
+                type: 'Me/meLoadingAction',
+                payload: true,
+            }, {
+                type: 'Me/meLoadingAction',
+                payload: false,
+            }, {
+                type: 'SignIn/setUserDataAction',
+                payload: {
+                    email: 'foo@gmail.com',
+                },
+            }];
+
+            return store.dispatch(fetchMeAction() as any)
+                .then(() => {
+                    /** Assert array of dispatched actions equals to expectedActions */
+                    expect(store.getActions()).toEqual(expectedActions);
+                });
+        });
+
+        test('Fetch with error', () => {
+            /** Mock '/auth/user/me' url */
+            axiosMock
+                .onGet('/auth/user/me')
+                .reply(403);
+
+            /** Define expected actions */
+            const expectedActions = [{
+                type: 'Me/meLoadingAction',
+                payload: true,
+            }, {
+                type: 'Me/meLoadingAction',
+                payload: false,
+            }, {
+                type: 'SignIn/setUserDataAction',
+                payload: null,
+            }];
+
+            return store.dispatch(fetchMeAction() as any)
+                .then(() => {
+                    /** Assert array of dispatched actions equals to expectedActions */
                     expect(store.getActions()).toEqual(expectedActions);
                 });
         });

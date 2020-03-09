@@ -28,17 +28,24 @@ import {
     selectSubjectConfigSubSubjectsNames,
     selectSubjectConfigSubSubjectsThemes,
 } from 'store/selectors/subjectConfiguration';
+import { selectIsLoggedIn } from 'store/selectors/auth';
 import { RootState } from 'store/slices';
 
 /** Mock dependencies */
 jest.mock('store/actionCreators/subjectConfiguration');
 jest.mock('store/slices/subjectConfiguration');
 jest.mock('store/selectors/subjectConfiguration');
+jest.mock('store/selectors/auth');
 
 describe('SubjectConfiguration container', () => {
     const MOCK_STATE = {
         subjectConfiguration: {
             dialogVisible: false,
+        },
+        auth: {
+            signIn: {
+                user: null,
+            },
         },
     } as RootState;
 
@@ -114,6 +121,33 @@ describe('SubjectConfiguration container', () => {
 
         /** Assert the correct key have been added to the component */
         expect(store.getActions()).toEqual([MOCK_ACTION]);
+    });
+
+    test('Sets isLoggedIn prop on component', () => {
+        /** Create stub component to wrap */
+        const TestComponent = () => <div />;
+
+        /** Configure component via HOC */
+        const ConfiguredComponent = container(TestComponent);
+
+        /** Create stub for selector */
+        const MOCK_SELECTOR = false;
+        (selectIsLoggedIn as unknown as jest.Mock)
+            .mockReturnValue(MOCK_SELECTOR);
+
+        /** Mount via enzyme */
+        const componentWrapper = mount(
+            <Provider store={store}>
+                <ConfiguredComponent />
+            </Provider>,
+        );
+
+        /** Extract loading prop */
+        const { isLoggedIn } =
+            componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
+
+        /** Assert the correct key and value have been added to the component */
+        expect(isLoggedIn).toEqual(MOCK_SELECTOR);
     });
 
     test('Sets loading prop on component', () => {

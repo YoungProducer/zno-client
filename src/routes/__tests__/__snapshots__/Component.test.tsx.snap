@@ -2,21 +2,27 @@
 
 exports[`Routes component Is match snapshot 1`] = `
 <Switch>
-  <Connect(Component)
+  <Route
     exact={true}
     path="/"
   >
-    <WithStyles(Component) />
-    <h1>
-      home
-    </h1>
-  </Connect(Component)>
-  <Connect(Component)
+    <Redirect
+      to={
+        Object {
+          "pathname": "/subject-selection",
+          "state": Object {
+            "from": "/",
+          },
+        }
+      }
+    />
+  </Route>
+  <Route
     exact={true}
     path="/subject-selection"
   >
     <Component />
-  </Connect(Component)>
+  </Route>
   <Connect(Component)
     exact={true}
     path="/subject-selection/subject-configuration"
@@ -24,11 +30,10 @@ exports[`Routes component Is match snapshot 1`] = `
     <Component />
   </Connect(Component)>
   <Route
+    component={[Function]}
     exact={true}
     path="/auth/signin"
-  >
-    <Connect(Component) />
-  </Route>
+  />
   <Route
     exact={true}
     path="/auth/signup"

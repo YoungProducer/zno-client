@@ -6,26 +6,29 @@
  */
 
 // External imports
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 // Application's imports
+import { TAppProps } from 'containers/App';
 import Routes from 'routes';
 import history from 'routes/history';
 import theme from 'theme';
-import store from 'store';
 
 /** Create App component */
-const Component = () => (
-    <Provider store={store}>
+const Component = ({ fetchMe }: TAppProps) => {
+    useEffect(() => {
+        fetchMe();
+    }, []);
+
+    return (
         <ThemeProvider theme={theme}>
             <Router history={history}>
                 <Routes />
             </Router>
         </ThemeProvider>
-    </Provider>
-);
+    );
+};
 
 export default Component;

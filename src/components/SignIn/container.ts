@@ -23,6 +23,7 @@ import {
     selectSignInErrorFields,
     selectSignInFieldsMessages,
 } from 'store/selectors/auth';
+import { selectIsLoggedIn } from 'store/selectors/auth';
 import { IFetchSignInActionCredentials } from 'utils/verify-credentials';
 import { RootState } from 'store/slices';
 
@@ -31,6 +32,7 @@ interface IOwnProps {}
 
 /** Props which component get from the redux-store */
 interface IStateProps {
+    isLoggedIn: boolean;
     loading: boolean;
     errorFields: ISignInErrorFields;
     fieldsMessages: ISignInFieldsMessages;
@@ -51,6 +53,7 @@ export type TSignInProps =
 
 /** Function which connect variables from the redux-store to component */
 const mapStateToProps = (state: RootState): IStateProps => ({
+    isLoggedIn: selectIsLoggedIn(state),
     loading: selectSignInLoading(state),
     errorFields: selectSignInErrorFields(state),
     fieldsMessages: selectSignInFieldsMessages(state),

@@ -25,7 +25,7 @@ export const selectSubjectConfig = (state: RootState) =>
  */
 export const selectSubjectConfigSubjectName = createSelector(
     selectSubjectConfig,
-    (subjectConfig) => subjectConfig.name,
+    (subjectConfig) => subjectConfig ? subjectConfig.name : null,
 );
 
 /**
@@ -40,6 +40,10 @@ export const selectSubjectConfigSubjectName = createSelector(
 export const selectSubjectConfigSubSubjectsNames = createSelector(
     selectSubjectConfig,
     (subjectConfig) => {
+        if (!subjectConfig) {
+            return null;
+        }
+
         /** Extract subSubjects from config */
         const { subSubjects } = subjectConfig;
 
@@ -78,6 +82,10 @@ export const selectSubjectConfigSubSubjectsNames = createSelector(
 export const selectSubjectConfigSubSubjectsThemes = createSelector(
     selectSubjectConfig,
     (subjectConfig) => {
+        if (!subjectConfig) {
+            return null;
+        }
+
         /** Extract property 'subSubjects' */
         const { subSubjects } = subjectConfig;
 
@@ -105,7 +113,7 @@ export const selectSubjectConfigSubSubjectsThemes = createSelector(
  */
 export const selectSubjectConfigThemes = createSelector(
     selectSubjectConfig,
-    (subjectConfig) => subjectConfig.themes ? subjectConfig.themes : null,
+    (subjectConfig) => subjectConfig && subjectConfig.themes ? subjectConfig.themes : null,
 );
 
 /**
@@ -144,6 +152,10 @@ export const selectSubjectConfigThemes = createSelector(
 export const selectSubjectConfigExams = createSelector(
     selectSubjectConfig,
     (subjectConfig) => {
+        if (!subjectConfig) {
+            return null;
+        }
+
         /** Extract exams property */
         const { exams } = subjectConfig;
 

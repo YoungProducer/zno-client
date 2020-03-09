@@ -44,6 +44,7 @@ exports[`SignIn component Is match snapshot 1`] = `
                   className="makeStyles-icon-13"
                 />
               }
+              type="email"
               value=""
             />
           </WithStyles(ForwardRef(Grid))>
@@ -62,6 +63,7 @@ exports[`SignIn component Is match snapshot 1`] = `
                   className="makeStyles-icon-13"
                 />
               }
+              type="password"
               value=""
             />
           </WithStyles(ForwardRef(Grid))>

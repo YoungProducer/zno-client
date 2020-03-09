@@ -106,6 +106,7 @@ const DialogActions = withStyles((theme: Theme) => ({
 const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps) => {
     /** Destruct props */
     const {
+        isLoggedIn,
         dialogVisible,
         subjectThemes,
         subjectExams,
@@ -125,6 +126,8 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
      * or share this url with other user.
      */
     useEffect(() => {
+        if (!isLoggedIn) history.push('/auth/signin');
+
         /** Get subject name from url search */
         const subjectName = new URLSearchParams(location.search).get('subject');
 

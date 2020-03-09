@@ -16,15 +16,20 @@ import { TPrivateRoute } from './container';
 const Component = ({ isLoggedIn, children, ...rest }: TPrivateRoute) => (
     <Route
         {...rest}
-        render={({ location }) =>
-            isLoggedIn
+        render={({ location }) => {
+            const pathname = location
+                ? `/auth/signin?next=${location.pathname}${location.search}`
+                : '/auth/signin';
+
+            return isLoggedIn
                 ? children
                 : <Redirect
                     to={{
                         pathname: '/auth/signin',
                         state: { from: location },
                     }}
-                />
+                />;
+        }
         }
     />
 );

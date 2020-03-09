@@ -10,7 +10,6 @@ import React from 'react';
 import { Router as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 /** Application's imports */
-import AppBar from 'components/AppBar';
 import PrivateRoute from 'components/PrivateRoute';
 import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
@@ -22,29 +21,22 @@ import { TRoutesProps } from './container';
 const Component = ({ isLoggedIn }: TRoutesProps) => {
     return (
         <Switch>
-            <PrivateRoute exact path='/'>
-                <>
-                    <AppBar />
-                    <h1>home</h1>
-                </>
-            </PrivateRoute>
-            <PrivateRoute exact path='/subject-selection'>
+            <Route exact path='/'>
+                <Redirect to={{
+                    pathname: '/subject-selection',
+                    state: { from: '/' },
+                }}/>
+            </Route>
+            <Route exact path='/subject-selection'>
                 <SubjectSelection />
-            </PrivateRoute>
-            <PrivateRoute exact path='/subject-selection/subject-configuration'>
+            </Route>
+            <PrivateRoute
+                exact
+                path='/subject-selection/subject-configuration'
+            >
                 <SubjectConfiguration />
             </PrivateRoute>
-            <Route exact path='/auth/signin'>
-                { isLoggedIn
-                    ? <Redirect
-                        to={{
-                            pathname: '/subject-selection',
-                            state: { from: '/auth/signin' },
-                        }}
-                    />
-                    : <SignIn />
-                }
-            </Route>
+            <Route exact path='/auth/signin' component={SignIn} />
             <Route exact path='/auth/signup'>
                 { isLoggedIn
                     ? <Redirect

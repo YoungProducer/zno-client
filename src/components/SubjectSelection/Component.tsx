@@ -6,7 +6,8 @@
  */
 
 /** External imports */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import CSSBaseLine from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +23,10 @@ const Component = (props: TSubjectSelectionProps) => {
         subjectsList,
         fetchSubjectsNames,
     } = props;
+
+    useEffect(() => {
+        fetchSubjectsNames();
+    }, []);
 
     return (
         <div className={classes.root}>

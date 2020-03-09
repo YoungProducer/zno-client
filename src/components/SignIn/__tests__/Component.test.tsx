@@ -13,6 +13,16 @@ import { shallow, mount } from 'enzyme';
 import Component from '../Component';
 import { TSignInProps } from '../container';
 
+/** Create mock function for useHistory hook */
+const push = jest.fn();
+
+/** Mock react-router-dom module */
+jest.mock('react-router-dom', () => ({
+    useHistory: jest.fn(() => ({
+        push,
+    })),
+}));
+
 describe('SignIn component', () => {
     /** Mock function for props */
     const setSignInFieldsMessagesToDefault = jest.fn();
@@ -33,6 +43,7 @@ describe('SignIn component', () => {
             email: 'foo',
             password: 'bar',
         },
+        isLoggedIn: false,
     };
 
     beforeEach(() => {

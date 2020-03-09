@@ -12,13 +12,19 @@ import { combineReducers } from '@reduxjs/toolkit';
 // Application's imports
 import signUp from './signup';
 import signIn from './signin';
+import me from './me';
+import refresh from './refresh';
 
 // Export all actions from all slices
 export * from './signup';
 export * from './signin';
+export * from './me';
+export * from './refresh';
 
 // Export combined reducer related to auth
 export default combineReducers({
     signUp,
     signIn,
+    me,
+    refresh,
 });

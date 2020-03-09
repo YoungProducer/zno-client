@@ -36,6 +36,7 @@ describe('SubjectConfigurationModal component', () => {
     const requiredProps: TSubjectConfigurationModalProps = {
         fetchSubjectConfiguration,
         toggleSubjectConfigurationDialog,
+        isLoggedIn: false,
         dialogVisible: true,
         loading: false,
         subjectName: 'foo',

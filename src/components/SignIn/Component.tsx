@@ -6,7 +6,7 @@
  */
 
 /** External imports */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import { makeStyles, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 /** Application's imports */
 import { TSignInProps } from './container';
@@ -87,12 +88,25 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
  */
 const useSignInElements = (props: TSignInProps) => {
     const {
+        isLoggedIn,
         errorFields,
         fieldsMessages,
         fetchSignIn,
         setSignInErrorFieldsToDefault,
         setSignInFieldsMessagesToDefault,
     } = props;
+
+    const history = useHistory();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            const next = history.location.state
+                ? `${(history.location.state as any).from.pathname}${(history.location.state as any).from.search}`
+                : undefined;
+            // const next: string = new URLSearchParams(history.location.state.).get('next');
+            history.push(next || '/');
+        }
+    }, [isLoggedIn]);
 
     const clearFields = () => {
         setSignInErrorFieldsToDefault();
@@ -177,6 +191,7 @@ const Component = (props: TSignInProps) => {
                             <Grid item>
                                 <Input
                                     color='primary'
+                                    type='email'
                                     placeholder='Емеїл'
                                     startAdornment={<EmailIcon className={classes.icon}/>}
                                     data-testid='signin-email-input'
@@ -186,6 +201,7 @@ const Component = (props: TSignInProps) => {
                             <Grid item>
                                 <Input
                                     color='primary'
+                                    type='password'
                                     placeholder='Пароль'
                                     startAdornment={<LockIcon className={classes.icon}/>}
                                     data-testid='signin-password-input'

@@ -8,6 +8,8 @@
 // Application's imports
 import signUp from 'store/slices/auth/signup';
 import signIn, { TUser } from 'store/slices/auth/signin';
+import me from 'store/slices/auth/me';
+import refresh from 'store/slices/auth/refresh';
 import {
     signUpLoadingAction,
     setSignUpErrorFieldsAction,
@@ -22,6 +24,10 @@ import {
     setSignInFieldsMessagesAction,
     setSignInFieldsMessagesToDefaultAction,
     ISignInInitialState,
+    meLoadingAction,
+    IMeInitialState,
+    refreshLoadingAction,
+    IRefreshInitialState,
 } from 'store/slices/auth';
 
 describe('Auth reducer', () => {
@@ -473,6 +479,62 @@ describe('Auth reducer', () => {
 
             /** Check is result equals to expected state */
             expect(result).toEqual(expectedState);
+        });
+    });
+
+    describe('Me reducer', () => {
+        test('Toggle loading to true', () => {
+            /** Define initial state */
+            const initialState: IMeInitialState = {
+                loading: false,
+            };
+
+            /** Get result of dispatched action */
+            const result = me(initialState, meLoadingAction(true));
+
+            /** Check is loading prop equals true */
+            expect(result.loading).toBeTruthy();
+        });
+
+        test('Toggle loading to false', () => {
+            /** Define initial state */
+            const initialState: IMeInitialState = {
+                loading: true,
+            };
+
+            /** Get result of dispatched action */
+            const result = me(initialState, meLoadingAction(false));
+
+            /** Check is loading prop equals true */
+            expect(result.loading).toBeFalsy();
+        });
+    });
+
+    describe('Refresh reducer', () => {
+        test('Toggle loading to true', () => {
+            /** Define initial state */
+            const initialState: IRefreshInitialState = {
+                loading: false,
+            };
+
+            /** Get result of dispatched action */
+            const result = refresh(initialState, refreshLoadingAction(true));
+
+            /** Check is loading prop equals true */
+            expect(result.loading).toBeTruthy();
+        });
+
+        test('Toggle loading to false', () => {
+            /** Define initial state */
+            const initialState: IRefreshInitialState = {
+                loading: true,
+            };
+
+            /** Get result of dispatched action */
+            const result = refresh(initialState, refreshLoadingAction(false));
+
+            /** Check is loading prop equals true */
+            expect(result.loading).toBeFalsy();
         });
     });
 });
