@@ -53,9 +53,9 @@ describe('Api', () => {
     });
 
     test('subjectsNames success', async () => {
-        /** Mock '/subjects/names url */
+        /** Mock '/subject/names url */
         mockAxios
-            .onGet('/subjects/names')
+            .onGet('/subject/names')
             .reply(200, ['foo']);
 
         /** Get result of subjectsNames method */
