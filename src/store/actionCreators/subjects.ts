@@ -14,19 +14,19 @@ import api from 'api';
 import {
     subjectsLoadingAction,
     setSubjectsListAction,
+    TSubjectList,
 } from 'store/slices/subjects';
 
-export const fetchSubjectsNamesAction = () => async (dispatch: Dispatch<any>) => {
+export const fetchSubjectsAction = () => async (dispatch: Dispatch<any>) => {
     dispatch(subjectsLoadingAction(true));
 
-    return await api.subjectsNames()
+    return await api.subjects()
         .then(response => {
             dispatch(subjectsLoadingAction(false));
-
             return response;
         })
         .then(response => response.data)
-        .then(subjectsNames => dispatch(setSubjectsListAction(subjectsNames)))
+        .then((subjects: TSubjectList) => dispatch(setSubjectsListAction(subjects)))
         .catch(error => {
             dispatch(subjectsLoadingAction(false));
         });

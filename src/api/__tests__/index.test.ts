@@ -55,11 +55,11 @@ describe('Api', () => {
     test('subjectsNames success', async () => {
         /** Mock '/subject/names url */
         mockAxios
-            .onGet('/subject/names')
+            .onGet('/subject/subjects')
             .reply(200, ['foo']);
 
         /** Get result of subjectsNames method */
-        const result = await api.subjectsNames();
+        const result = await api.subjects();
 
         /** Assert response has status 200 */
         expect(result.status).toBe(200);

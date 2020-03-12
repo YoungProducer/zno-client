@@ -26,7 +26,10 @@ jest.mock('react-router-dom', () => ({
 describe('SubjectTile component', () => {
     /** Define required props */
     const requiredProps: ISubjectTileProps = {
-        subject: 'foo',
+        subject: {
+            id: 'foo',
+            name: 'bar',
+        },
     };
 
     test('Is match snapshot', () => {

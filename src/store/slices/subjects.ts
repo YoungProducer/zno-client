@@ -12,9 +12,14 @@ import { createSlice } from '@reduxjs/toolkit';
 /** Application's imports */
 import { ILoadingAction } from 'store/types';
 
+export type TSubjectList = {
+    id: string;
+    name: string;
+}[];
+
 /** Declare interface for setSubjectsListAction */
 interface ISetSubjectsListAction {
-    payload: string[];
+    payload: TSubjectList;
 }
 
 /** Declare interface for initial state */
@@ -26,7 +31,7 @@ export interface ISubjectsInitialState {
     /**
      * Array of subjects.
      */
-    subjectsList: string[];
+    subjectsList: TSubjectList;
 }
 
 /** Define initial state */
@@ -46,13 +51,6 @@ const subjects = createSlice({
             ...state,
             loading: payload,
         }),
-        // setSubjectsListAction: (
-        //     state: ISubjectsInitialState,
-        //     { payload }: ISetSubjectsListAction,
-        // ) => ({
-        //     ...state,
-        //     subjectsList: payload || [],
-        // }),
         setSubjectsListAction: {
             reducer: (
                 state: ISubjectsInitialState,
@@ -61,7 +59,7 @@ const subjects = createSlice({
                 ...state,
                 subjectsList: payload,
             }),
-            prepare: (value?: string[]) => ({ payload: value || [] }),
+            prepare: (value?: TSubjectList) => ({ payload: value || [] }),
         },
     },
 });

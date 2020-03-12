@@ -15,7 +15,7 @@ import configureMockStore from 'redux-mock-store';
 
 /** Application's imports */
 import container, { TSubjectSelectionProps } from '../container';
-import { fetchSubjectsNamesAction } from 'store/actionCreators/subjects';
+import { fetchSubjectsAction } from 'store/actionCreators/subjects';
 import {
     selectSubjectsLoading,
     selectSubjectsList,
@@ -75,7 +75,7 @@ describe('SubjectSelection container', () => {
         const MOCK_ACTION = {
             type: 'foo123',
         };
-        (fetchSubjectsNamesAction as jest.Mock)
+        (fetchSubjectsAction as jest.Mock)
             .mockReturnValue(MOCK_ACTION);
 
         /** Create a stub component to wrap */

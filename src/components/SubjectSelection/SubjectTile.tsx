@@ -29,9 +29,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 export interface ISubjectTileProps {
     /**
-     * Subject name.
+     * Subject object which container id and name properties.
      */
-    subject: string;
+    subject: {
+        id: string;
+        name: string;
+    };
 }
 
 /** Create component */
@@ -42,7 +45,7 @@ const Component = ({ subject }: ISubjectTileProps) => {
     const history = useHistory();
 
     const clickHandle = () => {
-        history.push(`/subject-selection/subject-configuration?subject=${subject}`);
+        history.push(`/subject-selection/subject-configuration?subject=${subject.id}`);
     };
 
     return (
@@ -52,7 +55,7 @@ const Component = ({ subject }: ISubjectTileProps) => {
                 onClick={clickHandle}
                 data-testid='subject-tile-button'
             >
-                {subject}
+                {subject.name}
             </Button>
         </Grid>
     );

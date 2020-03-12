@@ -46,9 +46,9 @@ class Api implements IApi {
             { withCredentials: true },
         )
 
-    subjectsNames = async () =>
+    subjects = async () =>
         await this.axiosInstance.get(
-            '/subject/names',
+            '/subject/subjects',
             { withCredentials: true },
         )
 

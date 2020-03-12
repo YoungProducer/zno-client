@@ -13,12 +13,12 @@ import { compose } from 'redux';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 /** Application's imports */
-import { fetchSubjectsNamesAction } from 'store/actionCreators/subjects';
+import { fetchSubjectsAction } from 'store/actionCreators/subjects';
 import {
     selectSubjectsLoading,
     selectSubjectsList,
 } from 'store/selectors/subjects';
-import { RootState } from 'store/slices';
+import { RootState, TSubjectList } from 'store/slices';
 
 /** Define styles as hook */
 const styles = (theme: Theme) => createStyles({
@@ -34,7 +34,7 @@ interface IOwnProps extends WithStyles<typeof styles> {}
 /** Props which component select from the redux-store */
 interface IStateProps {
     loading: boolean;
-    subjectsList: string[];
+    subjectsList: TSubjectList;
 }
 
 /** Props(actions) which component can dispatch */
@@ -56,7 +56,7 @@ const mapStateProps = (state: RootState): IStateProps => ({
 
 /** Create function which connect actions to the component */
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-    fetchSubjectsNames: () => dispatch(fetchSubjectsNamesAction()),
+    fetchSubjectsNames: () => dispatch(fetchSubjectsAction()),
 });
 
 /**

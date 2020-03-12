@@ -51,21 +51,30 @@ describe('Subjects slice', () => {
 
         /** Get result of dispatched action */
         const result: ISubjectsInitialState = subjects(initialState, setSubjectsListAction(
-            ['Математика'],
+            [{
+                id: 'foo',
+                name: 'Математика',
+            }],
         ));
 
         /** Assert subjectsList have length 1 */
         expect(result.subjectsList).toHaveLength(1);
 
         /** Assert subjectsList has item 'Математика' */
-        expect(result.subjectsList).toEqual(['Математика']);
+        expect(result.subjectsList).toEqual([{
+            id: 'foo',
+            name: 'Математика',
+        }]);
     });
 
     test('setSubjectsListAction without param should clean an subjectsList array', () => {
         /** Define initial state */
         const initialState: ISubjectsInitialState = {
             loading: false,
-            subjectsList: ['Математика'],
+            subjectsList: [{
+                id: 'foo',
+                name: 'Математика',
+            }],
         };
 
         /** Get result of dispatched action */
