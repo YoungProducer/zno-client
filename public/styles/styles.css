@@ -29,3 +29,8 @@ a {
     -webkit-clip-path: polygon(0 96%, 100% 87%, 100% 0, 0 0);
     clip-path: polygon(0 96%, 100% 87%, 100% 0, 0 0);
 }
+
+.subject-selection-background {
+    background: linear-gradient(112deg, #20aed0 0%, #811ec8 100%);
+    clip-path: polygon(0 99%, 100% 99%, 100% 0, 0 0);
+}

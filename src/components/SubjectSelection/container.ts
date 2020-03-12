@@ -24,7 +24,8 @@ import { RootState, TSubjectList } from 'store/slices';
 const styles = (theme: Theme) => createStyles({
     root: {
         width: '100%',
-        padding: theme.spacing(1),
+        height: '100vh',
+        // padding: theme.spacing(1),
     },
 });
 

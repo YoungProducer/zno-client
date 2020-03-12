@@ -19,11 +19,11 @@ import SubjectConfiguration from 'components/modals/SubjectConfigurationModal';
 const Component = () => (
     <React.Fragment>
         <CssBaseline />
-        <AppBar />
-        <Container maxWidth='lg'>
+        {/* <AppBar /> */}
+        {/* <Container maxWidth='lg'> */}
             {/* <SubjectConfiguration /> */}
             <SubjectSelection />
-        </Container>
+        {/* </Container> */}
     </React.Fragment>
 );
 

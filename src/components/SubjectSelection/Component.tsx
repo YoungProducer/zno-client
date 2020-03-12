@@ -7,6 +7,7 @@
 
 /** External imports */
 import React, { useEffect } from 'react';
+import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import CSSBaseLine from '@material-ui/core/CssBaseline';
@@ -29,15 +30,17 @@ const Component = (props: TSubjectSelectionProps) => {
     }, []);
 
     return (
-        <div className={classes.root}>
-            <Grid container spacing={1}>
-                {subjectsList.map((subject, index) => (
-                    <SubjectTile
-                        key={index}
-                        subject={subject}
-                    />
-                ))}
-            </Grid>
+        <div className={classNames(classes.root, 'subject-selection-background')}>
+            <Container maxWidth='lg'>
+                {/* <Grid container spacing={1}>
+                    {subjectsList.map((subject, index) => (
+                        <SubjectTile
+                            key={index}
+                            subject={subject}
+                        />
+                    ))}
+                </Grid> */}
+            </Container>
         </div>
     );
 };
