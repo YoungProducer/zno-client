@@ -6417,6 +6417,11 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
+konva@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-4.1.6.tgz#99016aeab3e120617b7a00a2ffabccd92db4bd56"
+  integrity sha512-UpskmAKOspXw96Oab1Ea8VLGl87UQpv8jFr7Bq03U8xg/Pc3r9P2CbiuqWtiyAguoZriWk13BvVPep5DQ1Zv2A==
+
 lcid@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/lcid/-/lcid-2.0.0.tgz#6ef5d2df60e52f82eb228a4c373e8d1f397253cf"
@@ -8191,6 +8196,14 @@ react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0, react-i
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
+react-konva@^16.12.0-0:
+  version "16.12.0-0"
+  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-16.12.0-0.tgz#a39a383bb0c9e67a04cabde97c8015d74a2f14c5"
+  integrity sha512-gDwvNh0bKoS2hzYFiUHUipfJnEzqfOc0zB5PWy3yV6RFCAhE/LcN079wn/d/cY4S+3rX3OozKXtlMyJGVy2WJA==
+  dependencies:
+    react-reconciler "^0.24.0"
+    scheduler "^0.18.0"
+
 react-pose@^4.0.8:
   version "4.0.10"
   resolved "https://registry.yarnpkg.com/react-pose/-/react-pose-4.0.10.tgz#fde1c6c388ec210f7099dfe2b8dd2f89a75db7d0"
@@ -8200,6 +8213,16 @@ react-pose@^4.0.8:
     hey-listen "^1.0.5"
     popmotion-pose "^3.4.10"
     tslib "^1.10.0"
+
+react-reconciler@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.24.0.tgz#5a396b2c2f5efe8554134a5935f49f546723f2dd"
+  integrity sha512-gAGnwWkf+NOTig9oOowqid9O0HjTDC+XVGBCAmJYYJ2A2cN/O4gDdIuuUQjv8A4v6GDwVfJkagpBBLW5OW9HSw==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.18.0"
 
 react-redux@^6.0.1:
   version "6.0.1"

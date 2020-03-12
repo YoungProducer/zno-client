@@ -11,12 +11,19 @@ import { RootState } from './slices';
 export default {
     subjects: {
         loading: false,
-        subjectsList: [
-            'Математика',
-            'Фізика',
-            'Українська мова',
-            'Хімія',
-        ],
+        subjectsList: [{
+            id: 'foo',
+            name: 'Математика',
+        }, {
+            id: 'bar',
+            name: 'Фізика',
+        }, {
+            id: 'abc',
+            name: 'Українська мова',
+        }, {
+            id: 'crv',
+            name: 'Хімія',
+        }],
     },
     auth: {
         signIn: {

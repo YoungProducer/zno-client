@@ -16,14 +16,17 @@ import { green } from '@material-ui/core/colors';
 /** Define classes as hook */
 const useStyles = makeStyles((theme: Theme) => createStyles({
     button: {
-        borderRadius: 0,
-        background: green[700],
+        // borderRadius: 0,
+        // background: green[700],
         color: '#fff',
-        width: '100%',
-        height: 100,
-        '&:hover': {
-            background: green[800],
-        },
+        height: '100%',
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+        // width: '100%',
+        // height: 100,
+        // '&:hover': {
+        //     background: green[800],
+        // },
     },
 }));
 
@@ -49,15 +52,16 @@ const Component = ({ subject }: ISubjectTileProps) => {
     };
 
     return (
-        <Grid item xs={3}>
+        // <Grid item xs={3}>
             <Button
                 className={classes.button}
                 onClick={clickHandle}
                 data-testid='subject-tile-button'
+                variant='text'
             >
                 {subject.name}
             </Button>
-        </Grid>
+        // </Grid>
     );
 };
 
