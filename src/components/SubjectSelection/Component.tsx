@@ -6,7 +6,7 @@
  */
 
 /** External imports */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
@@ -85,6 +85,10 @@ const Component = (props: TSubjectSelectionProps) => {
         fetchSubjectsNames,
     } = props;
 
+    const [seachValue, setSearchValue] = useState<string>('');
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+        setSearchValue(event.target.value);
+
     useEffect(() => {
         fetchSubjectsNames();
     }, []);
@@ -97,6 +101,8 @@ const Component = (props: TSubjectSelectionProps) => {
                         <InputBase
                             className={classes.searchInput}
                             placeholder='Знайти предмет'
+                            value={seachValue}
+                            onChange={handleSearchChange}
                             endAdornment={
                                 <IconButton
                                     size='small'
@@ -109,7 +115,10 @@ const Component = (props: TSubjectSelectionProps) => {
                             }
                         />
                     </div>
-                    <SubjectPresentation />
+                    <SubjectPresentation
+                        subjectsList={subjectsList}
+                        searchValue={seachValue}
+                    />
                 </Container>
             </div>
             {/* <div className={classes.popularBlock}>

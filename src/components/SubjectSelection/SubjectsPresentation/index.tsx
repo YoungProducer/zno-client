@@ -6,7 +6,7 @@
  */
 
 /** External imports */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import {
     Stage,
     Layer,
@@ -16,28 +16,29 @@ import {
 import 'konva/lib/shapes/Circle';
 
 /** Application's imports */
-import { getCirclesData, getIconsData } from './process';
+import { getCirclesData, getIconsData, IIconData, ICircle } from './process';
+import { TSubjectList } from 'store/slices';
 
 const CustomCircle = ({
     x,
     y,
     radius,
-    scale = true,
+    hidden,
 }: {
     x: number;
     y: number;
     radius: number;
-    scale: boolean;
+    hidden: boolean;
 }) => {
     let circle: any;
 
     useEffect(() => {
         circle.to({
-            scaleX: scale ? 1.5 : 1,
-            scaleY: scale ? 1.5 : 1,
+            scaleX: hidden ? 0 : 1,
+            scaleY: hidden ? 0 : 1,
             duration: 0.2,
         });
-    }, [scale]);
+    }, [hidden]);
 
     return (
         <Circle
@@ -50,10 +51,54 @@ const CustomCircle = ({
     );
 };
 
-const Component = () => {
-    const circles = getCirclesData(8);
+export type TSubjectPresentationProps = {
+    subjectsList: TSubjectList;
+    searchValue: string;
+};
 
-    const icons = getIconsData(circles);
+export interface ISmartIcon extends IIconData {
+    id: string;
+    name: string;
+    hidden: boolean;
+}
+
+const Component = ({
+    subjectsList,
+    searchValue,
+}: TSubjectPresentationProps) => {
+    const [circles, setCircle] = useState<ICircle[]>([]);
+    const [icons, setIcons] = useState<ISmartIcon[]>(() => {
+        const circlesData = getCirclesData(subjectsList.length);
+        setCircle(circlesData);
+
+        const iconsData = getIconsData(circlesData);
+
+        return iconsData.map((icon, index) => ({
+            ...icon,
+            ...subjectsList[index],
+            hidden: false,
+        }));
+    });
+
+    const change = useCallback(() => {
+        setIcons(icons.map((icon) => {
+            const match =
+                searchValue === ''
+                    ? false
+                    : icon.name
+                        .toLowerCase()
+                        .indexOf(searchValue.toLowerCase()) === -1;
+
+            return {
+                ...icon,
+                hidden: match,
+            };
+        }));
+    }, [icons, searchValue]);
+
+    useEffect(() => {
+        change();
+    }, [searchValue]);
 
     return (
         <Stage width={650} height={650}>
@@ -70,13 +115,13 @@ const Component = () => {
                 ))}
             </Layer>
             <Layer>
-                { icons.map(({ x, y, radius }, index) => (
+                { icons.map(({ x, y, radius, hidden }, index) => (
                     <CustomCircle
                         key={index}
                         x={x}
                         y={y}
                         radius={radius}
-                        scale={false}
+                        hidden={hidden}
                     />
                 ))}
             </Layer>
