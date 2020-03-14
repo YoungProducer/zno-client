@@ -39,9 +39,9 @@ describe('fetchSubjectConfigurationAction', () => {
 
     test('Api call with success response', () => {
         /** Mock /subjects/configuration/{subject-name} */
-        const subjectName = 'foo';
+        const id = 'foo';
         mockAxios
-            .onGet(`/subjects/configuration/${subjectName}`)
+            .onGet(`/subjects/configuration/${id}`)
             .reply(200, {
                 name: 'foo',
                 themes: ['bar'],
@@ -64,7 +64,7 @@ describe('fetchSubjectConfigurationAction', () => {
 
         /** Dispatch action */
         return store.dispatch(fetchSubjectConfigurationAction({
-            subjectName,
+            id,
         }) as any)
             .then(() => {
                 /** Assert list of dispatched actions equals to expected actions */
@@ -74,9 +74,9 @@ describe('fetchSubjectConfigurationAction', () => {
 
     test('Api call with error', () => {
         /** Mock /subjects/configuration/{subject-name} */
-        const subjectName = 'foo';
+        const id = 'foo';
         mockAxios
-            .onGet(`/subjects/configuration/${subjectName}`)
+            .onGet(`/subjects/configuration/${id}`)
             .reply(404);
 
         /** Define expected actions */
@@ -90,7 +90,7 @@ describe('fetchSubjectConfigurationAction', () => {
 
         /** Dispatch action */
         return store.dispatch(fetchSubjectConfigurationAction({
-            subjectName,
+            id,
         }) as any)
             .then(() => {
                 /** Assert list of dispatched actions equals to expected actions */

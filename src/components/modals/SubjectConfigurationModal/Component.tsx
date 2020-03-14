@@ -128,14 +128,14 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     useEffect(() => {
         if (!isLoggedIn) history.push('/auth/signin');
 
-        /** Get subject name from url search */
-        const subjectName = new URLSearchParams(location.search).get('subject');
+        /** Get subject id from url search */
+        const subjectId = new URLSearchParams(location.search).get('subject');
 
         /** Open dialog */
         toggleSubjectConfigurationDialog(true);
 
         /** Get subject configuration by subject name */
-        fetchSubjectConfiguration({ subjectName });
+        fetchSubjectConfiguration({ id: subjectId });
     }, []);
 
     /** Responsible for themes or exams selection */

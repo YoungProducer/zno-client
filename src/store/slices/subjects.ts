@@ -15,6 +15,7 @@ import { ILoadingAction } from 'store/types';
 export type TSubjectList = {
     id: string;
     name: string;
+    image: string;
 }[];
 
 /** Declare interface for setSubjectsListAction */

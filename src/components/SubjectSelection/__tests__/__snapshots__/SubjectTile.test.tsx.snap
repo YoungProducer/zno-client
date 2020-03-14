@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SubjectTile component Is match snapshot 1`] = `
-<WithStyles(ForwardRef(Grid))
-  item={true}
-  xs={3}
+<WithStyles(ForwardRef(Button))
+  className="makeStyles-button-1"
+  data-testid="subject-tile-button"
+  onClick={[Function]}
+  variant="text"
 >
-  <WithStyles(ForwardRef(Button))
-    className="makeStyles-button-1"
-    data-testid="subject-tile-button"
-    onClick={[Function]}
-  >
-    bar
-  </WithStyles(ForwardRef(Button))>
-</WithStyles(ForwardRef(Grid))>
+  bar
+</WithStyles(ForwardRef(Button))>
 `;

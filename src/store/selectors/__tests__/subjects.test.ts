@@ -32,7 +32,11 @@ describe('Subjects selectors', () => {
         /** Mock state */
         const MOCK_STATE = {
             subjects: {
-                subjectsList: ['foo'],
+                subjectsList: [{
+                    id: 'foo',
+                    name: 'math',
+                    image: 'bar',
+                }],
             },
         } as RootState;
 
@@ -41,7 +45,11 @@ describe('Subjects selectors', () => {
 
         /** Assert selector returns array with one element */
         expect(result).toHaveLength(1);
-        expect(result).toEqual(['foo']);
+        expect(result).toEqual([{
+            id: 'foo',
+            name: 'math',
+            image: 'bar',
+        }]);
     });
 
     test('selectSubjectsList when subjectsList is empty', () => {

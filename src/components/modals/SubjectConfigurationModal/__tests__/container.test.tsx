@@ -85,7 +85,7 @@ describe('SubjectConfiguration container', () => {
             = componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Invoke fetchSubjectConfiguration */
-        fetchSubjectConfiguration({ subjectName: 'foo' });
+        fetchSubjectConfiguration({ id: 'foo' });
 
         /** Assert the correct key have been added to the component */
         expect(store.getActions()).toEqual([MOCK_ACTION]);

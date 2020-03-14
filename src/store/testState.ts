@@ -14,15 +14,19 @@ export default {
         subjectsList: [{
             id: 'foo',
             name: 'Математика',
+            image: null,
         }, {
             id: 'bar',
             name: 'Фізика',
+            image: null,
         }, {
             id: 'abc',
             name: 'Українська мова',
+            image: null,
         }, {
             id: 'crv',
             name: 'Хімія',
+            image: null,
         }],
     },
     auth: {

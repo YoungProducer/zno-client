@@ -11,29 +11,52 @@ import {
     Stage,
     Layer,
     Circle,
+    Image,
+    Label,
+    Rect,
 } from 'react-konva';
+import useImage from 'use-image';
 
 import 'konva/lib/shapes/Circle';
+import 'konva/lib/shapes/Image';
+import 'konva/lib/shapes/Label';
+import 'konva/lib/shapes/Rect';
 
 /** Application's imports */
 import { getCirclesData, getIconsData, IIconData, ICircle } from './process';
 import { TSubjectList } from 'store/slices';
+
+import math from 'public/images/mathematics.svg';
 
 const CustomCircle = ({
     x,
     y,
     radius,
     hidden,
+    imageUrl,
+    name,
 }: {
     x: number;
     y: number;
     radius: number;
     hidden: boolean;
+    imageUrl: string;
+    name: string;
 }) => {
+    const imageHeight = 40;
+    const imageWidth = 40;
+
+    let [imageSource] = useImage(imageUrl);
     let circle: any;
+    let image: any;
 
     useEffect(() => {
         circle.to({
+            scaleX: hidden ? 0 : 1,
+            scaleY: hidden ? 0 : 1,
+            duration: (Math.random() * (0.4 - 0.2) + 0.2).toFixed(1),
+        });
+        image.to({
             scaleX: hidden ? 0 : 1,
             scaleY: hidden ? 0 : 1,
             duration: 0.2,
@@ -41,13 +64,25 @@ const CustomCircle = ({
     }, [hidden]);
 
     return (
-        <Circle
-            x={x}
-            y={y}
-            radius={radius}
-            fill={'#fff'}
-            ref={node => circle = node}
-        />
+        <>
+            <Circle
+                x={x}
+                y={y}
+                radius={radius}
+                fill={'#fff'}
+                ref={node => circle = node}
+            />
+            <Image
+                image={imageSource}
+                x={x}
+                y={y}
+                offsetX={imageWidth / 2}
+                offsetY={imageHeight / 2}
+                width={imageWidth}
+                height={imageHeight}
+                ref={node => image = node}
+            />
+        </>
     );
 };
 
@@ -59,6 +94,7 @@ export type TSubjectPresentationProps = {
 export interface ISmartIcon extends IIconData {
     id: string;
     name: string;
+    image: string;
     hidden: boolean;
 }
 
@@ -97,6 +133,21 @@ const Component = ({
     }, [icons, searchValue]);
 
     useEffect(() => {
+        setIcons(() => {
+            const circlesData = getCirclesData(subjectsList.length);
+            setCircle(circlesData);
+
+            const iconsData = getIconsData(circlesData);
+
+            return iconsData.map((icon, index) => ({
+                ...icon,
+                ...subjectsList[index],
+                hidden: false,
+            }));
+        });
+    }, [subjectsList]);
+
+    useEffect(() => {
         change();
     }, [searchValue]);
 
@@ -115,13 +166,15 @@ const Component = ({
                 ))}
             </Layer>
             <Layer>
-                { icons.map(({ x, y, radius, hidden }, index) => (
+                { icons.map(({ x, y, radius, hidden, name, image }, index) => (
                     <CustomCircle
                         key={index}
                         x={x}
                         y={y}
                         radius={radius}
                         hidden={hidden}
+                        name={name}
+                        imageUrl={image}
                     />
                 ))}
             </Layer>

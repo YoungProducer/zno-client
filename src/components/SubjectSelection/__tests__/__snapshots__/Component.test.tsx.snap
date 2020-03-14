@@ -1,17 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SubjectSelection component Is match snapshot 1`] = `
-<div
-  className="root"
->
-  <WithStyles(ForwardRef(Grid))
-    container={true}
-    spacing={1}
+<Fragment>
+  <div
+    className="makeStyles-root-1 subject-selection-background"
   >
-    <Component
-      key="0"
-      subject="foo"
-    />
-  </WithStyles(ForwardRef(Grid))>
-</div>
+    <WithStyles(ForwardRef(Container))
+      className="makeStyles-container-2"
+      maxWidth="lg"
+    >
+      <div
+        className="makeStyles-searchBlock-3"
+      >
+        <WithStyles(ForwardRef(InputBase))
+          className="makeStyles-searchInput-6"
+          endAdornment={
+            <WithStyles(ForwardRef(IconButton))
+              className="makeStyles-iconButton-7"
+              size="small"
+            >
+              <Memo(SearchIcon)
+                className="makeStyles-icon-8"
+              />
+            </WithStyles(ForwardRef(IconButton))>
+          }
+          onChange={[Function]}
+          placeholder="Знайти предмет"
+          value=""
+        />
+      </div>
+      <Component
+        searchValue=""
+        subjectsList={
+          Array [
+            Object {
+              "id": "foo",
+              "image": "bar",
+              "name": "math",
+            },
+          ]
+        }
+      />
+    </WithStyles(ForwardRef(Container))>
+  </div>
+</Fragment>
 `;

@@ -24,7 +24,11 @@ describe('SubjectSelection component', () => {
             root: 'root',
         },
         loading: false,
-        subjectsList: ['foo'],
+        subjectsList: [{
+            id: 'foo',
+            name: 'math',
+            image: 'bar',
+        }],
     };
 
     afterEach(() => {

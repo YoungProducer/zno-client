@@ -54,6 +54,7 @@ describe('Subjects slice', () => {
             [{
                 id: 'foo',
                 name: 'Математика',
+                image: 'bar',
             }],
         ));
 
@@ -64,6 +65,7 @@ describe('Subjects slice', () => {
         expect(result.subjectsList).toEqual([{
             id: 'foo',
             name: 'Математика',
+            image: 'bar',
         }]);
     });
 
@@ -74,6 +76,7 @@ describe('Subjects slice', () => {
             subjectsList: [{
                 id: 'foo',
                 name: 'Математика',
+                image: 'bar',
             }],
         };
 

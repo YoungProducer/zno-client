@@ -87,7 +87,7 @@ describe('Api', () => {
             .reply(200, response);
 
         /** Get result of subjectConfiguration method */
-        const result = await api.subjectConfiguration({ subjectName: 'Foo' });
+        const result = await api.subjectConfiguration({ id: 'Foo' });
 
         /** Assert response has status 200 */
         expect(result.status).toBe(200);
