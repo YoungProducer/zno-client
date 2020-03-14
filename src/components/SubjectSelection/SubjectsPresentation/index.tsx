@@ -7,6 +7,7 @@
 
 /** External imports */
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Stage,
     Layer,
@@ -35,6 +36,8 @@ const CustomCircle = ({
     hidden,
     imageUrl,
     name,
+    id,
+    history,
 }: {
     x: number;
     y: number;
@@ -42,6 +45,8 @@ const CustomCircle = ({
     hidden: boolean;
     imageUrl: string;
     name: string;
+    id: string;
+    history: any;
 }) => {
     const imageHeight = 40;
     const imageWidth = 40;
@@ -63,6 +68,10 @@ const CustomCircle = ({
         });
     }, [hidden]);
 
+    const clickHandle = () => {
+        history.push(`/subject-selection/subject-configuration?subject=${id}`);
+    };
+
     return (
         <>
             <Circle
@@ -81,6 +90,7 @@ const CustomCircle = ({
                 width={imageWidth}
                 height={imageHeight}
                 ref={node => image = node}
+                onClick={clickHandle}
             />
         </>
     );
@@ -102,6 +112,7 @@ const Component = ({
     subjectsList,
     searchValue,
 }: TSubjectPresentationProps) => {
+    const history = useHistory();
     const [circles, setCircle] = useState<ICircle[]>([]);
     const [icons, setIcons] = useState<ISmartIcon[]>(() => {
         const circlesData = getCirclesData(subjectsList.length);
@@ -166,15 +177,17 @@ const Component = ({
                 ))}
             </Layer>
             <Layer>
-                { icons.map(({ x, y, radius, hidden, name, image }, index) => (
+                { icons.map(({ x, y, radius, hidden, name, image, id }) => (
                     <CustomCircle
-                        key={index}
+                        key={id}
                         x={x}
                         y={y}
                         radius={radius}
                         hidden={hidden}
                         name={name}
                         imageUrl={image}
+                        id={id}
+                        history={history}
                     />
                 ))}
             </Layer>

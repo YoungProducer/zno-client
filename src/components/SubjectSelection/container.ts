@@ -18,6 +18,7 @@ import {
     selectSubjectsLoading,
     selectSubjectsList,
 } from 'store/selectors/subjects';
+import { selectIsLoggedIn } from 'store/selectors/auth';
 import { RootState, TSubjectList } from 'store/slices';
 
 /** Define styles as hook */
@@ -36,6 +37,7 @@ interface IOwnProps extends WithStyles<typeof styles> {}
 interface IStateProps {
     loading: boolean;
     subjectsList: TSubjectList;
+    loggedIn: boolean;
 }
 
 /** Props(actions) which component can dispatch */
@@ -53,6 +55,7 @@ export type TSubjectSelectionProps =
 const mapStateProps = (state: RootState): IStateProps => ({
     loading: selectSubjectsLoading(state),
     subjectsList: selectSubjectsList(state),
+    loggedIn: selectIsLoggedIn(state),
 });
 
 /** Create function which connect actions to the component */
