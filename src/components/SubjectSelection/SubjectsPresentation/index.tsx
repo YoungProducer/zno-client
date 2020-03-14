@@ -56,15 +56,17 @@ const CustomCircle = ({
     let image: any;
 
     useEffect(() => {
+        const duration = (Math.random() * (0.4 - 0.2) + 0.2).toFixed(1);
+
         circle.to({
+            duration,
             scaleX: hidden ? 0 : 1,
             scaleY: hidden ? 0 : 1,
-            duration: (Math.random() * (0.4 - 0.2) + 0.2).toFixed(1),
         });
         image.to({
+            duration,
             scaleX: hidden ? 0 : 1,
             scaleY: hidden ? 0 : 1,
-            duration: 0.2,
         });
     }, [hidden]);
 
