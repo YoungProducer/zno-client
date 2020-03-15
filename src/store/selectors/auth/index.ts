@@ -9,3 +9,4 @@ export * from './signup';
 export * from './signin';
 export * from './me';
 export * from './refresh';
+export * from './logout';

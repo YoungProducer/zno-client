@@ -18,6 +18,7 @@ import {
     selectSignInUser,
     selectSignInErrorFields,
     selectSignInFieldsMessages,
+    selectLogoutLoading,
     selectIsLoggedIn,
 } from '../auth';
 import {
@@ -233,6 +234,25 @@ describe('Auth', () => {
             const result = selectIsLoggedIn(store.getState() as RootState);
 
             /** Assert that result equals false */
+            expect(result).toBeFalsy();
+        });
+    });
+
+    describe('Logout selectors', () => {
+        test('selectLogoutLoading', () => {
+            /** Create mocked store */
+            const store = mockStore({
+                auth: {
+                    logout: {
+                        loading: false,
+                    },
+                },
+            } as RootState);
+
+            /** Get selector's result */
+            const result = selectLogoutLoading(store.getState() as RootState);
+
+            /** Assert result has right value */
             expect(result).toBeFalsy();
         });
     });
