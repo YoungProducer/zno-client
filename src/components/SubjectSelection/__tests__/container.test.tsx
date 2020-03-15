@@ -32,6 +32,11 @@ describe('SubjectSelection container', () => {
             loading: false,
             subjectsList: [],
         },
+        auth: {
+            signIn: {
+                user: null,
+            },
+        },
     } as RootState;
 
     /** Define middlewares */

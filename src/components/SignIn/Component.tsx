@@ -181,11 +181,19 @@ const useSignInElements = (props: TSignInProps) => {
             }
         }, [errorFields.password]);
 
+    /** Remember checkbox */
+    const [remember, setRemember] = useState<boolean>(false);
+    const handleChangeRemember =
+        useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+            setRemember(event.target.checked);
+        }, []);
+
     /** SignUp button handle */
     const handleFetchSignIn = useCallback(() => fetchSignIn({
         email,
         password,
-    }), [email, password]);
+        remember,
+    }), [email, password, remember]);
 
     return {
         emailField: {
@@ -200,6 +208,10 @@ const useSignInElements = (props: TSignInProps) => {
             error: errorFields.password,
             helperText: fieldsMessages.password,
         },
+        rememberCheckbox: {
+            onChange: handleChangeRemember,
+            value: remember,
+        },
         signInButton: {
             onClick: handleFetchSignIn,
         },
@@ -212,7 +224,7 @@ const Component = (props: TSignInProps) => {
     const classes = useStyles({});
 
     /** Get fields data from hook */
-    const { emailField, passwordField, signInButton } = useSignInElements(props);
+    const { emailField, passwordField, rememberCheckbox, signInButton } = useSignInElements(props);
 
     return (
         <div
@@ -268,6 +280,7 @@ const Component = (props: TSignInProps) => {
                                                 color='primary'
                                                 checkedIcon={<span className={classNames(classes.checkBoxIcon, classes.checkBoxСheckedIcon)} />}
                                                 icon={<span className={classes.checkBoxIcon}/>}
+                                                {...rememberCheckbox}
                                             />
                                         }
                                         label={`Запам'ятати мене`}

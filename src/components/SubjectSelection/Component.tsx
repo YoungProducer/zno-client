@@ -7,6 +7,7 @@
 
 /** External imports */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
@@ -22,7 +23,6 @@ import { TSubjectSelectionProps } from './container';
 import SubjectTile from './SubjectTile';
 import SubjectPresentation from './SubjectsPresentation';
 import Logo from 'img/logo';
-import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {

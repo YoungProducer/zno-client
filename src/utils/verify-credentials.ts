@@ -67,6 +67,7 @@ export const verifySignUpCredentials = (credentials: IFetchSignUpActionCredentia
 export interface IFetchSignInActionCredentials {
     email: string;
     password: string;
+    remember: boolean;
 }
 
 export const verifySignInCredentials = (credentials: IFetchSignInActionCredentials): TVerifyAuthCredentials => {

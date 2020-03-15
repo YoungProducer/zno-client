@@ -84,6 +84,7 @@ describe('SignIn component', () => {
         expect(fetchSignIn).toBeCalledWith({
             email: 'bar',
             password: 'foo',
+            remember: false,
         });
     });
 

@@ -13,6 +13,13 @@ import { shallow } from 'enzyme';
 import Component from '../Component';
 import { TSubjectSelectionProps } from '../container';
 
+/** Mock modules */
+jest.mock('react-router-dom', () => ({
+    useHistory: jest.fn(() => ({
+        push: jest.fn(),
+    })),
+}));
+
 describe('SubjectSelection component', () => {
     /** Create mock for function */
     const fetchSubjectsNames = jest.fn();
@@ -29,6 +36,7 @@ describe('SubjectSelection component', () => {
             name: 'math',
             image: 'bar',
         }],
+        loggedIn: false,
     };
 
     afterEach(() => {
