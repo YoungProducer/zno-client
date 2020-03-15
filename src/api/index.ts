@@ -46,6 +46,13 @@ class Api implements IApi {
             { withCredentials: true },
         )
 
+    logout = async () =>
+        await this.axiosInstance.post(
+            '/auth/user/logout',
+            {},
+            { withCredentials: true },
+        )
+
     subjects = async () =>
         await this.axiosInstance.get(
             '/subject/subjects',

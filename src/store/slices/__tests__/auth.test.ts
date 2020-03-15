@@ -10,6 +10,7 @@ import signUp from 'store/slices/auth/signup';
 import signIn, { TUser } from 'store/slices/auth/signin';
 import me from 'store/slices/auth/me';
 import refresh from 'store/slices/auth/refresh';
+import logout from 'store/slices/auth/logout';
 import {
     signUpLoadingAction,
     setSignUpErrorFieldsAction,
@@ -28,6 +29,8 @@ import {
     IMeInitialState,
     refreshLoadingAction,
     IRefreshInitialState,
+    logoutLoadingAction,
+    ILogoutInitialState,
 } from 'store/slices/auth';
 
 describe('Auth reducer', () => {
@@ -532,6 +535,34 @@ describe('Auth reducer', () => {
 
             /** Get result of dispatched action */
             const result = refresh(initialState, refreshLoadingAction(false));
+
+            /** Check is loading prop equals true */
+            expect(result.loading).toBeFalsy();
+        });
+    });
+
+    describe('Me reducer', () => {
+        test('Toggle loading to true', () => {
+            /** Define initial state */
+            const initialState: ILogoutInitialState = {
+                loading: false,
+            };
+
+            /** Get result of dispatched action */
+            const result = logout(initialState, logoutLoadingAction(true));
+
+            /** Check is loading prop equals true */
+            expect(result.loading).toBeTruthy();
+        });
+
+        test('Toggle loading to false', () => {
+            /** Define initial state */
+            const initialState: ILogoutInitialState = {
+                loading: true,
+            };
+
+            /** Get result of dispatched action */
+            const result = logout(initialState, logoutLoadingAction(false));
 
             /** Check is loading prop equals true */
             expect(result.loading).toBeFalsy();

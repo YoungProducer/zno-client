@@ -16,6 +16,7 @@ import {
     fetchSignUpAction,
     fetchSignInAction,
     fetchMeAction,
+    fetchLogoutAction,
 } from 'store/actionCreators/auth';
 
 describe('Auth async actions', () => {
@@ -137,6 +138,7 @@ describe('Auth async actions', () => {
             return store.dispatch(fetchSignInAction({
                 email: 'foo',
                 password: 'barbarbar',
+                remember: false,
             }) as any)
                 .then(() => {
                     /** Assert that array of dispatched actions equals to expectedActions */
@@ -165,6 +167,7 @@ describe('Auth async actions', () => {
             return store.dispatch(fetchSignInAction({
                 email: 'foo@gmail.com',
                 password: 'barbarbar',
+                remember: false,
             }) as any)
                 .then(() => {
                     /** Assert that array of dispatched actions equals to expectedActions */
@@ -190,6 +193,7 @@ describe('Auth async actions', () => {
             return store.dispatch(fetchSignInAction({
                 email: 'foo@gmail.com',
                 password: 'barbarbar',
+                remember: false,
             }) as any)
                 .then(() => {
                     /** Assert that array of dispatched actions equals to expectedActions */
@@ -278,6 +282,60 @@ describe('Auth async actions', () => {
                 /** Assert array of dispatched actions equals to expectedActions */
                 expect(store.getActions()).toEqual(expectedActions);
             });
+        });
+    });
+
+    describe('fetchLogoutAction', () => {
+        afterEach(() => {
+            axiosMock.reset();
+            store.clearActions();
+        });
+
+        test('Fetch with success response', () => {
+            /** Mock '/auth/user/logout' url */
+            axiosMock
+                .onPost('/auth/user/logout')
+                .reply(200);
+
+            /** Define expected actions */
+            const expectedActions = [{
+                type: 'Logout/logoutLoadingAction',
+                payload: true,
+            }, {
+                type: 'Logout/logoutLoadingAction',
+                payload: false,
+            }, {
+                type: 'SignIn/setUserDataAction',
+                payload: null,
+            }];
+
+            return store.dispatch(fetchLogoutAction() as any)
+                .then(() => {
+                    /** Assert array of dispatched actions equals to expectedActions */
+                    expect(store.getActions()).toEqual(expectedActions);
+                });
+        });
+
+        test('Fetch with error response', () => {
+            /** Mock '/auth/user/logout' url */
+            axiosMock
+                .onPost('/auth/user/logout')
+                .reply(400);
+
+            /** Define expected actions */
+            const expectedActions = [{
+                type: 'Logout/logoutLoadingAction',
+                payload: true,
+            }, {
+                type: 'Logout/logoutLoadingAction',
+                payload: false,
+            }];
+
+            return store.dispatch(fetchLogoutAction() as any)
+                .then(() => {
+                    /** Assert array of dispatched actions equals to expectedActions */
+                    expect(store.getActions()).toEqual(expectedActions);
+                });
         });
     });
 });

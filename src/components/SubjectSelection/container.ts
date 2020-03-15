@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 /** Application's imports */
+import { fetchLogoutAction } from 'store/actionCreators/auth';
 import { fetchSubjectsAction } from 'store/actionCreators/subjects';
 import {
     selectSubjectsLoading,
@@ -43,6 +44,7 @@ interface IStateProps {
 /** Props(actions) which component can dispatch */
 interface IDispatchProps {
     fetchSubjectsNames: () => void;
+    fetchLogout: () => void;
 }
 
 /** Declare type which describe all props pushed to the component */
@@ -61,6 +63,7 @@ const mapStateProps = (state: RootState): IStateProps => ({
 /** Create function which connect actions to the component */
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     fetchSubjectsNames: () => dispatch(fetchSubjectsAction()),
+    fetchLogout: () => dispatch(fetchLogoutAction()),
 });
 
 /**

@@ -129,6 +129,7 @@ const Component = (props: TSubjectSelectionProps) => {
         subjectsList,
         loggedIn,
         fetchSubjectsNames,
+        fetchLogout,
     } = props;
 
     const [seachValue, setSearchValue] = useState<string>('');
@@ -167,6 +168,7 @@ const Component = (props: TSubjectSelectionProps) => {
                                 <Button
                                     variant='text'
                                     className={classes.signUpButton}
+                                    onClick={fetchLogout}
                                 >
                                     Вийти
                                 </Button>

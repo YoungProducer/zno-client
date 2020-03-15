@@ -14,12 +14,14 @@ import signUp from './signup';
 import signIn from './signin';
 import me from './me';
 import refresh from './refresh';
+import logout from './logout';
 
 // Export all actions from all slices
 export * from './signup';
 export * from './signin';
 export * from './me';
 export * from './refresh';
+export * from './logout';
 
 // Export combined reducer related to auth
 export default combineReducers({
@@ -27,4 +29,5 @@ export default combineReducers({
     signIn,
     me,
     refresh,
+    logout,
 });

@@ -52,6 +52,19 @@ describe('Api', () => {
         expect(result.status).toBe(200);
     });
 
+    test('logout success', async () => {
+        /** Mock '/auth/user/logout' url */
+        mockAxios
+            .onPost('/auth/user/logout')
+            .reply(200);
+
+        /** Get result of logout method */
+        const result = await api.logout();
+
+        /** Assert that result has status 200 */
+        expect(result.status).toBe(200);
+    });
+
     test('subjectsNames success', async () => {
         /** Mock '/subject/names url */
         mockAxios

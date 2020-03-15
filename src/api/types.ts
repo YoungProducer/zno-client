@@ -29,4 +29,5 @@ export interface IApi {
     subjects(): Promise<AxiosResponse>;
     subjectConfiguration(credentials: ISubjectConfigurationCredentials): Promise<AxiosResponse>;
     me(): Promise<AxiosResponse>;
+    logout(): Promise<AxiosResponse>;
 }
