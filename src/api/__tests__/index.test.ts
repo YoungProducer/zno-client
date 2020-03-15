@@ -96,7 +96,7 @@ describe('Api', () => {
 
         /** Mock /subjects/configuration/{subject-name} url */
         mockAxios
-            .onGet('/subjects/configuration/Foo')
+            .onGet('/subject-config/config/Foo')
             .reply(200, response);
 
         /** Get result of subjectConfiguration method */

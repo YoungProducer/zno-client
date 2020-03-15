@@ -41,7 +41,7 @@ describe('fetchSubjectConfigurationAction', () => {
         /** Mock /subjects/configuration/{subject-name} */
         const id = 'foo';
         mockAxios
-            .onGet(`/subjects/configuration/${id}`)
+            .onGet(`/subject-config/config/${id}`)
             .reply(200, {
                 name: 'foo',
                 themes: ['bar'],
@@ -76,7 +76,7 @@ describe('fetchSubjectConfigurationAction', () => {
         /** Mock /subjects/configuration/{subject-name} */
         const id = 'foo';
         mockAxios
-            .onGet(`/subjects/configuration/${id}`)
+            .onGet(`/subject-config/config/${id}`)
             .reply(404);
 
         /** Define expected actions */
