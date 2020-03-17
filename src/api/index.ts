@@ -20,42 +20,48 @@ class Api implements IApi {
     axiosInstance: AxiosInstance;
 
     constructor() {
+        const mode = process.env.NODE_ENV || 'production';
+
+        const baseURL = mode === 'production'
+            ? `${process.env.API_ENDPOINT}`
+            : 'http://localhost:4000/api';
+
         this.axiosInstance = axios.create({
-            baseURL: 'http://localhost:4000',
+            baseURL,
             timeout: 10000,
         });
     }
 
     signup = async (credentials: ISignUpCredentials) =>
         await this.axiosInstance.post(
-            '/auth/user/signup',
+            'api/auth/user/signup',
             { ...credentials },
             { withCredentials: true },
         )
 
     signin = async (credentials: ISignInCredentials) =>
         await this.axiosInstance.post(
-            '/auth/user/signin',
+            'api/auth/user/signin',
             { ...credentials },
             { withCredentials: true },
         )
 
     me = async () =>
         await this.axiosInstance.get(
-            '/auth/user/me',
+            'api/auth/user/me',
             { withCredentials: true },
         )
 
     logout = async () =>
         await this.axiosInstance.post(
-            '/auth/user/logout',
+            'api/auth/user/logout',
             {},
             { withCredentials: true },
         )
 
     subjects = async () =>
         await this.axiosInstance.get(
-            '/subject/subjects',
+            'api/subject/subjects',
             { withCredentials: true },
         )
 
@@ -64,7 +70,7 @@ class Api implements IApi {
      */
     subjectConfiguration = async (credentials: ISubjectConfigurationCredentials) =>
         await this.axiosInstance.get(
-            `/subject-config/config/${credentials.id}`,
+            `api/subject-config/config/${credentials.id}`,
             { withCredentials: true },
         )
 }

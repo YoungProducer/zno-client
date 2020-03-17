@@ -18,7 +18,7 @@ import testState from './testState';
 
 const createStore = () => {
     /** Extract env variable */
-    const useTestState: boolean = JSON.parse(process.env.REACT_USE_TEST_STATE);
+    const useTestState: string = process.env.REACT_USE_TEST_STATE || 'false';
 
     /** Define middlewares */
     const midlleware = getDefaultMiddleware({
@@ -38,7 +38,7 @@ const createStore = () => {
      * If useTestState equals true load testState
      * in other case set preloadedState as undefined.
      */
-    const preloadedState = useTestState ? testState : undefined;
+    const preloadedState = useTestState === 'true' ? testState : undefined;
 
     return configureStore({
         preloadedState,

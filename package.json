@@ -5,7 +5,7 @@
   "author": "Bezrukov Olexandr",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production",
+    "build": "rm -rf ./build && webpack --mode production",
     "test": "jest --watchAll --updateSnapshot --detectOpenHandles"
   },
   "license": "MIT",
