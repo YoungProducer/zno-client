@@ -38,10 +38,10 @@ describe('fetchSubjectConfigurationAction', () => {
     });
 
     test('Api call with success response', () => {
-        /** Mock /subjects/configuration/{subject-name} */
+        /** Mock api/subject-config/{subject-id} */
         const id = 'foo';
         mockAxios
-            .onGet(`/subject-config/config/${id}`)
+            .onGet(`api/subject-config/${id}`)
             .reply(200, {
                 name: 'foo',
                 themes: ['bar'],
@@ -73,10 +73,10 @@ describe('fetchSubjectConfigurationAction', () => {
     });
 
     test('Api call with error', () => {
-        /** Mock /subjects/configuration/{subject-name} */
+        /** Mock api/subject-config/${subject-id} */
         const id = 'foo';
         mockAxios
-            .onGet(`/subject-config/config/${id}`)
+            .onGet(`api/subject-config/${id}`)
             .reply(404);
 
         /** Define expected actions */

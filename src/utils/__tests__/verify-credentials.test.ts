@@ -132,6 +132,7 @@ describe('Verify auth credentials', () => {
             const input: IFetchSignInActionCredentials = {
                 email: 'foo',
                 password: '12345678',
+                remember: false,
             };
 
             /** Define expected value */
@@ -151,6 +152,7 @@ describe('Verify auth credentials', () => {
             const input: IFetchSignInActionCredentials = {
                 email: 'foo@gmail.com',
                 password: '123',
+                remember: false,
             };
 
             /** Define expected value */
@@ -170,6 +172,7 @@ describe('Verify auth credentials', () => {
             const input: IFetchSignInActionCredentials = {
                 email: 'foo',
                 password: '123',
+                remember: false,
             };
 
             /** Define expected value */
@@ -190,6 +193,7 @@ describe('Verify auth credentials', () => {
             const input: IFetchSignInActionCredentials = {
                 email: 'foo@gmail.com',
                 password: '12345678',
+                remember: false,
             };
 
             /** Assert that functions returns 'null' because both fields are filled correctly */

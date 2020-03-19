@@ -40,7 +40,7 @@ describe('fetchSubjectsAction', () => {
     test('Fetch subjects names with success response', () => {
         /** Mock subjects endpoint to send success response */
         axiosMock
-            .onGet('/subject/subjects')
+            .onGet('api/subject')
             .reply(200, [{
                 id: 'foo',
                 name: 'Математика',
@@ -74,7 +74,7 @@ describe('fetchSubjectsAction', () => {
     test('Fetch subjects names with error', () => {
         /** Mock subjects endpoint to send success response */
         axiosMock
-            .onGet('/subject/subjects')
+            .onGet('api/subject')
             .reply(404);
 
         /** Define expected actions */

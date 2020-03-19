@@ -21,9 +21,9 @@ describe('Api', () => {
     });
 
     test('signup success', async () => {
-        /** Mock '/auth/user/signup' url */
+        /** Mock 'api/auth/signup' url */
         mockAxios
-            .onPost('/auth/user/signup')
+            .onPost('api/auth/signup')
             .reply(200);
 
         /** Get result of signup method */
@@ -37,9 +37,9 @@ describe('Api', () => {
     });
 
     test('signup success', async () => {
-        /** Mock '/auth/user/signin' url */
+        /** Mock 'api/auth/signin' url */
         mockAxios
-            .onPost('/auth/user/signin')
+            .onPost('api/auth/signin')
             .reply(200);
 
         /** Get result of signin method */
@@ -53,9 +53,9 @@ describe('Api', () => {
     });
 
     test('logout success', async () => {
-        /** Mock '/auth/user/logout' url */
+        /** Mock 'api/auth/logout' url */
         mockAxios
-            .onPost('/auth/user/logout')
+            .onPost('api/auth/logout')
             .reply(200);
 
         /** Get result of logout method */
@@ -66,9 +66,9 @@ describe('Api', () => {
     });
 
     test('subjectsNames success', async () => {
-        /** Mock '/subject/names url */
+        /** Mock 'api/subject/names url */
         mockAxios
-            .onGet('/subject/subjects')
+            .onGet('api/subject/subjects')
             .reply(200, ['foo']);
 
         /** Get result of subjectsNames method */
@@ -94,9 +94,9 @@ describe('Api', () => {
             },
         };
 
-        /** Mock /subject-config/config/{subject-name} url */
+        /** Mock api/subject-config/config/{subject-name} url */
         mockAxios
-            .onGet('/subject-config/config/Foo')
+            .onGet('api/subject-config/Foo')
             .reply(200, response);
 
         /** Get result of subjectConfiguration method */

@@ -34,34 +34,34 @@ class Api implements IApi {
 
     signup = async (credentials: ISignUpCredentials) =>
         await this.axiosInstance.post(
-            'api/auth/user/signup',
+            'api/auth/signup',
             { ...credentials },
             { withCredentials: true },
         )
 
     signin = async (credentials: ISignInCredentials) =>
         await this.axiosInstance.post(
-            'api/auth/user/signin',
+            'api/auth/signin',
             { ...credentials },
             { withCredentials: true },
         )
 
     me = async () =>
         await this.axiosInstance.get(
-            'api/auth/user/me',
+            'api/auth/me',
             { withCredentials: true },
         )
 
     logout = async () =>
         await this.axiosInstance.post(
-            'api/auth/user/logout',
+            'api/auth/logout',
             {},
             { withCredentials: true },
         )
 
     subjects = async () =>
         await this.axiosInstance.get(
-            'api/subject/subjects',
+            'api/subject',
             { withCredentials: true },
         )
 
@@ -70,7 +70,7 @@ class Api implements IApi {
      */
     subjectConfiguration = async (credentials: ISubjectConfigurationCredentials) =>
         await this.axiosInstance.get(
-            `api/subject-config/config/${credentials.id}`,
+            `api/subject-config/${credentials.id}`,
             { withCredentials: true },
         )
 }

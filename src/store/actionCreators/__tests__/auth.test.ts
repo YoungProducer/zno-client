@@ -61,7 +61,7 @@ describe('Auth async actions', () => {
         test('Fetch signup with success status', () => {
             // Mock url to get success response
             axiosMock
-                .onPost('/auth/user/signup')
+                .onPost('api/auth/signup')
                 .reply(200, 'Success');
 
             // Define expected actions
@@ -87,7 +87,7 @@ describe('Auth async actions', () => {
         test('Fetch signup with error', () => {
             // Mock url to get success response
             axiosMock
-                .onPost('/auth/user/signup')
+                .onPost('api/auth/signup')
                 .reply(404);
 
             // Define expected actions
@@ -147,9 +147,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch sign in with succes response', () => {
-            /** Mock '/auth/user/signin' url */
+            /** Mock 'api/auth/signin' url */
             axiosMock
-                .onPost('/auth/user/signin')
+                .onPost('api/auth/signin')
                 .reply(200, { email: 'foo@gmail.com' });
 
             /** Define expected actions */
@@ -176,9 +176,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch sign in with error', () => {
-            /** Mock '/auth/user/signin' url */
+            /** Mock 'api/auth/signin' url */
             axiosMock
-                .onPost('/auth/user/signin')
+                .onPost('api/auth/signin')
                 .reply(403, 'error');
 
             /** Define expected actions */
@@ -209,9 +209,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch with success response', () => {
-            /** Mock '/auth/user/me' url */
+            /** Mock 'api/auth/me' url */
             axiosMock
-                .onGet('/auth/user/me')
+                .onGet('api/auth/me')
                 .reply(200, {
                     email: 'foo@gmail.com',
                 });
@@ -238,9 +238,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch with error', () => {
-            /** Mock '/auth/user/me' url */
+            /** Mock 'api/auth/me' url */
             axiosMock
-                .onGet('/auth/user/me')
+                .onGet('api/auth/me')
                 .reply(403);
 
             /** Define expected actions */
@@ -260,9 +260,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch with status 401(Unathorized)', () => {
-            /** Mock '/auth/user/me' url */
+            /** Mock 'api/auth/me' url */
             axiosMock
-                .onGet('/auth/user/me')
+                .onGet('api/auth/me')
                 .reply(401);
 
             /** Define expected actions */
@@ -292,9 +292,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch with success response', () => {
-            /** Mock '/auth/user/logout' url */
+            /** Mock 'api/auth/logout' url */
             axiosMock
-                .onPost('/auth/user/logout')
+                .onPost('api/auth/logout')
                 .reply(200);
 
             /** Define expected actions */
@@ -317,9 +317,9 @@ describe('Auth async actions', () => {
         });
 
         test('Fetch with error response', () => {
-            /** Mock '/auth/user/logout' url */
+            /** Mock 'api/auth/logout' url */
             axiosMock
-                .onPost('/auth/user/logout')
+                .onPost('api/auth/logout')
                 .reply(400);
 
             /** Define expected actions */
