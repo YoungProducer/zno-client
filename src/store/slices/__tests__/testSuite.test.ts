@@ -14,6 +14,8 @@ import testSuite, {
     setExplanationsImagesAction,
     setRightAnswersAction,
     setAnswersAction,
+    selectAnswerByIndexAction,
+    giveAnswerByIndexAction,
     ITestSuiteInitialState,
 } from '../testSuite';
 
@@ -124,5 +126,86 @@ describe('TestSuite slice', () => {
         /** Assert selectedAnswers and givedAnswers are empty arrays */
         expect(result.selectedAnswers).toHaveLength(0);
         expect(result.givedAnswers).toHaveLength(0);
+    });
+
+    test('selectAnswerByIndexAction with payload for tasks with one right answer should correctly set it to state', () => {
+        /** Define initial state */
+        const initialState = {
+            selectedAnswers: [['']],
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, selectAnswerByIndexAction({
+            id: 0,
+            answer: '0',
+        }));
+
+        /** Assert selectedAnswers has right keys */
+        expect(result.selectedAnswers).toEqual([['0']]);
+    });
+
+    test('selectAnswerByIndexAction with payload for tasks with many right answers should correctly set it to state', () => {
+        /** Define initial state */
+        const initialState = {
+            selectedAnswers: [['', '', '', '']],
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, selectAnswerByIndexAction({
+            id: 0,
+            answerIndex: 2,
+            answer: '0',
+        }));
+
+        /** Assert selectedAnswers has right keys */
+        expect(result.selectedAnswers).toEqual([['', '', '0', '']]);
+    });
+
+    test('selectAnswerByIndexAction without answer prop in payload should set current answer to default', () => {
+        /** Define initial state */
+        const initialState = {
+            selectedAnswers: [['', '1']],
+            givedAnswers: [['', '']],
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, selectAnswerByIndexAction({
+            id: 0,
+            answerIndex: 1,
+        }));
+
+        /** Assert selectedAnswers property has right keys */
+        expect(result.selectedAnswers).toEqual([['', '']]);
+    });
+
+    test('selectAnswerByIndexAction without answer prop should also set gived answer to default', () => {
+        /** Define initial state */
+        const initialState = {
+            selectedAnswers: [['3', '1']],
+            givedAnswers: [['', '']],
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, selectAnswerByIndexAction({
+            id: 0,
+            answerIndex: 1,
+        }));
+
+        /** Assert givedAnswers property has right keys */
+        expect(result.givedAnswers).toEqual([['', '']]);
+    });
+
+    test('giveAnswerByIndexAction should set to givedAnswers answer array identical to array in selectedAnswers', () => {
+        /** Define initial state */
+        const initialState = {
+            selectedAnswers: [['3', '1']],
+            givedAnswers: [['', '']],
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, giveAnswerByIndexAction(0));
+
+        /** Assert givedAnswers property has right keys */
+        expect(result.givedAnswers).toEqual([['3', '1']]);
     });
 });

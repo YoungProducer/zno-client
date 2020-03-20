@@ -27,12 +27,30 @@ interface ISetTestSuiteImagesAction {
     payload: string[];
 }
 
-interface ISetRightAnswersAction {
+interface ISetAnswersActions {
     payload: (string[])[];
 }
 
-interface IInitTestSuiteAnswersAction {
-    payload: (string[])[];
+export interface ISetAnswerByIdPayload {
+    answer: string;
+    /**
+     * Task index.
+     */
+    id: number;
+    /**
+     * Answer index.
+     * Index of element in answer array.
+     * [['foo', 'bar']] => index = 1 => 'bar'
+     */
+    answerIndex: number;
+}
+
+interface ISetAnswerByIdAction {
+    payload: ISetAnswerByIdPayload;
+}
+
+interface IGiveAnswerByIdAction {
+    payload: number;
 }
 
 /** Declare interface for initial state */
@@ -169,7 +187,7 @@ const testSuite = createSlice({
         setRightAnswersAction: {
             reducer: (
                 state: ITestSuiteInitialState,
-                { payload }: ISetRightAnswersAction,
+                { payload }: ISetAnswersActions,
             ) => ({
                 ...state,
                 rightAnswers: payload,
@@ -188,7 +206,7 @@ const testSuite = createSlice({
         setAnswersAction: {
             reducer: (
                 state: ITestSuiteInitialState,
-                { payload }: IInitTestSuiteAnswersAction,
+                { payload }: ISetAnswersActions,
             ) => ({
                 ...state,
                 selectedAnswers: payload,
@@ -198,6 +216,73 @@ const testSuite = createSlice({
                 payload: answers ? answers.map(answer => answer.map((() => ''))) : [],
             }),
         },
+        /**
+         * Set selection answer by index.
+         * If answer doesn't exist
+         * then el in answer array in selectedAnswers prop
+         * will be setted to default('')
+         * and answer array in givedAnswers prop
+         * will be setted to default
+         * it means that all answers
+         * will be setted to default('').
+         * For example:
+         *  current state = {
+         *    selectedAnswers: ['0', '3', '4', '5'],
+         *    givedAnswers: ['0', '3', '4', '5'].
+         *  },
+         *  id = 0, answerIndex = 1, answer = undefined,
+         *  new state = {
+         *    selectedAnswers: ['0', '', '4', '5']
+         *    givedAnswers: ['', '', '', '']
+         *  }.
+         */
+        selectAnswerByIndexAction: {
+            reducer: (
+                state: ITestSuiteInitialState,
+                { payload }: ISetAnswerByIdAction,
+            ) => ({
+                ...state,
+                selectedAnswers: state.selectedAnswers.map((answer, index) =>
+                    index !== payload.id
+                        ? answer
+                        : answer.map((el, answerIndex) =>
+                            answerIndex === payload.answerIndex
+                                ? payload.answer
+                                : el,
+                            ),
+                ),
+                givedAnswers: payload.answer !== ''
+                    ? state.givedAnswers
+                    : state.givedAnswers.map((answer, index) =>
+                        index !== payload.id
+                            ? answer
+                            : answer.map(() => ''),
+                    ),
+            }),
+            prepare: ({ id, answer, answerIndex }: {
+                answer?: string;
+                id: number;
+                answerIndex?: number;
+            }) => ({
+                payload: ({
+                    id,
+                    answerIndex: answerIndex || 0,
+                    answer: answer || '',
+                }),
+            }),
+        },
+        /**
+         * Set gived answer by index.
+         */
+        giveAnswerByIndexAction: (
+            state: ITestSuiteInitialState,
+            { payload }: IGiveAnswerByIdAction,
+        ) => ({
+            ...state,
+            givedAnswers: state.givedAnswers.map((answer, index) =>
+                index === payload ? state.selectedAnswers[payload] : answer,
+            ),
+        }),
     },
 });
 
@@ -210,6 +295,8 @@ export const {
     setExplanationsImagesAction,
     setRightAnswersAction,
     setAnswersAction,
+    selectAnswerByIndexAction,
+    giveAnswerByIndexAction,
 } = testSuite.actions;
 
 /** Export reducer */
