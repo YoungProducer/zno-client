@@ -506,7 +506,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                                 color='secondary'
                                 {...selectSubSubjectField}
                                 margin='none'
-                                variant='standard'
+                                variant='outlined'
                                 {...{ 'data-testid': 'select-sub-subject' }}
                             >
                                 {subSubjects}
@@ -523,7 +523,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                                 select={true}
                                 {...selectThemeField}
                                 margin='none'
-                                variant='standard'
+                                variant='outlined'
                                 color='secondary'
                                 {...{ 'data-testid': 'select-subject-theme' }}
                             >

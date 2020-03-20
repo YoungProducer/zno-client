@@ -47,6 +47,6 @@ describe('SubjectTile component', () => {
         /** Simulate */
         tree.find(`[data-testid='subject-tile-button']`).simulate('click');
 
-        expect(push).toHaveBeenCalledWith('/subject-selection/subject-configuration?subject=foo');
+        expect(push).toHaveBeenCalledWith('/subject-configuration/foo');
     });
 });

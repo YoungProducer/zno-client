@@ -25,6 +25,9 @@ jest.mock('react-router-dom', () => ({
     useHistory: jest.fn(() => ({
         push,
     })),
+    useParams: () => ({
+        subjectId: 'foo',
+    }),
 }));
 
 describe('SubjectConfigurationModal component', () => {
@@ -72,17 +75,6 @@ describe('SubjectConfigurationModal component', () => {
 
         /** Assert testType has correct value */
         expect(tree.find(`[data-testid='select-test-type']`).props().value).toEqual(ETestTypes.THEMES);
-    });
-
-    test('Dialog onClose handler', () => {
-        /** Mount component */
-        const tree = mount(<Component {...requiredProps} />);
-
-        /** Simulate click outside of dialog */
-        tree.find(Backdrop).simulate('click');
-
-        /** Assert toggleSubjectConfigurationDialog have been called with right arg  */
-        expect(toggleSubjectConfigurationDialog).toHaveBeenCalledWith(false);
     });
 
     test('Dialog close button handler', () => {
@@ -397,7 +389,7 @@ describe('SubjectConfigurationModal component', () => {
         expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('bar');
     });
 
-    test(`If property 'trainings' is null exam value should be ''`, () => {
+    test(`If property 'trainings' is null exam value shouldn't be displayed`, () => {
         /** Render component */
         const tree = shallow(
             <Component
@@ -417,11 +409,11 @@ describe('SubjectConfigurationModal component', () => {
         tree.find(`[data-testid='select-exam-type']`)
             .simulate('change', { target: { value: EExamTypes.TRAININGS } });
 
-        /** Assert select-exam text field has right value */
-        expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('');
+        /** Assert select-exam text field is not displayed */
+        expect(tree.exists(`[data-testid='select-exam']`)).toBeFalsy();
     });
 
-    test(`If property 'sessions' is null exam value should be ''`, () => {
+    test(`If property 'sessions' is null exam value shouldn't be displayed`, () => {
         /** Render component */
         const tree = shallow(
             <Component
@@ -441,8 +433,8 @@ describe('SubjectConfigurationModal component', () => {
         tree.find(`[data-testid='select-exam-type']`)
             .simulate('change', { target: { value: EExamTypes.SESSIONS } });
 
-        /** Assert select-exam text field has right value */
-        expect(tree.find(`[data-testid='select-exam']`).props().value).toEqual('');
+        /** Assert select-exam text field is not displayed */
+        expect(tree.exists(`[data-testid='select-exam']`)).toBeFalsy();
     });
 
     test(`Check is after exam selection select-exam field has right value`, () => {

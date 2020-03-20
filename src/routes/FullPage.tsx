@@ -6,8 +6,12 @@
  * and have max width = 100 vh.
  */
 
+/** External imports */
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+/** Application's imports */
+import Logo from 'img/logo';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -16,6 +20,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         height: '100vh',
         background: '#f4f6f9',
         padding: theme.spacing(6),
+    },
+    container: {
+        display: 'flex',
+    },
+    logo: {
+        paddingBottom: theme.spacing(1),
     },
 }));
 
@@ -26,7 +36,13 @@ interface IFullPageProps {
 const Component = ({ children }: IFullPageProps) => {
     const clasess = useStyles({});
 
-    return (<div className={clasess.root}>{children}</div>);
+    return (
+        <div className={clasess.root}>
+            <div className={clasess.logo}><Logo /></div>
+            <div className={clasess.container}>
+                {children}
+            </div>
+        </div>);
 };
 
 export default Component;

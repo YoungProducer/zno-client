@@ -3,12 +3,8 @@
 exports[`SubjectConfiguration route Is match snapshot 1`] = `
 <Fragment>
   <CssBaseline />
-  <WithStyles(Component) />
-  <WithStyles(ForwardRef(Container))
-    maxWidth="lg"
-  >
+  <Component>
     <Connect(Component) />
-    <WithStyles(Connect(Component)) />
-  </WithStyles(ForwardRef(Container))>
+  </Component>
 </Fragment>
 `;
