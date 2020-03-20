@@ -85,7 +85,7 @@ describe('SignIn container', () => {
             componentWrapper.find('TestComponent').props() as TSignInProps;
 
         /** Invoke fetchSignIn */
-        fetchSignIn({ email: 'foo', password: 'foo' });
+        fetchSignIn({ email: 'foo', password: 'foo', remember: false });
 
         /** Assert the correct keys have been added to the component */
         expect(store.getActions()).toEqual([MOCK_ACTION]);

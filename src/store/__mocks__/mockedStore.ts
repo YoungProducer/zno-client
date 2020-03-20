@@ -52,6 +52,9 @@ const mockedStore = mockStore({
         refresh: {
             loading: false,
         },
+        logout: {
+            loading: false,
+        },
     },
     subjects: {
         loading: false,

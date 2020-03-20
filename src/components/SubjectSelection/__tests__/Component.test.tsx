@@ -23,10 +23,12 @@ jest.mock('react-router-dom', () => ({
 describe('SubjectSelection component', () => {
     /** Create mock for function */
     const fetchSubjectsNames = jest.fn();
+    const fetchLogout = jest.fn();
 
     /** Define required props */
     const requiredProps: TSubjectSelectionProps = {
         fetchSubjectsNames,
+        fetchLogout,
         classes: {
             root: 'root',
         },
