@@ -71,7 +71,7 @@ const CustomCircle = ({
     }, [hidden]);
 
     const clickHandle = () => {
-        history.push(`/subject-selection/subject-configuration?subject=${id}`);
+        history.push(`/subject-configuration/${id}`);
     };
 
     return (

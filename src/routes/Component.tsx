@@ -36,6 +36,18 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
             >
                 <SubjectConfiguration />
             </PrivateRoute>
+            <PrivateRoute
+                exact
+                path='/subject-configuration/:subjectId'
+            >
+                <SubjectConfiguration />
+            </PrivateRoute>
+            <PrivateRoute
+                exact
+                path='/test-suite/:testSuiteId'
+            >
+                Test suite
+            </PrivateRoute>
             <Route exact path='/auth/signin' component={SignIn} />
             <Route exact path='/auth/signup'>
                 { isLoggedIn

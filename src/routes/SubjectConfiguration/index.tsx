@@ -11,19 +11,22 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 /** Application's imports */
+import FullPage from '../FullPage';
 import AppBar from 'components/AppBar';
 import SubjectSelection from 'components/SubjectSelection';
-import SubjectConfiguration from 'components/modals/SubjectConfigurationModal';
+import SubjectConfiguration from 'components/TestSuiteSide/SubjectConfiguration';
 
 /** Create component */
 const Component = () => (
     <React.Fragment>
         <CssBaseline />
-        <AppBar />
-        <Container maxWidth='lg'>
+        {/* <AppBar /> */}
+        {/* <Container maxWidth='lg'> */}
+        <FullPage>
             <SubjectConfiguration />
-            <SubjectSelection />
-        </Container>
+        </FullPage>
+            {/* <SubjectSelection /> */}
+        {/* </Container> */}
     </React.Fragment>
 );
 

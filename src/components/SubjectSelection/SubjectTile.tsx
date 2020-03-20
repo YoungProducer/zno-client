@@ -48,7 +48,7 @@ const Component = ({ subject }: ISubjectTileProps) => {
     const history = useHistory();
 
     const clickHandle = () => {
-        history.push(`/subject-selection/subject-configuration?subject=${subject.id}`);
+        history.push(`/subject-configuration/${subject.id}`);
     };
 
     return (

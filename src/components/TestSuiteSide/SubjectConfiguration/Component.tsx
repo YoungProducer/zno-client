@@ -8,7 +8,8 @@
 
 /** External imports */
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import classNames from 'classnames';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -22,6 +23,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/HomeOutlined';
 import { makeStyles, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 
@@ -31,6 +34,7 @@ import {
     EExamTypes,
     TSubjectConfigurationModalProps,
 } from './container';
+import Wrapper from '../Wrapper';
 
 /** Define Material UI styles as hook */
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -43,12 +47,31 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     textField: {
         minWidth: 240,
+        width: '100%',
         '& .MuiInputBase-root': {
             borderRadius: 0,
         },
     },
-    dialogPaper: {
-        borderRadius: 0,
+    dialog: {
+        borderRadius: 40,
+        width: 500,
+        background: '#fff',
+        padding: theme.spacing(2),
+    },
+    dialogHeader: {
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        display: 'flex',
+        alignItems: 'center',
+    },
+    selectionBlock: {
+        // marginTop: theme.spacing(2),
+    },
+    subjectName: {
+        color: '#b19898',
+    },
+    button: {
+        filter: `drop-shadow(0px 3px 2.5px rgba(0,0,0,0.16))`,
     },
     declineButton: {
         backgroundColor: red[500],
@@ -57,6 +80,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             backgroundColor: red[600],
         },
     },
+    icon: {
+        color: '#333',
+    },
+    homeIcon: {
+        marginLeft: -12,
+    },
 }));
 
 const styles = (theme: Theme) =>
@@ -64,6 +93,9 @@ const styles = (theme: Theme) =>
         root: {
             margin: 0,
             padding: theme.spacing(2),
+        },
+        typography: {
+            color: '#867272',
         },
     });
 
@@ -77,7 +109,9 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
     const { children, classes, ...other } = props;
     return (
         <MuiDialogTitle disableTypography className={classes.root} {...other}>
-            <Typography variant="h6">{children}</Typography>
+            <Typography variant="h5" className={classes.typography}>
+                {children}
+            </Typography>
         </MuiDialogTitle>
     );
 });
@@ -85,8 +119,8 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 const DialogContent = withStyles((theme: Theme) => ({
     root: {
         padding: theme.spacing(2),
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
     },
 }))(MuiDialogContent);
 
@@ -108,6 +142,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     const {
         isLoggedIn,
         dialogVisible,
+        subjectName,
         subjectThemes,
         subjectExams,
         subSubjectsNames,
@@ -118,6 +153,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     const location = useLocation();
     const history = useHistory();
+    const { subjectId } = useParams();
 
     /**
      * Automaticaly open this dialog.
@@ -128,13 +164,10 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     useEffect(() => {
         if (!isLoggedIn) history.push('/auth/signin');
 
-        /** Get subject id from url search */
-        const subjectId = new URLSearchParams(location.search).get('subject');
-
         /** Open dialog */
         toggleSubjectConfigurationDialog(true);
 
-        /** Get subject configuration by subject name */
+        /** Get subject configuration by subject id */
         fetchSubjectConfiguration({ id: subjectId });
     }, []);
 
@@ -168,10 +201,11 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
                 }
 
                 if (subSubject !== '' && subSubjectsThemes !== null) {
-                    setTheme(subSubjectsThemes[subSubject] ? subSubjectsThemes[subSubject][0] : '');
+                    setSubSubject(subSubjectsNames[0]);
+                    setTheme(subSubjectsThemes[subSubjectsNames[0]] ? subSubjectsThemes[subSubjectsNames[0]][0] : '');
                 }
             }
-        }, [subjectThemes, subSubject, subSubjectsThemes]);
+        }, [subjectThemes, subSubject, subSubjectsThemes, subSubjectsNames]);
 
     /** Handle onChange event of sub-subject text-field */
     const handleChangeSubSubject = useCallback(
@@ -278,6 +312,18 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     [testType, subjectExams]);
 
     /**
+     * Responsible for displaying selection text field
+     * which allows to select exam.
+     */
+    const displayExamSelection = useMemo(() =>
+        testType === ETestTypes.EXAMS
+        && subjectExams !== null
+        && examType !== '' as EExamTypes
+        && ((examType === EExamTypes.SESSIONS && subjectExams.sessions !== null && subjectExams.sessions)
+        || (examType === EExamTypes.TRAININGS && subjectExams.trainings !== null && subjectExams.trainings)),
+    [testType, subjectExams, exam]);
+
+    /**
      * Memoized value which returns list of exams
      * from sessions or traingings
      */
@@ -317,8 +363,8 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     /** */
     const allowGoToTest = useMemo(() =>
         testType !== '' as ETestTypes
-        && ((theme !== '' && displayThemeSelection)
-        || (exam !== '' && displayExamTypeSelection)),
+        && ((theme && theme !== '' && displayThemeSelection)
+        || (exam && exam !== '' && displayExamTypeSelection)),
     [testType, exam, theme]);
 
     /** Handler for dialog onClose event */
@@ -335,37 +381,41 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         }
     }, [allowGoToTest]);
 
+    const redirectToHome = () => history.push('/');
+
     return {
         displayThemeSelection,
         displaySubSubjectSelection,
         displayExamTypeSelection,
+        displayExamSelection,
         subSubjects,
         themes,
         exams,
         allowGoToTest,
+        redirectToHome,
         handleGoToTest,
         dialog: {
             open: dialogVisible,
             onClose: handleOnClose,
         },
         selectTypeField: {
-            value: testType,
+            value: testType || '',
             onChange: handleChangeTestType,
         },
         selectSubSubjectField: {
-            value: subSubject,
+            value: subSubject || '',
             onChange: handleChangeSubSubject,
         },
         selectThemeField: {
-            value: theme,
+            value: theme || '',
             onChange: handleChangeTheme,
         },
         selectExamTypeField: {
-            value: examType,
+            value: examType || '',
             onChange: handleChangeExamType,
         },
         selectExamField: {
-            value: exam,
+            value: exam || '',
             onChange: handleChangeExam,
         },
     };
@@ -374,6 +424,8 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 /** Create component */
 const Component = (props: TSubjectConfigurationModalProps) => {
     const classes = useStyles({});
+
+    const { subjectName } = props;
 
     /** Get elements from custom hook */
     const {
@@ -389,84 +441,98 @@ const Component = (props: TSubjectConfigurationModalProps) => {
         displayThemeSelection,
         displaySubSubjectSelection,
         displayExamTypeSelection,
+        displayExamSelection,
         allowGoToTest,
         handleGoToTest,
+        redirectToHome,
     } = useSubjectConfigurationElements(props);
 
     return (
-        <Dialog
-            {...dialog}
+        <Wrapper
+            // {...dialog}
             aria-labelledby='subject-config-title'
             aria-describedby=''
-            PaperProps={{
-                className: classes.dialogPaper,
-            }}
+            // className={classes.dialog}
         >
-            <DialogTitle id='subject-config-title'>
-                Налаштування тесту
-            </DialogTitle>
-            <DialogContent>
-                <FormControl component='fieldset' className={classes.block}>
-                    <FormLabel component='legend'>Оберіть тип тесту</FormLabel>
-                    <RadioGroup
-                        aria-label='select-test-type'
-                        name='select-test-type'
-                        data-testid='select-test-type'
-                        {...selectTypeField}
-                    >
-                        <FormControlLabel
-                            value={ETestTypes.THEMES}
-                            control={<Radio color='secondary' />}
-                            label={ETestTypes.THEMES}
-                            labelPlacement='end'
-                        />
-                        <FormControlLabel
-                            value={ETestTypes.EXAMS}
-                            control={<Radio color='secondary' />}
-                            label={ETestTypes.EXAMS}
-                            labelPlacement='end'
-                        />
-                    </RadioGroup>
-                </FormControl>
-
-                { displaySubSubjectSelection && (
-                    <FormControl component='div' className={classes.block}>
-                        <FormLabel component='legend'>Оберіть предмет</FormLabel>
-                        <TextField
-                            id='standard-select-currency'
-                            className={classes.textField}
-                            select={true}
-                            color='secondary'
-                            {...selectSubSubjectField}
-                            margin='none'
-                            variant='standard'
-                            {...{ 'data-testid': 'select-sub-subject' }}
+            <div className={classes.dialogHeader}>
+                <IconButton
+                    onClick={redirectToHome}
+                    className={classes.homeIcon}
+                >
+                    <HomeIcon className={classes.icon}/>
+                </IconButton>
+                <Typography
+                    variant='h6'
+                    className={classes.subjectName}
+                >
+                    {subjectName}
+                </Typography>
+            </div>
+            <div className={classes.selectionBlock}>
+                <DialogTitle id='subject-config-title'>
+                    Налаштування тесту
+                </DialogTitle>
+                <DialogContent>
+                    <FormControl component='fieldset' className={classes.block}>
+                        <FormLabel component='legend'>Оберіть тип тесту</FormLabel>
+                        <RadioGroup
+                            aria-label='select-test-type'
+                            name='select-test-type'
+                            data-testid='select-test-type'
+                            {...selectTypeField}
                         >
-                            {subSubjects}
-                        </TextField>
+                            <FormControlLabel
+                                value={ETestTypes.THEMES}
+                                control={<Radio color='secondary' />}
+                                label={ETestTypes.THEMES}
+                                labelPlacement='end'
+                            />
+                            <FormControlLabel
+                                value={ETestTypes.EXAMS}
+                                control={<Radio color='secondary' />}
+                                label={ETestTypes.EXAMS}
+                                labelPlacement='end'
+                            />
+                        </RadioGroup>
                     </FormControl>
-                )}
 
-                { displayThemeSelection && (
-                    <FormControl component='div' className={classes.block}>
-                        <FormLabel component='legend'>Оберіть тему</FormLabel>
-                        <TextField
-                            id='standard-select-currency'
-                            className={classes.textField}
-                            select={true}
-                            {...selectThemeField}
-                            margin='none'
-                            variant='standard'
-                            color='secondary'
-                            {...{ 'data-testid': 'select-subject-theme' }}
-                        >
-                            {themes}
-                        </TextField>
-                    </FormControl>
-                )}
+                    { displaySubSubjectSelection && (
+                        <FormControl component='div' className={classes.block}>
+                            <FormLabel component='legend'>Оберіть предмет</FormLabel>
+                            <TextField
+                                id='standard-select-currency'
+                                className={classes.textField}
+                                select={true}
+                                color='secondary'
+                                {...selectSubSubjectField}
+                                margin='none'
+                                variant='standard'
+                                {...{ 'data-testid': 'select-sub-subject' }}
+                            >
+                                {subSubjects}
+                            </TextField>
+                        </FormControl>
+                    )}
 
-                { displayExamTypeSelection && (
-                    <>
+                    { displayThemeSelection && (
+                        <FormControl component='div' className={classes.block}>
+                            <FormLabel component='legend'>Оберіть тему</FormLabel>
+                            <TextField
+                                id='standard-select-currency'
+                                className={classes.textField}
+                                select={true}
+                                {...selectThemeField}
+                                margin='none'
+                                variant='standard'
+                                color='secondary'
+                                {...{ 'data-testid': 'select-subject-theme' }}
+                            >
+                                {themes}
+                            </TextField>
+                        </FormControl>
+                    )}
+
+                    { displayExamTypeSelection && (
                         <FormControl component='fieldset' className={classes.block}>
                             <FormLabel component='legend'>Оберіть тип тесту</FormLabel>
                             <RadioGroup
@@ -489,7 +555,9 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                                 />
                             </RadioGroup>
                         </FormControl>
+                    )}
 
+                    { displayExamSelection && (
                         <FormControl component='div' className={classes.block}>
                             <FormLabel
                                 component='legend'
@@ -513,31 +581,32 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                                 {exams}
                             </TextField>
                         </FormControl>
-                    </>
-                )}
-            </DialogContent>
+                    )}
+                </DialogContent>
 
-            <DialogActions>
-                <Button
-                    disabled={!allowGoToTest}
-                    variant='text'
-                    color='secondary'
-                    data-testid='go-to-test'
-                    onClick={handleGoToTest}
-                >
-                    Розпочати тест
-                </Button>
-                <Button
-                    variant='text'
-                    color='primary'
-                    className={classes.declineButton}
-                    onClick={dialog.onClose}
-                    data-testid='close-subject-conf-button'
-                >
-                    Скасувати
-                </Button>
-            </DialogActions>
-        </Dialog>
+                <DialogActions>
+                    <Button
+                        disabled={!allowGoToTest}
+                        variant='contained'
+                        color='primary'
+                        className={classes.button}
+                        data-testid='go-to-test'
+                        onClick={handleGoToTest}
+                    >
+                        Розпочати тест
+                    </Button>
+                    <Button
+                        variant='text'
+                        color='primary'
+                        className={classNames(classes.button, classes.declineButton)}
+                        onClick={dialog.onClose}
+                        data-testid='close-subject-conf-button'
+                    >
+                        Скасувати
+                    </Button>
+                </DialogActions>
+            </div>
+        </Wrapper>
     );
 };
 

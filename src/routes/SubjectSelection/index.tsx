@@ -13,7 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 /** Application's imports */
 import AppBar from 'components/AppBar';
 import SubjectSelection from 'components/SubjectSelection';
-import SubjectConfiguration from 'components/modals/SubjectConfigurationModal';
+import SubjectConfiguration from 'components/TestSuiteSide/SubjectConfiguration';
 
 /** Create component */
 const Component = () => (
