@@ -76,6 +76,7 @@ describe('SubjectConfiguration slice', () => {
         /** Define payload for setSubjectConfigAction */
         const payload: TSubjectConfig = {
             name: 'foo',
+            id: 'abc',
             themes: ['bar'],
         };
 

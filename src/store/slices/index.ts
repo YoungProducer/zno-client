@@ -13,6 +13,7 @@ import auth from './auth';
 import subjects from './subjects';
 import subjectConfiguration from './subjectConfiguration';
 import testSuite from './testSuite';
+import errorHandler from './errorHandler';
 
 // Define root reducer
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     subjects,
     subjectConfiguration,
     testSuite,
+    errorHandler,
 });
 
 // Export actions
