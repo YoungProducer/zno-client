@@ -108,4 +108,34 @@ describe('Api', () => {
         /** Assert response data equals mocked response */
         expect(result.data).toEqual(response);
     });
+
+    test('testSuite should be called with correct url', async () => {
+        /** Mock url */
+        mockAxios
+            .onGet(new RegExp(`api/test-suite/*`))
+            .reply(200);
+
+        /** Get result of testSuite method */
+        const result = await api.testSuite({
+            subjectId: 'foo',
+            theme: '123',
+        });
+
+        /** Get search params string from url */
+        const search = result.config.url.slice(
+            result.config.url.indexOf('?'),
+            result.config.url.length,
+        );
+
+        /** Get search params */
+        const searchParams = new URLSearchParams(search);
+
+        /** Get following params */
+        const subjectId = searchParams.get('subjectId');
+        const theme = searchParams.get('theme');
+
+        /** Assert search params have right values */
+        expect(subjectId).toBe('foo');
+        expect(theme).toBe('123');
+    });
 });

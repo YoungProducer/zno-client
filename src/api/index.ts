@@ -14,6 +14,7 @@ import {
     ISignUpCredentials,
     ISignInCredentials,
     ISubjectConfigurationCredentials,
+    ITestSuiteCredentials,
 } from './types';
 
 class Api implements IApi {
@@ -73,6 +74,16 @@ class Api implements IApi {
             `api/subject-config/${credentials.id}`,
             { withCredentials: true },
         )
+
+    testSuite = async (credentials: ITestSuiteCredentials) => {
+        /** Generate query string */
+        const searchParams = new URLSearchParams(Object.entries(credentials));
+
+        return await this.axiosInstance.get(
+            `api/test-suite?${searchParams}`,
+            { withCredentials: true },
+        );
+    }
 }
 
 // Export all types related to Api
