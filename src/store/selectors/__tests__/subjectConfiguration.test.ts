@@ -10,10 +10,10 @@ import {
     selectSubjectConfigurationLoading,
     selectSubjectConfigurationDialogVisible,
     selectSubjectConfig,
-    selectSubjectConfigSubjectName,
+    selectSubjectConfigSubjectData,
     selectSubjectConfigThemes,
     selectSubjectConfigExams,
-    selectSubjectConfigSubSubjectsNames,
+    selectSubjectConfigSubSubjectsData,
     selectSubjectConfigSubSubjectsThemes,
 } from 'store/selectors/subjectConfiguration';
 import { RootState } from 'store/slices';
@@ -70,15 +70,16 @@ describe('SubjectConfiguration selectors', () => {
             subjectConfiguration: {
                 subjectConfig: {
                     name: 'foo',
+                    id: '123',
                 },
             },
         } as RootState;
 
         /** Get selector's result */
-        const result = selectSubjectConfigSubjectName(MOCK_STATE);
+        const result = selectSubjectConfigSubjectData(MOCK_STATE);
 
-        /** Assert result equals 'foo' */
-        expect(result).toEqual('foo');
+        /** Assert result has right keys */
+        expect(result).toEqual({ name: 'foo', id: '123' });
     });
 
     test(`selectSubjectConfigThemes when property 'themes' exists`, () => {
@@ -277,8 +278,8 @@ describe('SubjectConfiguration selectors', () => {
         } as RootState;
 
         /** Get selectors' results */
-        const result_1 = selectSubjectConfigSubSubjectsNames(MOCK_STATE_1);
-        const result_2 = selectSubjectConfigSubSubjectsNames(MOCK_STATE_2);
+        const result_1 = selectSubjectConfigSubSubjectsData(MOCK_STATE_1);
+        const result_2 = selectSubjectConfigSubSubjectsData(MOCK_STATE_2);
 
         /** Assert results equal null */
         expect(result_1).toBeNull();
@@ -292,19 +293,27 @@ describe('SubjectConfiguration selectors', () => {
                 subjectConfig: {
                     subSubjects: [{
                         name: 'foo',
+                        id: '123',
                     }, {
                         name: 'bar',
+                        id: 'abc',
                     }],
                 },
             },
         } as RootState;
 
         /** Get selector's result */
-        const result = selectSubjectConfigSubSubjectsNames(MOCK_STATE);
+        const result = selectSubjectConfigSubSubjectsData(MOCK_STATE);
 
         /** Assert selector return array with right values */
         expect(result).toHaveLength(2);
-        expect(result).toEqual(['foo', 'bar']);
+        expect(result).toEqual([{
+            name:'foo',
+            id: '123',
+        }, {
+            name: 'bar',
+            id: 'abc',
+        }]);
     });
 
     test(`selectSubjectConfigSubSubjectsThemes if property 'subSubjects' doesn't exist or it is an empty array`, () => {

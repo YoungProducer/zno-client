@@ -13,9 +13,13 @@ import { createSlice } from '@reduxjs/toolkit';
 /** Application's imports */
 import { ILoadingAction } from 'store/types';
 
-/** Declare interface for subject */
-export interface ISubject {
+export interface ISubjectRootData {
     name: string;
+    id: string;
+}
+
+/** Declare interface for subject */
+export interface ISubject extends ISubjectRootData {
     themes?: string[];
 }
 

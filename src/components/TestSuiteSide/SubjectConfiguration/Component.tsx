@@ -142,10 +142,10 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     const {
         isLoggedIn,
         dialogVisible,
-        subjectName,
+        subjectData,
         subjectThemes,
         subjectExams,
-        subSubjectsNames,
+        subSubjectsData,
         subSubjectsThemes,
         toggleSubjectConfigurationDialog,
         fetchSubjectConfiguration,
@@ -175,7 +175,10 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     const [testType, setTestType] = useState<ETestTypes>('' as ETestTypes);
 
     /** Responsible for theme selection of specific sub-subject */
-    const [subSubject, setSubSubject] = useState<string>(subSubjectsNames !== null ? subSubjectsNames[0] : '');
+    const [subSubject, setSubSubject] = useState<string>(
+            subSubjectsData !== null
+                ? subSubjectsData[0].name
+                : '');
 
     /** Responsible for theme selection */
     const [theme, setTheme] = useState<string>(subjectThemes !== null ? subjectThemes[0] : '');
@@ -201,11 +204,13 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
                 }
 
                 if (subSubject !== '' && subSubjectsThemes !== null) {
-                    setSubSubject(subSubjectsNames[0]);
-                    setTheme(subSubjectsThemes[subSubjectsNames[0]] ? subSubjectsThemes[subSubjectsNames[0]][0] : '');
+                    setSubSubject(subSubjectsData[0].name);
+                    setTheme(subSubjectsThemes[subSubjectsData[0].name]
+                        ? subSubjectsThemes[subSubjectsData[0].name][0]
+                        : '');
                 }
             }
-        }, [subjectThemes, subSubject, subSubjectsThemes, subSubjectsNames]);
+        }, [subjectThemes, subSubject, subSubjectsThemes, subSubjectsData]);
 
     /** Handle onChange event of sub-subject text-field */
     const handleChangeSubSubject = useCallback(
@@ -252,19 +257,19 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     /** Memoized value which returns list of sub-subjects */
     const subSubjects = useMemo(() => {
-        if (subSubjectsNames === null || testType !== ETestTypes.THEMES) return null;
+        if (subSubjectsData === null || testType !== ETestTypes.THEMES) return null;
 
-        return subSubjectsNames.map(subject => (
-            <MenuItem key={subject} value={subject}>
-                {subject}
+        return subSubjectsData.map(subject => (
+            <MenuItem key={subject.name} value={subject.name}>
+                {subject.name}
             </MenuItem>
         ));
-    }, [subSubjectsNames, testType]);
+    }, [subSubjectsData, testType]);
 
     /** Responsible for displaying of sub-subject selection */
     const displaySubSubjectSelection = useMemo(() =>
-        subSubjectsNames !== null && testType === ETestTypes.THEMES,
-    [testType, subSubjectsNames]);
+        subSubjectsData !== null && testType === ETestTypes.THEMES,
+    [testType, subSubjectsData]);
 
     /** Memoized value which returns list of themes */
     const themes = useMemo(() => {
@@ -273,12 +278,16 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
          * and testType equals 'THEMES'
          * then this function will returns themes list for selected subSubject.
          */
-        if (subSubjectsThemes !== null && subSubject !== '' && testType === ETestTypes.THEMES) {
-            return subSubjectsThemes[subSubject] ? subSubjectsThemes[subSubject].map(theme => (
-                <MenuItem key={theme} value={theme}>
-                    {theme}
-                </MenuItem>
-            )) : null;
+        if (subSubjectsThemes !== null
+            && subSubject !== ''
+            && testType === ETestTypes.THEMES) {
+            return subSubjectsThemes[subSubject]
+                ? subSubjectsThemes[subSubject].map(theme => (
+                    <MenuItem key={theme} value={theme}>
+                        {theme}
+                    </MenuItem>
+                ))
+                : null;
         }
 
         /**
@@ -286,7 +295,9 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
          * and testType equals 'THEMES'
          * then this function will returns themes list for current subject.
          */
-        if (subjectThemes !== null && subSubjectsThemes === null && testType === ETestTypes.THEMES) {
+        if (subjectThemes !== null
+            && subSubjectsThemes === null
+            && testType === ETestTypes.THEMES) {
             return subjectThemes.map(theme => (
                 <MenuItem key={theme} value={theme}>
                     {theme}
@@ -299,7 +310,9 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     /** Responsible for displaying of theme selection */
     const displayThemeSelection = useMemo(() =>
-        (subSubjectsThemes !== null || subjectThemes !== null) && testType === ETestTypes.THEMES,
+        (subSubjectsThemes !== null
+        || subjectThemes !== null)
+        && testType === ETestTypes.THEMES,
     [testType, subjectThemes, subSubjectsThemes]);
 
     /**
@@ -319,8 +332,12 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
         testType === ETestTypes.EXAMS
         && subjectExams !== null
         && examType !== '' as EExamTypes
-        && ((examType === EExamTypes.SESSIONS && subjectExams.sessions !== null && subjectExams.sessions)
-        || (examType === EExamTypes.TRAININGS && subjectExams.trainings !== null && subjectExams.trainings)),
+        && ((examType === EExamTypes.SESSIONS
+            && subjectExams.sessions !== null
+            && subjectExams.sessions)
+        || (examType === EExamTypes.TRAININGS
+            && subjectExams.trainings !== null
+            && subjectExams.trainings)),
     [testType, subjectExams, exam]);
 
     /**
@@ -425,7 +442,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 const Component = (props: TSubjectConfigurationModalProps) => {
     const classes = useStyles({});
 
-    const { subjectName } = props;
+    const { subjectData } = props;
 
     /** Get elements from custom hook */
     const {
@@ -465,7 +482,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     variant='h6'
                     className={classes.subjectName}
                 >
-                    {subjectName}
+                    {subjectData.name}
                 </Typography>
             </div>
             <div className={classes.selectionBlock}>

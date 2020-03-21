@@ -42,8 +42,11 @@ describe('SubjectConfigurationModal component', () => {
         isLoggedIn: false,
         dialogVisible: true,
         loading: false,
-        subjectName: 'foo',
-        subSubjectsNames: null,
+        subjectData: {
+            name: 'foo',
+            id: '123',
+        },
+        subSubjectsData: null,
         subSubjectsThemes: null,
         subjectExams: null,
         subjectThemes: null,
@@ -94,7 +97,10 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }]}
             />,
         );
 
@@ -113,7 +119,7 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={null}
+                subSubjectsData={null}
             />,
         );
 
@@ -132,7 +138,10 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }]}
             />,
         );
 
@@ -158,7 +167,7 @@ describe('SubjectConfigurationModal component', () => {
             <Component
                 {...requiredProps}
                 subjectThemes={null}
-                subSubjectsNames={null}
+                subSubjectsData={null}
             />,
         );
 
@@ -212,7 +221,10 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }]}
                 subSubjectsThemes={{ foo: ['bar'] }}
             />,
         );
@@ -247,7 +259,10 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }]}
                 subSubjectsThemes={{ foo: ['bar', 'abc'] }}
             />,
         );
@@ -265,7 +280,10 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }]}
                 subSubjectsThemes={{ zoo: ['bar'] }}
             />,
         );
@@ -470,7 +488,13 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo', 'abc']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }, {
+                    name: 'abc',
+                    id: '456',
+                }]}
                 subSubjectsThemes={{ foo: ['bar'], abc: ['123', '456'] }}
             />,
         );
@@ -509,7 +533,13 @@ describe('SubjectConfigurationModal component', () => {
         const tree = shallow(
             <Component
                 {...requiredProps}
-                subSubjectsNames={['foo', 'abc']}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }, {
+                    name: 'abc',
+                    id: '456',
+                }]}
                 subSubjectsThemes={{ foo: ['bar'], abcd: ['123', '456'] }}
             />,
         );

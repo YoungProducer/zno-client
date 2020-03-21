@@ -22,10 +22,10 @@ import { toggleSubjectConfigurationDialogAction } from 'store/slices/subjectConf
 import {
     selectSubjectConfigurationLoading,
     selectSubjectConfigurationDialogVisible,
-    selectSubjectConfigSubjectName,
+    selectSubjectConfigSubjectData,
     selectSubjectConfigThemes,
     selectSubjectConfigExams,
-    selectSubjectConfigSubSubjectsNames,
+    selectSubjectConfigSubSubjectsData,
     selectSubjectConfigSubSubjectsThemes,
 } from 'store/selectors/subjectConfiguration';
 import { selectIsLoggedIn } from 'store/selectors/auth';
@@ -213,7 +213,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Create stub for selector */
         const MOCK_SELECTOR = 'foo';
-        (selectSubjectConfigSubjectName as unknown as jest.Mock)
+        (selectSubjectConfigSubjectData as unknown as jest.Mock)
             .mockReturnValue(MOCK_SELECTOR);
 
         /** Mount via enzyme */
@@ -224,11 +224,11 @@ describe('SubjectConfiguration container', () => {
         );
 
         /** Extract loading prop */
-        const { subjectName } =
+        const { subjectData } =
             componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
-        expect(subjectName).toEqual(MOCK_SELECTOR);
+        expect(subjectData).toEqual(MOCK_SELECTOR);
     });
 
     test('Sets subjectThemes prop on component', () => {
@@ -294,7 +294,7 @@ describe('SubjectConfiguration container', () => {
 
         /** Create stub for selector */
         const MOCK_SELECTOR = ['foo'];
-        (selectSubjectConfigSubSubjectsNames as unknown as jest.Mock)
+        (selectSubjectConfigSubSubjectsData as unknown as jest.Mock)
             .mockReturnValue(MOCK_SELECTOR);
 
         /** Mount via enzyme */
@@ -305,11 +305,11 @@ describe('SubjectConfiguration container', () => {
         );
 
         /** Extract loading prop */
-        const { subSubjectsNames } =
+        const { subSubjectsData } =
             componentWrapper.find('TestComponent').props() as TSubjectConfigurationModalProps;
 
         /** Assert the correct key and value have been added to the component */
-        expect(subSubjectsNames).toEqual(MOCK_SELECTOR);
+        expect(subSubjectsData).toEqual(MOCK_SELECTOR);
     });
 
     test('Sets subSubjectsThemes prop on component', () => {

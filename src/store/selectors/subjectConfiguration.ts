@@ -21,15 +21,18 @@ export const selectSubjectConfig = (state: RootState) =>
     state.subjectConfiguration.subjectConfig;
 
 /**
- * Select name of subject.
+ * Select id and name of subject.
  */
-export const selectSubjectConfigSubjectName = createSelector(
+export const selectSubjectConfigSubjectData = createSelector(
     selectSubjectConfig,
-    (subjectConfig) => subjectConfig ? subjectConfig.name : null,
+    (subjectConfig) => subjectConfig ? {
+        name: subjectConfig.name,
+        id: subjectConfig.id,
+    } : null,
 );
 
 /**
- * Select names of sub-subjects.
+ * Select ids and names of sub-subjects.
  * If property 'subSubjects' doesn't exist
  * then selector returns null.
  *
@@ -37,7 +40,7 @@ export const selectSubjectConfigSubjectName = createSelector(
  * if some object doesn't have property 'name'
  * then this object will be skiped.
  */
-export const selectSubjectConfigSubSubjectsNames = createSelector(
+export const selectSubjectConfigSubSubjectsData = createSelector(
     selectSubjectConfig,
     (subjectConfig) => {
         if (!subjectConfig) {
@@ -54,7 +57,7 @@ export const selectSubjectConfigSubSubjectsNames = createSelector(
             /**
              * Return new array from previous array and current value.
              */
-            return acc.concat(curr.name);
+            return acc.concat({ name: curr.name, id: curr.id });
         }, []);
     },
 );

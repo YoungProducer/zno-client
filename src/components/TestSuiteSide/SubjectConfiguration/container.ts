@@ -13,16 +13,16 @@ import { connect } from 'react-redux';
 /** Application's imports */
 import { fetchSubjectConfigurationAction } from 'store/actionCreators/subjectConfiguration';
 import {
-    toggleSubjectConfigurationDialogAction,
+    toggleSubjectConfigurationDialogAction, ISubjectRootData,
 } from 'store/slices/subjectConfiguration';
 import {
     selectSubjectConfigurationLoading,
     selectSubjectConfigurationDialogVisible,
-    selectSubjectConfigSubjectName,
+    selectSubjectConfigSubjectData,
     selectSubjectConfigThemes,
     selectSubjectConfigExams,
-    selectSubjectConfigSubSubjectsNames,
     selectSubjectConfigSubSubjectsThemes,
+    selectSubjectConfigSubSubjectsData,
 } from 'store/selectors/subjectConfiguration';
 import { selectIsLoggedIn } from 'store/selectors/auth/signin';
 import { RootState } from 'store/slices';
@@ -47,13 +47,13 @@ interface IStateProps {
     isLoggedIn: boolean;
     loading: boolean;
     dialogVisible: boolean;
-    subjectName: string;
+    subjectData: ISubjectRootData;
     subjectThemes: string[] | null;
     subjectExams: {
         trainings: string[] | null;
         sessions: string[] | null;
     };
-    subSubjectsNames: string[] | null;
+    subSubjectsData: ISubjectRootData[] | null;
     subSubjectsThemes: {
         [attr: string]: string[];
     };
@@ -76,10 +76,10 @@ const mapStateToProps = (state: RootState): IStateProps => ({
     isLoggedIn: selectIsLoggedIn(state),
     loading: selectSubjectConfigurationLoading(state),
     dialogVisible: selectSubjectConfigurationDialogVisible(state),
-    subjectName: selectSubjectConfigSubjectName(state),
+    subjectData: selectSubjectConfigSubjectData(state),
     subjectThemes: selectSubjectConfigThemes(state),
     subjectExams: selectSubjectConfigExams(state),
-    subSubjectsNames: selectSubjectConfigSubSubjectsNames(state),
+    subSubjectsData: selectSubjectConfigSubSubjectsData(state),
     subSubjectsThemes: selectSubjectConfigSubSubjectsThemes(state),
 });
 
