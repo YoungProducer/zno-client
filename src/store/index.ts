@@ -14,6 +14,7 @@ import { createLogger } from 'redux-logger';
 
 // Application's imports
 import rootReducer from './slices';
+import middlewares from './middlewares';
 import testState from './testState';
 
 const createStore = () => {
@@ -43,7 +44,7 @@ const createStore = () => {
     return configureStore({
         preloadedState,
         reducer: rootReducer,
-        middleware: [...midlleware, logger],
+        middleware: [...midlleware, logger, ...middlewares],
     });
 };
 
@@ -51,5 +52,7 @@ const createStore = () => {
 const store = createStore();
 
 export type AppDispatch = typeof store.dispatch;
+
+export type Store = typeof store;
 
 export default store;

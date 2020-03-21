@@ -19,7 +19,7 @@ export interface ISetErrorPayload {
     data?: any;
 }
 
-interface ISetErrorAction {
+export interface ISetErrorAction {
     payload: ISetErrorPayload;
 }
 

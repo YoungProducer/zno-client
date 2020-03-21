@@ -29,6 +29,7 @@ export * from './auth';
 export * from './subjects';
 export * from './subjectConfiguration';
 export * from './testSuite';
+export * from './errorHandler';
 
 // Export type of store
 export type RootState = ReturnType<typeof rootReducer>;
