@@ -12,18 +12,21 @@ import { combineReducers } from '@reduxjs/toolkit';
 import auth from './auth';
 import subjects from './subjects';
 import subjectConfiguration from './subjectConfiguration';
+import testSuite from './testSuite';
 
 // Define root reducer
 const rootReducer = combineReducers({
     auth,
     subjects,
     subjectConfiguration,
+    testSuite,
 });
 
 // Export actions
 export * from './auth';
 export * from './subjects';
 export * from './subjectConfiguration';
+export * from './testSuite';
 
 // Export type of store
 export type RootState = ReturnType<typeof rootReducer>;

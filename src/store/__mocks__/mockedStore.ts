@@ -65,6 +65,16 @@ const mockedStore = mockStore({
         dialogVisible: false,
         subjectConfig: null,
     },
+    testSuite: {
+        loading: false,
+        limitTime: false,
+        showRightDuringTest: false,
+        rightAnswers: [],
+        selectedAnswers: [],
+        givedAnswers: [],
+        tasksImages: [],
+        explanationImages: [],
+    },
 });
 
 export default mockedStore;
