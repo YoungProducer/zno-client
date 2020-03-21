@@ -138,4 +138,20 @@ describe('Api', () => {
         expect(subjectId).toBe('foo');
         expect(theme).toBe('123');
     });
+
+    test('testSuite images should send 2 requests', async () => {
+        /** Mock urls */
+        mockAxios
+            .onGet(new RegExp(`api/test-suite/foo/images/task`))
+            .reply(200);
+        mockAxios
+            .onGet(new RegExp(`api/test-suite/foo/images/explanation`))
+            .reply(200);
+
+        /** Get result of current method */
+        const result = await api.testSuiteImages({ id: 'foo' });
+
+        /** Assert methiod returns two responses */
+        expect(result).toHaveLength(2);
+    });
 });

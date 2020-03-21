@@ -42,13 +42,28 @@ export interface ITestSuiteCredentials {
     training?: string;
 }
 
+export interface ITestSuiteImagesCredentials {
+    /**
+     * Test suite id.
+     */
+    id: string;
+}
+
 export interface IApi {
     axiosInstance: AxiosInstance;
+    /** Methods related to auth */
     signup(credentials: ISignUpCredentials): Promise<AxiosResponse>;
     signin(credentials: ISignInCredentials): Promise<AxiosResponse>;
-    subjects(): Promise<AxiosResponse>;
-    subjectConfiguration(credentials: ISubjectConfigurationCredentials): Promise<AxiosResponse>;
     me(): Promise<AxiosResponse>;
     logout(): Promise<AxiosResponse>;
+
+    /** Methods related to subjects and subject configuration */
+    subjects(): Promise<AxiosResponse>;
+    subjectConfiguration(credentials: ISubjectConfigurationCredentials): Promise<AxiosResponse>;
+
+    /** Methods related to test suites */
     testSuite(credentials: ITestSuiteCredentials): Promise<AxiosResponse>;
+    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<any>;
+    tasksImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
+    explanationsImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
 }

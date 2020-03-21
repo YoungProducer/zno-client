@@ -15,6 +15,7 @@ import {
     ISignInCredentials,
     ISubjectConfigurationCredentials,
     ITestSuiteCredentials,
+    ITestSuiteImagesCredentials,
 } from './types';
 
 class Api implements IApi {
@@ -84,6 +85,21 @@ class Api implements IApi {
             { withCredentials: true },
         );
     }
+
+    tasksImages = async (credentials: ITestSuiteImagesCredentials) =>
+        await this.axiosInstance.get(
+            `api/test-suite/${credentials.id}/images/task`,
+            { withCredentials: true },
+        )
+
+    explanationsImages = async (credentials: ITestSuiteImagesCredentials) =>
+        await this.axiosInstance.get(
+            `api/test-suite/${credentials.id}/images/explanation`,
+            { withCredentials: true },
+        )
+
+    testSuiteImages = async (credentials: ITestSuiteImagesCredentials) =>
+        await axios.all([this.tasksImages(credentials), this.explanationsImages(credentials)])
 }
 
 // Export all types related to Api
