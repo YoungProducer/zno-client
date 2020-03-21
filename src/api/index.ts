@@ -99,7 +99,7 @@ class Api implements IApi {
         )
 
     testSuiteImages = async (credentials: ITestSuiteImagesCredentials) =>
-        await axios.all([this.tasksImages(credentials), this.explanationsImages(credentials)])
+        await axios.all([await this.tasksImages(credentials), await this.explanationsImages(credentials)])
 }
 
 // Export all types related to Api

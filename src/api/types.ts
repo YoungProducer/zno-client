@@ -63,7 +63,7 @@ export interface IApi {
 
     /** Methods related to test suites */
     testSuite(credentials: ITestSuiteCredentials): Promise<AxiosResponse>;
-    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<any>;
+    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse[]>;
     tasksImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
     explanationsImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
 }
