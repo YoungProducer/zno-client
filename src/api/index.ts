@@ -16,6 +16,7 @@ import {
     ISubjectConfigurationCredentials,
     ITestSuiteCredentials,
     ITestSuiteImagesCredentials,
+    ITestSuiteResponseData,
 } from './types';
 
 class Api implements IApi {
@@ -76,7 +77,7 @@ class Api implements IApi {
             { withCredentials: true },
         )
 
-    testSuite = async (credentials: ITestSuiteCredentials) => {
+    testSuite = async (credentials: ITestSuiteCredentials): Promise<AxiosResponse<ITestSuiteResponseData>> => {
         /** Generate query string */
         const searchParams = new URLSearchParams(Object.entries(credentials));
 

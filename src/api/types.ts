@@ -22,6 +22,7 @@ export interface ISubjectConfigurationCredentials {
     id: string;
 }
 
+/** Typings for testSuite method */
 export interface ITestSuiteCredentials {
     subjectId: string;
     subSubjectId?: string;
@@ -42,12 +43,49 @@ export interface ITestSuiteCredentials {
     training?: string;
 }
 
+export type TAnswerType = 'SINGLE' | 'RELATIONS' | 'TEXT';
+
+export interface IAnswer {
+    /**
+     * Index of task.
+     */
+    taskId: number;
+    answer: string[];
+    type: TAnswerType;
+}
+
+export interface ITestSuiteResponseData {
+    /**
+     * Test suite id.
+     */
+    id: string;
+    /**
+     * Theme name.
+     */
+    theme?: string | null;
+    /**
+     * Session name.
+     */
+    session?: string | null;
+    /**
+     * Training variant name.
+     */
+    training?: string | null;
+    /**
+     * Answers.
+     */
+    answers: IAnswer[];
+}
+
+/** Types for method testSuiteImages */
 export interface ITestSuiteImagesCredentials {
     /**
      * Test suite id.
      */
     id: string;
 }
+
+export type TTestSuiteImagesResponseData = [string[], string[]];
 
 export interface IApi {
     axiosInstance: AxiosInstance;
@@ -62,8 +100,8 @@ export interface IApi {
     subjectConfiguration(credentials: ISubjectConfigurationCredentials): Promise<AxiosResponse>;
 
     /** Methods related to test suites */
-    testSuite(credentials: ITestSuiteCredentials): Promise<AxiosResponse>;
-    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse[]>;
+    testSuite(credentials: ITestSuiteCredentials): Promise<AxiosResponse<ITestSuiteResponseData>>;
+    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse<TTestSuiteImagesResponseData>>;
     tasksImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
     explanationsImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
 }
