@@ -53,6 +53,7 @@ describe('fetchTestSuiteAction', () => {
             .reply(200, {
                 id: 'foo',
                 answers: [['0'], ['1', '3']],
+                theme: 'foo',
             });
 
         axiosMock
@@ -70,6 +71,9 @@ describe('fetchTestSuiteAction', () => {
         }, {
             type: 'TestSuite/setRightAnswersAction',
             payload: [['0'], ['1', '3']],
+        }, {
+            type: 'TestSuite/setTestSuiteNameAction',
+            payload: 'foo',
         }, {
             type: 'TestSuite/testSuiteLoadingAction',
             payload: false,

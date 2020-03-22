@@ -8,6 +8,7 @@
 /** Application's imports */
 import testSuite, {
     testSuiteLoadingAction,
+    setTestSuiteNameAction,
     showRightDuringTestAction,
     limitTestSuiteTimeAction,
     setTasksImagesAction,
@@ -20,6 +21,104 @@ import testSuite, {
 } from '../testSuite';
 
 describe('TestSuite slice', () => {
+    test(`setTestSuiteNameAction without payload should set name to empty string`, () => {
+        /** Define initial state */
+        const initialState = {
+            name: 'foo',
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, setTestSuiteNameAction());
+
+        /** Assert name is empty string */
+        expect(result.name).toBe('');
+    });
+
+    test(`setTestSuiteNameAction with two defined propertes should set name as theme`, () => {
+        /** Define initial state */
+        const initialState = {
+            name: '',
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, setTestSuiteNameAction({
+            session: 'foo',
+            theme: 'bar',
+        }));
+
+        /** Assert name is empty string */
+        expect(result.name).toBe('bar');
+    });
+
+    test(`setTestSuiteNameAction with empty object should set name to empty string`, () => {
+        /** Define initial state */
+        const initialState = {
+            name: '',
+        } as ITestSuiteInitialState;
+
+        /** Dispatch action and get new state */
+        const result = testSuite(initialState, setTestSuiteNameAction({}));
+
+        /** Assert name is empty string */
+        expect(result.name).toBe('');
+    });
+
+    test('setTestSuiteNameAction with payloads which have null properties should correctly sets name of test suite', () => {
+        /** Define initial state */
+        const ininitalState = {
+            name: '',
+        } as ITestSuiteInitialState;
+
+        /** Dispatch actions with different payloads */
+        const result_1 = testSuite(ininitalState, setTestSuiteNameAction({
+            theme: 'foo',
+            session: null,
+            training: null,
+        }));
+
+        const result_2 = testSuite(ininitalState, setTestSuiteNameAction({
+            theme: null,
+            session: 'bar',
+            training: null,
+        }));
+
+        const result_3 = testSuite(ininitalState, setTestSuiteNameAction({
+            theme: null,
+            session: null,
+            training: 'abc',
+        }));
+
+        /** Assert all actions set right value */
+        expect(result_1.name).toBe('foo');
+        expect(result_2.name).toBe('bar');
+        expect(result_3.name).toBe('abc');
+    });
+
+    test('setTestSuiteNameAction with payloads which have undefined properties should correctly sets name of test suite', () => {
+        /** Define initial state */
+        const ininitalState = {
+            name: '',
+        } as ITestSuiteInitialState;
+
+        /** Dispatch actions with different payloads */
+        const result_1 = testSuite(ininitalState, setTestSuiteNameAction({
+            theme: 'foo',
+        }));
+
+        const result_2 = testSuite(ininitalState, setTestSuiteNameAction({
+            session: 'bar',
+        }));
+
+        const result_3 = testSuite(ininitalState, setTestSuiteNameAction({
+            training: 'abc',
+        }));
+
+        /** Assert all actions set right value */
+        expect(result_1.name).toBe('foo');
+        expect(result_2.name).toBe('bar');
+        expect(result_3.name).toBe('abc');
+    });
+
     test('setTasksImagesAction with payload should set payload to state', () => {
         /** Define initial state */
         const initialState = {

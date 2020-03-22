@@ -53,6 +53,16 @@ interface IGiveAnswerByIdAction {
     payload: number;
 }
 
+interface ISetTestSuiteNameAction {
+    payload: string;
+}
+
+export interface ISetTestSuiteNamePreparePayload {
+    theme?: string;
+    session?: string;
+    training?: string;
+}
+
 /** Declare interface for initial state */
 export interface ITestSuiteInitialState {
     /**
@@ -95,6 +105,10 @@ export interface ITestSuiteInitialState {
      * By default: 180 minutes(3 hours).
      */
     limitTime: boolean;
+    /**
+     * It could be name of theme, session or training variant.
+     */
+    name: string;
 }
 
 /** Create initial state */
@@ -107,6 +121,7 @@ const initialState: ITestSuiteInitialState = {
     rightAnswers: [],
     selectedAnswers: [],
     givedAnswers: [],
+    name: '',
 };
 
 /** Create slice */
@@ -124,6 +139,42 @@ const testSuite = createSlice({
             ...state,
             loading: payload,
         }),
+        /**
+         * Set name of current test suite.
+         */
+        setTestSuiteNameAction: {
+            reducer: (
+                state: ITestSuiteInitialState,
+                { payload }: ISetTestSuiteNameAction,
+            ) => ({
+                ...state,
+                name: payload,
+            }),
+            prepare: (data?: ISetTestSuiteNamePreparePayload) => {
+                if (!data
+                    || (!data.session
+                    && !data.training
+                    && !data.theme)) {
+                    return { payload: '' };
+                }
+
+                if (data.theme && data.theme !== null) {
+                    return {
+                        payload: data.theme,
+                    };
+                }
+                if (data.training && data.training !== null) {
+                    return {
+                        payload: data.training,
+                    };
+                }
+                if (data.session && data.session !== null) {
+                    return {
+                        payload: data.session,
+                    };
+                }
+            },
+        },
         /**
          * Toggles value related to display right answers
          * during the test or after completion.
@@ -289,6 +340,7 @@ const testSuite = createSlice({
 /** Export actions */
 export const {
     testSuiteLoadingAction,
+    setTestSuiteNameAction,
     showRightDuringTestAction,
     limitTestSuiteTimeAction,
     setTasksImagesAction,

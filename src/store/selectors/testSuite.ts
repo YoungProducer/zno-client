@@ -17,6 +17,9 @@ const selectTaskIndexFromProps: ParametricSelector<RootState, any, number> = (_,
 export const selectTestSuiteLoading = (state: RootState) =>
     state.testSuite.loading;
 
+export const selectTestSuiteName = (state: RootState) =>
+    state.testSuite.name;
+
 export const selectTestSuiteLimitTime = (state: RootState) =>
     state.testSuite.limitTime;
 

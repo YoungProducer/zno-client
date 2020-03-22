@@ -17,6 +17,7 @@ import {
     setRightAnswersAction,
     setTasksImagesAction,
     setExplanationsImagesAction,
+    setTestSuiteNameAction,
 } from 'store/slices/testSuite';
 import { setErrorAction } from 'store/slices/errorHandler';
 
@@ -28,6 +29,11 @@ export const fetchTestSuiteAction = (credentials: ITestSuiteCredentials) =>
             .then(response => response.data)
             .then(testSuiteData => {
                 dispatch(setRightAnswersAction(testSuiteData.answers));
+                dispatch(setTestSuiteNameAction({
+                    session: testSuiteData.session,
+                    training: testSuiteData.training,
+                    theme: testSuiteData.theme,
+                }));
 
                 return api.testSuiteImages({ id: testSuiteData.id })
                     .then(axios.spread((tasks, explanations) => {

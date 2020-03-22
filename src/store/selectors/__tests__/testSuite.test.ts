@@ -9,6 +9,7 @@
 import { RootState } from "store/slices";
 import {
     selectTestSuiteLoading,
+    selectTestSuiteName,
     selectTestSuiteLimitTime,
     selectShowRightDuringTest,
     selectTestSuitesTasksImages,
@@ -37,6 +38,21 @@ describe('TestSuite selectors', () => {
 
         /** Assert result of selector has right value */
         expect(result).toBeFalsy();
+    });
+
+    test('selectTestSuiteName', () => {
+        /** Define state */
+        const state = {
+            testSuite: {
+                name: 'foo',
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectTestSuiteName(state);
+
+        /** Assert result of selector has right value */
+        expect(result).toBe('foo');
     });
 
     test('selectTestSuiteLimitTime', () => {
