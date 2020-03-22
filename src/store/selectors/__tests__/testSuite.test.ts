@@ -12,7 +12,7 @@ import {
     selectTestSuiteName,
     selectTestSuiteLimitTime,
     selectShowRightDuringTest,
-    selectTestSuitesTasksImages,
+    selectTestSuiteTasksImages,
     selectTestSuiteExplanationsImages,
     selectSelectedAnswers,
     selectGivedAnswers,
@@ -94,7 +94,7 @@ describe('TestSuite selectors', () => {
         } as RootState;
 
         /** Get selector's result */
-        const result = selectTestSuitesTasksImages(state);
+        const result = selectTestSuiteTasksImages(state);
 
         /** Assert result of selector has right keys */
         expect(result).toEqual(['foo']);
