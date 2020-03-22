@@ -232,42 +232,13 @@ const testSuite = createSlice({
             }),
         },
         /**
-         * Set right answers array.
-         * If payload is undefined it will set right answers
-         * to default(empty array).
-         */
-        // setRightAnswersAction: {
-        //     reducer: (
-        //         state: ITestSuiteInitialState,
-        //         { payload }: ISetAnswersActions,
-        //     ) => ({
-        //         ...state,
-        //         rightAnswers: payload,
-        //     }),
-        //     prepare: (answers?: (string[])[]) => ({
-        //         payload: answers ? answers : [],
-        //     }),
-        // },
-        /**
-         * Set user answers array.
+         * Set answers array.
          * If payload exists
-         * returns same array but with replaced values to ''.
+         * returns array which contain objects
+         * with right, select, gived answers and answer's type.
          * If payload doesn't exist
          * returns empty array.
          */
-        // setAnswersAction: {
-        //     reducer: (
-        //         state: ITestSuiteInitialState,
-        //         { payload }: ISetAnswersActions,
-        //     ) => ({
-        //         ...state,
-        //         selectedAnswers: payload,
-        //         givedAnswers: payload,
-        //     }),
-        //     prepare: (answers?: (string[])[]) => ({
-        //         payload: answers ? answers.map(answer => answer.map((() => ''))) : [],
-        //     }),
-        // },
         setAnswersAction: {
             reducer: (
                 state: ITestSuiteInitialState,
@@ -313,22 +284,6 @@ const testSuite = createSlice({
                 { payload }: ISetAnswerByIdAction,
             ) => ({
                 ...state,
-                // selectedAnswers: state.selectedAnswers.map((answer, index) =>
-                //     index !== payload.id
-                //         ? answer
-                //         : answer.map((el, answerIndex) =>
-                //             answerIndex === payload.answerIndex
-                //                 ? payload.answer
-                //                 : el,
-                //             ),
-                // ),
-                // givedAnswers: payload.answer !== ''
-                //     ? state.givedAnswers
-                //     : state.givedAnswers.map((answer, index) =>
-                //         index !== payload.id
-                //             ? answer
-                //             : answer.map(() => ''),
-                //     ),
                 answers: state.answers.map((answer, index) =>
                     index !== payload.id
                         ? answer
@@ -363,9 +318,6 @@ const testSuite = createSlice({
             { payload }: IGiveAnswerByIdAction,
         ) => ({
             ...state,
-            // givedAnswers: state.givedAnswers.map((answer, index) =>
-            //     index === payload ? state.selectedAnswers[payload] : answer,
-            // ),
             answers: state.answers.map((answer, index) =>
                 index === payload
                     ? {
