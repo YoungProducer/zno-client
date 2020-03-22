@@ -14,11 +14,8 @@ import {
     selectShowRightDuringTest,
     selectTestSuiteTasksImages,
     selectTestSuiteExplanationsImages,
-    selectSelectedAnswers,
-    selectGivedAnswers,
-    selectRightAnswers,
-    selectSelectedAnswerByTaskIndex,
-    selectGivedAnswerByTaskIndex,
+    selectAnswers,
+    selectAnswerByTaskIndex,
     selectIsAnswerSelected,
     selectIsAnswerGived,
     selectIsAnswerRight,
@@ -115,95 +112,70 @@ describe('TestSuite selectors', () => {
         expect(result).toEqual(['foo']);
     });
 
-    test('selectSelectedAnswers', () => {
+    test('selectAnswers', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                selectedAnswers: [['0']],
+                answers: [{
+                    selected: ['0'],
+                    gived: ['0'],
+                    right: ['1'],
+                    type: 'SINGLE',
+                }],
             },
         } as RootState;
 
         /** Get selector's result */
-        const result = selectSelectedAnswers(state);
+        const result = selectAnswers(state);
 
-        /** Assert result of selector has right keys */
-        expect(result).toEqual([['0']]);
+        /** Assert result has right values */
+        expect(result).toEqual([{
+            selected: ['0'],
+            gived: ['0'],
+            right: ['1'],
+            type: 'SINGLE',
+        }]);
     });
 
-    test('selectGivedAnswers', () => {
+    test('selectAnswerByTaskIndex', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                givedAnswers: [['2', '1']],
+                answers: [{
+                    selected: ['0'],
+                    gived: ['0'],
+                    right: ['1'],
+                    type: 'SINGLE',
+                }, {
+                    selected: ['1'],
+                    gived: ['1'],
+                    right: ['2'],
+                    type: 'SINGLE',
+                }],
             },
         } as RootState;
 
         /** Get selector's result */
-        const result = selectGivedAnswers(state);
+        const result = selectAnswerByTaskIndex(state, { taskIndex: 1 });
 
-        /** Assert result of selector has right keys */
-        expect(result).toEqual([['2', '1']]);
-    });
-
-    test('selectRightAnswers', () => {
-        /** Define mocked state */
-        const state = {
-            testSuite: {
-                rightAnswers: [['2', '1']],
-            },
-        } as RootState;
-
-        /** Get selector's result */
-        const result = selectRightAnswers(state);
-
-        /** Assert result of selector has right keys */
-        expect(result).toEqual([['2', '1']]);
-    });
-
-    test('selectSelectedAnswerByTaskIndex', () => {
-        /** Define mocked state */
-        const state = {
-            testSuite: {
-                selectedAnswers: [
-                    ['2', '1'],
-                    ['3', '4'],
-                ],
-            },
-        } as RootState;
-
-        /** Get selector's result */
-        const result = selectSelectedAnswerByTaskIndex(state, { taskIndex: 1 });
-
-        /** Assert selector returns right value */
-        expect(result).toEqual(['3', '4']);
-    });
-
-    test('selectGivedAnswerByTaskIndex', () => {
-        /** Define mocked state */
-        const state = {
-            testSuite: {
-                givedAnswers: [
-                    ['2', '1'],
-                    ['3', '4'],
-                ],
-            },
-        } as RootState;
-
-        /** Get selector's result */
-        const result = selectGivedAnswerByTaskIndex(state, { taskIndex: 1 });
-
-        /** Assert selector returns right value */
-        expect(result).toEqual(['3', '4']);
+        /** Assert result has right values */
+        expect(result).toEqual({
+            selected: ['1'],
+            gived: ['1'],
+            right: ['2'],
+            type: 'SINGLE',
+        });
     });
 
     test('selectIsAnswerSelected with already selected answers should return true', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                selectedAnswers: [
-                    ['2', '1'],
-                    ['3', '4'],
-                ],
+                answers: [{
+                    selected: ['2', '1'],
+                }, {
+                    selected: ['3', '4'],
+                }],
             },
         } as RootState;
 
@@ -218,10 +190,11 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                selectedAnswers: [
-                    ['2', '1'],
-                    ['', ''],
-                ],
+                answers: [{
+                    selected: ['2', '1'],
+                }, {
+                    selected: ['', ''],
+                }],
             },
         } as RootState;
 
@@ -236,10 +209,11 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                selectedAnswers: [
-                    ['2', '1'],
-                    ['3', ''],
-                ],
+                answers: [{
+                    selected: ['2', '1'],
+                }, {
+                    selected: ['3', ''],
+                }],
             },
         } as RootState;
 
@@ -254,10 +228,11 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                givedAnswers: [
-                    ['2', '1'],
-                    ['3', ''],
-                ],
+                answers: [{
+                    gived: ['2', '1'],
+                }, {
+                    gived: ['3', ''],
+                }],
             },
         } as RootState;
 
@@ -272,10 +247,11 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                givedAnswers: [
-                    ['2', '1'],
-                    ['', ''],
-                ],
+                answers: [{
+                    gived: ['2', '1'],
+                }, {
+                    gived: ['', ''],
+                }],
             },
         } as RootState;
 
@@ -290,10 +266,11 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                givedAnswers: [
-                    ['2', '1'],
-                    ['2', '1'],
-                ],
+                answers: [{
+                    gived: ['2', '1'],
+                }, {
+                    gived: ['2', '1'],
+                }],
             },
         } as RootState;
 
@@ -308,14 +285,13 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                givedAnswers: [
-                    ['2', '1'],
-                    ['2', '1'],
-                ],
-                rightAnswers: [
-                    ['2', '1'],
-                    ['3', '4'],
-                ],
+                answers: [{
+                    gived: ['2', '1'],
+                    right: ['2', '1'],
+                }, {
+                    gived: ['2', '1'],
+                    right: ['3', '4'],
+                }],
             },
         } as RootState;
 
@@ -330,14 +306,13 @@ describe('TestSuite selectors', () => {
         /** Define mocked state */
         const state = {
             testSuite: {
-                givedAnswers: [
-                    ['2', '1'],
-                    ['2', '1'],
-                ],
-                rightAnswers: [
-                    ['2', '1'],
-                    ['2', '4'],
-                ],
+                answers: [{
+                    gived: ['2', '1'],
+                    right: ['2', '1'],
+                }, {
+                    gived: ['2', '1'],
+                    right: ['2', '4'],
+                }],
             },
         } as RootState;
 

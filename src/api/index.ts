@@ -17,6 +17,7 @@ import {
     ITestSuiteCredentials,
     ITestSuiteImagesCredentials,
     ITestSuiteResponseData,
+    TTestSuiteImagesResponseData,
 } from './types';
 
 class Api implements IApi {
@@ -99,7 +100,7 @@ class Api implements IApi {
             { withCredentials: true },
         )
 
-    testSuiteImages = async (credentials: ITestSuiteImagesCredentials) =>
+    testSuiteImages = async (credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse<TTestSuiteImagesResponseData>[]> =>
         await axios.all([await this.tasksImages(credentials), await this.explanationsImages(credentials)])
 }
 

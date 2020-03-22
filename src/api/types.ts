@@ -45,7 +45,7 @@ export interface ITestSuiteCredentials {
 
 export type TAnswerType = 'SINGLE' | 'RELATIONS' | 'TEXT';
 
-export interface IAnswer {
+export interface IAnswerFromResponse {
     /**
      * Index of task.
      */
@@ -74,7 +74,7 @@ export interface ITestSuiteResponseData {
     /**
      * Answers.
      */
-    answers: IAnswer[];
+    answers: IAnswerFromResponse[];
 }
 
 /** Types for method testSuiteImages */
@@ -85,7 +85,7 @@ export interface ITestSuiteImagesCredentials {
     id: string;
 }
 
-export type TTestSuiteImagesResponseData = [string[], string[]];
+export type TTestSuiteImagesResponseData = string[];
 
 export interface IApi {
     axiosInstance: AxiosInstance;
@@ -101,7 +101,7 @@ export interface IApi {
 
     /** Methods related to test suites */
     testSuite(credentials: ITestSuiteCredentials): Promise<AxiosResponse<ITestSuiteResponseData>>;
-    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse<TTestSuiteImagesResponseData>>;
+    testSuiteImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse<TTestSuiteImagesResponseData>[]>;
     tasksImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
     explanationsImages(credentials: ITestSuiteImagesCredentials): Promise<AxiosResponse>;
 }

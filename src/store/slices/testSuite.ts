@@ -12,6 +12,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 /** Application's imports */
 import { ILoadingAction } from 'store/types';
+import { TAnswerType, IAnswerFromResponse } from 'api';
 
 /** Declare interface for actions and payloads */
 interface IShowRightDuringTestAction {
@@ -28,7 +29,7 @@ interface ISetTestSuiteImagesAction {
 }
 
 interface ISetAnswersActions {
-    payload: (string[])[];
+    payload: IAnswer[];
 }
 
 export interface ISetAnswerByIdPayload {
@@ -63,6 +64,27 @@ export interface ISetTestSuiteNamePreparePayload {
     training?: string;
 }
 
+/**  */
+export interface IAnswer {
+    type: TAnswerType;
+    /**
+     * Right answers.
+     */
+    right: string[];
+    /**
+     * Selected answers.
+     * Just selected not gived
+     * it means that user can change anywhen.
+     */
+    selected: string[];
+    /**
+     * Gived answers.
+     * If answers passed to this array
+     * app will show user is his answer is right.
+     */
+    gived: string[];
+}
+
 /** Declare interface for initial state */
 export interface ITestSuiteInitialState {
     /**
@@ -78,26 +100,7 @@ export interface ITestSuiteInitialState {
      * Explanation for tasks.
      */
     explanationImages: string[];
-    /**
-     * Right answers.
-     */
-    rightAnswers: (string[])[];
-    /**
-     * Selected answers.
-     * Just selected not gived
-     * it means that user can change anywhen.
-     */
-    selectedAnswers: (string[])[];
-    /**
-     * Gived answers.
-     * If answers passed to this array
-     * app will show user is his answer is right.
-     */
-    givedAnswers: (string[])[];
-    /**
-     * Displays is answer right during the test
-     * or after its completion.
-     */
+    answers: IAnswer[];
     showRightDuringTest: boolean;
     /**
      * Limit time for test.
@@ -118,9 +121,7 @@ const initialState: ITestSuiteInitialState = {
     limitTime: false,
     tasksImages: [],
     explanationImages: [],
-    rightAnswers: [],
-    selectedAnswers: [],
-    givedAnswers: [],
+    answers: [],
     name: '',
 };
 
@@ -235,18 +236,18 @@ const testSuite = createSlice({
          * If payload is undefined it will set right answers
          * to default(empty array).
          */
-        setRightAnswersAction: {
-            reducer: (
-                state: ITestSuiteInitialState,
-                { payload }: ISetAnswersActions,
-            ) => ({
-                ...state,
-                rightAnswers: payload,
-            }),
-            prepare: (answers?: (string[])[]) => ({
-                payload: answers ? answers : [],
-            }),
-        },
+        // setRightAnswersAction: {
+        //     reducer: (
+        //         state: ITestSuiteInitialState,
+        //         { payload }: ISetAnswersActions,
+        //     ) => ({
+        //         ...state,
+        //         rightAnswers: payload,
+        //     }),
+        //     prepare: (answers?: (string[])[]) => ({
+        //         payload: answers ? answers : [],
+        //     }),
+        // },
         /**
          * Set user answers array.
          * If payload exists
@@ -254,17 +255,36 @@ const testSuite = createSlice({
          * If payload doesn't exist
          * returns empty array.
          */
+        // setAnswersAction: {
+        //     reducer: (
+        //         state: ITestSuiteInitialState,
+        //         { payload }: ISetAnswersActions,
+        //     ) => ({
+        //         ...state,
+        //         selectedAnswers: payload,
+        //         givedAnswers: payload,
+        //     }),
+        //     prepare: (answers?: (string[])[]) => ({
+        //         payload: answers ? answers.map(answer => answer.map((() => ''))) : [],
+        //     }),
+        // },
         setAnswersAction: {
             reducer: (
                 state: ITestSuiteInitialState,
                 { payload }: ISetAnswersActions,
             ) => ({
                 ...state,
-                selectedAnswers: payload,
-                givedAnswers: payload,
+                answers: payload,
             }),
-            prepare: (answers?: (string[])[]) => ({
-                payload: answers ? answers.map(answer => answer.map((() => ''))) : [],
+            prepare: (answers?: IAnswerFromResponse[]) => ({
+                payload: answers
+                    ? answers.map(answer => ({
+                        type: answer.type,
+                        right: answer.answer,
+                        gived: answer.answer.map(() => ''),
+                        selected: answer.answer.map(() => ''),
+                    } as IAnswer))
+                    : [],
             }),
         },
         /**
@@ -293,22 +313,35 @@ const testSuite = createSlice({
                 { payload }: ISetAnswerByIdAction,
             ) => ({
                 ...state,
-                selectedAnswers: state.selectedAnswers.map((answer, index) =>
+                // selectedAnswers: state.selectedAnswers.map((answer, index) =>
+                //     index !== payload.id
+                //         ? answer
+                //         : answer.map((el, answerIndex) =>
+                //             answerIndex === payload.answerIndex
+                //                 ? payload.answer
+                //                 : el,
+                //             ),
+                // ),
+                // givedAnswers: payload.answer !== ''
+                //     ? state.givedAnswers
+                //     : state.givedAnswers.map((answer, index) =>
+                //         index !== payload.id
+                //             ? answer
+                //             : answer.map(() => ''),
+                //     ),
+                answers: state.answers.map((answer, index) =>
                     index !== payload.id
                         ? answer
-                        : answer.map((el, answerIndex) =>
-                            answerIndex === payload.answerIndex
-                                ? payload.answer
-                                : el,
-                            ),
-                ),
-                givedAnswers: payload.answer !== ''
-                    ? state.givedAnswers
-                    : state.givedAnswers.map((answer, index) =>
-                        index !== payload.id
-                            ? answer
-                            : answer.map(() => ''),
-                    ),
+                        : {
+                            ...answer,
+                            selected: answer.selected.map((el, answerIndex) =>
+                                answerIndex === payload.answerIndex
+                                    ? payload.answer
+                                    : el),
+                            gived: payload.answer !== ''
+                                ? answer.gived
+                                : answer.gived.map(() => ''),
+                        }),
             }),
             prepare: ({ id, answer, answerIndex }: {
                 answer?: string;
@@ -330,9 +363,16 @@ const testSuite = createSlice({
             { payload }: IGiveAnswerByIdAction,
         ) => ({
             ...state,
-            givedAnswers: state.givedAnswers.map((answer, index) =>
-                index === payload ? state.selectedAnswers[payload] : answer,
-            ),
+            // givedAnswers: state.givedAnswers.map((answer, index) =>
+            //     index === payload ? state.selectedAnswers[payload] : answer,
+            // ),
+            answers: state.answers.map((answer, index) =>
+                index === payload
+                    ? {
+                        ...answer,
+                        gived: answer.selected,
+                    }
+                    : answer),
         }),
     },
 });
@@ -345,7 +385,7 @@ export const {
     limitTestSuiteTimeAction,
     setTasksImagesAction,
     setExplanationsImagesAction,
-    setRightAnswersAction,
+    // setRightAnswersAction,
     setAnswersAction,
     selectAnswerByIndexAction,
     giveAnswerByIndexAction,

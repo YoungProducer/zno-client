@@ -32,47 +32,34 @@ export const selectTestSuiteTasksImages = (state: RootState) =>
 export const selectTestSuiteExplanationsImages = (state: RootState) =>
     state.testSuite.explanationImages;
 
-export const selectSelectedAnswers = (state: RootState) =>
-    state.testSuite.selectedAnswers;
-
-export const selectGivedAnswers = (state: RootState) =>
-    state.testSuite.givedAnswers;
-
-export const selectRightAnswers = (state: RootState) =>
-    state.testSuite.rightAnswers;
+export const selectAnswers = (state: RootState) =>
+    state.testSuite.answers;
 
 export const selectIsAnswerSelected = createSelector(
-    selectSelectedAnswers,
+    selectAnswers,
     selectTaskIndexFromProps,
-    (selectedAnswers, taskIndex) =>
-        selectedAnswers[taskIndex].some(answer => answer !== ''),
+    (answers, taskIndex) =>
+        answers[taskIndex].selected.some(answer => answer !== ''),
 );
 
 export const selectIsAnswerGived = createSelector(
-    selectGivedAnswers,
+    selectAnswers,
     selectTaskIndexFromProps,
-    (givedAnswers, taskIndex) =>
-        givedAnswers[taskIndex].every(answer => answer !== ''),
+    (answers, taskIndex) =>
+        answers[taskIndex].gived.every(answer => answer !== ''),
 );
 
 export const selectIsAnswerRight = createSelector(
-    selectGivedAnswers,
-    selectRightAnswers,
+    selectAnswers,
     selectTaskIndexFromProps,
-    (givedAnswers, rightAnswers, taskIndex) =>
-        givedAnswers[taskIndex].every((answer, index) =>
-            answer === rightAnswers[taskIndex][index]),
+    (answers, taskIndex) =>
+        answers[taskIndex].gived.every((answer, index) =>
+            answer === answers[taskIndex].right[index]),
 );
 
-export const selectSelectedAnswerByTaskIndex = createSelector(
-    selectSelectedAnswers,
+export const selectAnswerByTaskIndex = createSelector(
+    selectAnswers,
     selectTaskIndexFromProps,
-    (selectedAnswers, taskIndex) =>
-        selectedAnswers[taskIndex]);
-
-export const selectGivedAnswerByTaskIndex = createSelector(
-    selectGivedAnswers,
-    selectTaskIndexFromProps,
-    (givedAnswers, taskIndex) =>
-        givedAnswers[taskIndex],
+    (answers, taskIndex) =>
+        answers[taskIndex],
 );

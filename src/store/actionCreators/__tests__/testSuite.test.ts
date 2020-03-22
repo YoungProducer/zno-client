@@ -24,9 +24,7 @@ describe('fetchTestSuiteAction', () => {
     const MOCK_STATE = {
         testSuite: {
             loading: false,
-            rightAnswers: [],
-            selectedAnswers: [],
-            givedAnswers: [],
+            answers: [],
             explanationImages: [],
             tasksImages: [],
         },
@@ -52,7 +50,14 @@ describe('fetchTestSuiteAction', () => {
             .onGet(`api/test-suite?subjectId=bar`)
             .reply(200, {
                 id: 'foo',
-                answers: [['0'], ['1', '3']],
+                // answers: [['0'], ['1', '3']],
+                answers: [{
+                    answer: ['0'],
+                    type: 'SINGLE',
+                }, {
+                    answer: ['1', '3'],
+                    type: 'RELATIONS',
+                }],
                 theme: 'foo',
             });
 
@@ -69,8 +74,18 @@ describe('fetchTestSuiteAction', () => {
             type: 'TestSuite/testSuiteLoadingAction',
             payload: true,
         }, {
-            type: 'TestSuite/setRightAnswersAction',
-            payload: [['0'], ['1', '3']],
+            type: 'TestSuite/setAnswersAction',
+            payload: [{
+                right: ['0'],
+                selected: [''],
+                gived: [''],
+                type: 'SINGLE',
+            }, {
+                right: ['1', '3'],
+                selected: ['', ''],
+                gived: ['', ''],
+                type: 'RELATIONS',
+            }],
         }, {
             type: 'TestSuite/setTestSuiteNameAction',
             payload: 'foo',

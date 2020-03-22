@@ -14,7 +14,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import api, { ITestSuiteCredentials } from 'api';
 import {
     testSuiteLoadingAction,
-    setRightAnswersAction,
+    setAnswersAction,
     setTasksImagesAction,
     setExplanationsImagesAction,
     setTestSuiteNameAction,
@@ -28,7 +28,7 @@ export const fetchTestSuiteAction = (credentials: ITestSuiteCredentials) =>
         return await api.testSuite(credentials)
             .then(response => response.data)
             .then(testSuiteData => {
-                dispatch(setRightAnswersAction(testSuiteData.answers));
+                dispatch(setAnswersAction(testSuiteData.answers));
                 dispatch(setTestSuiteNameAction({
                     session: testSuiteData.session,
                     training: testSuiteData.training,
