@@ -6,6 +6,8 @@
  */
 
 /** Application's imports */
-import Componet from './Component';
+import Component from './Component';
+import container from './container';
 
-export default Componet;
+/** Export configured component via HOC */
+export default container(Component);

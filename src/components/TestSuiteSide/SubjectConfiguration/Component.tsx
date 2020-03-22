@@ -394,9 +394,33 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     const handleGoToTest = useCallback(() => {
         /** Check is allowGoToTest is true */
         if (allowGoToTest) {
-            history.push('/test');
+            const querystring = new URLSearchParams();
+
+            querystring.append('subjectId', subjectData.id);
+
+            if (subSubjectsData && subSubjectsData !== null && subSubject) {
+                const subSubjectId = subSubjectsData.find(subject => subject.name === subSubject).id;
+
+                querystring.append('subSubjectId', subSubjectId);
+            }
+
+            if (testType === ETestTypes.THEMES && theme !== '') {
+                querystring.append('theme', theme);
+            }
+
+            if (testType === ETestTypes.EXAMS && exam !== '') {
+                if (examType === EExamTypes.TRAININGS) {
+                    querystring.append('training', exam);
+                }
+
+                if (examType === EExamTypes.SESSIONS) {
+                    querystring.append('session', exam);
+                }
+            }
+
+            history.push(`/test-suite?${querystring.toString()}`);
         }
-    }, [allowGoToTest]);
+    }, [allowGoToTest, subSubjectsData, subSubject, subjectData, theme, exam]);
 
     const redirectToHome = () => history.push('/');
 

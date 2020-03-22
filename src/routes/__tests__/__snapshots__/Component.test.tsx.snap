@@ -37,9 +37,9 @@ exports[`Routes component Is match snapshot 1`] = `
   </Connect(Component)>
   <Connect(Component)
     exact={true}
-    path="/test-suite/:testSuiteId"
+    path="/test-suite"
   >
-    Test suite
+    <Component />
   </Connect(Component)>
   <Route
     component={[Function]}

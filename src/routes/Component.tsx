@@ -15,6 +15,7 @@ import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
 import SubjectSelection from './SubjectSelection';
 import SubjectConfiguration from './SubjectConfiguration';
+import TestSuite from './TestSuite';
 import { TRoutesProps } from './container';
 
 /** Create component */
@@ -44,9 +45,9 @@ const Component = ({ isLoggedIn }: TRoutesProps) => {
             </PrivateRoute>
             <PrivateRoute
                 exact
-                path='/test-suite/:testSuiteId'
+                path='/test-suite'
             >
-                Test suite
+                <TestSuite />
             </PrivateRoute>
             <Route exact path='/auth/signin' component={SignIn} />
             <Route exact path='/auth/signup'>

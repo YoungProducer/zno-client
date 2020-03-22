@@ -8,9 +8,7 @@
 
 /** External imports */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import Backdrop from '@material-ui/core/Backdrop';
-import MenuItem from '@material-ui/core/MenuItem';
+import { shallow } from 'enzyme';
 
 /** Application's imports */
 import Component from '../Component';
@@ -53,6 +51,7 @@ describe('SubjectConfigurationModal component', () => {
     };
 
     beforeEach(() => {
+        push.mockReset();
         (requiredProps.fetchSubjectConfiguration as jest.Mock).mockReset();
         (requiredProps.toggleSubjectConfigurationDialog as jest.Mock).mockReset();
     });
@@ -609,5 +608,96 @@ describe('SubjectConfigurationModal component', () => {
 
         /** Assert 'go-to-test' button is active */
         expect(tree.find(`[data-testid='go-to-test']`).props().disabled).toBeFalsy();
+    });
+
+    test('Go to test button with selected theme should call push method with right args', () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectThemes={['foo', 'bar']}
+            />,
+        );
+
+        /** Select test type 'THEMES' */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Simulate button click */
+        tree.find(`[data-testid='go-to-test']`)
+            .simulate('click');
+
+        /** Assert push method called with right args */
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&theme=foo');
+    });
+
+    test('Go to test button with sub-subjects and themes', () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subSubjectsData={[{
+                    name: 'foo',
+                    id: '123',
+                }, {
+                    name: 'abc',
+                    id: '456',
+                }]}
+                subSubjectsThemes={{
+                    foo: ['bar123', '456'],
+                    abc: ['bar', 'bbb'],
+                }}
+            />,
+        );
+
+        /** Select test type 'THEMES' */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.THEMES } });
+
+        /** Simulate button click */
+        tree.find(`[data-testid='go-to-test']`)
+            .simulate('click');
+
+        /** Assert push method called with right args */
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&subSubjectId=123&theme=bar123');
+    });
+
+    test('Go to test button with exams', () => {
+        /** Render component */
+        const tree = shallow(
+            <Component
+                {...requiredProps}
+                subjectExams={{
+                    trainings: ['foo'],
+                    sessions: ['bar'],
+                }}
+            />,
+        );
+
+        /** Select test type 'THEMES' */
+        tree.find(`[data-testid='select-test-type']`)
+            .simulate('change', { target: { value: ETestTypes.EXAMS } });
+
+        /** Select exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.SESSIONS } });
+
+        /** Simulate button click */
+        tree.find(`[data-testid='go-to-test']`)
+            .simulate('click');
+
+        /** Assert push method called with right args */
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&session=bar');
+
+        /** Select exam type */
+        tree.find(`[data-testid='select-exam-type']`)
+            .simulate('change', { target: { value: EExamTypes.TRAININGS } });
+
+        /** Simulate button click */
+        tree.find(`[data-testid='go-to-test']`)
+            .simulate('click');
+
+        /** Assert push method called with right args */
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&training=foo');
     });
 });
