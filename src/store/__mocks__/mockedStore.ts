@@ -75,6 +75,7 @@ const mockedStore = mockStore({
         tasksImages: [],
         explanationImages: [],
     },
+    errorHandler: {},
 });
 
 export default mockedStore;
