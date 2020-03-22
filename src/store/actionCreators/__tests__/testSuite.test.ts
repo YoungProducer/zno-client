@@ -17,6 +17,7 @@ import api from 'api';
 import { fetchTestSuiteAction } from '../testSuite';
 import { RootState } from 'store/slices';
 import { AnyAction } from '@reduxjs/toolkit';
+import { errorHandler } from 'store/middlewares/errorHandler';
 
 describe('fetchTestSuiteAction', () => {
     /** Create state for mocking */
@@ -32,7 +33,7 @@ describe('fetchTestSuiteAction', () => {
     } as RootState;
 
     /** Define middlewares array */
-    const middlewares = [thunk];
+    const middlewares = [thunk, errorHandler];
 
     /** Create mock store */
     const store = configureMockStore(middlewares)(MOCK_STATE);
@@ -81,6 +82,41 @@ describe('fetchTestSuiteAction', () => {
         }];
 
         /** Dispatch async action */
+        return store.dispatch(fetchTestSuiteAction({
+            subjectId: 'bar',
+        }) as any)
+            .then(() => {
+                /** Assert list of dispatched actions equals to expected actions */
+                expect(store.getActions()).toEqual(expectedActions);
+            });
+    });
+
+    test('Fetch with status code 401', () => {
+        /** Mock urls */
+        axiosMock
+            .onGet('api/test-suite?subjectId=bar')
+            .reply(401);
+
+        /** Define expected actions */
+        const expectedActions: AnyAction[] = [{
+            type: 'TestSuite/testSuiteLoadingAction',
+            payload: true,
+        }, {
+            type: 'TestSuite/testSuiteLoadingAction',
+            payload: false,
+        }, {
+            type: 'ErrorHandler/setErrorAction',
+            payload: {
+                message: 'Request failed with status code 401',
+                status: undefined as any,
+                statusCode: 401,
+            },
+        }, {
+            type: 'SignIn/setUserDataAction',
+            payload: null,
+        }];
+
+        /** Dispatch action */
         return store.dispatch(fetchTestSuiteAction({
             subjectId: 'bar',
         }) as any)

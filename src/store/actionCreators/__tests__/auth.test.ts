@@ -8,18 +8,67 @@
 
 // External imports
 import MockAdapter from 'axios-mock-adapter';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 // Application's imports
 import api from 'api';
-import store from 'store/__mocks__/mockedStore';
+import applicationsMiddlewares from 'store/middlewares';
 import {
     fetchSignUpAction,
     fetchSignInAction,
     fetchMeAction,
     fetchLogoutAction,
 } from 'store/actionCreators/auth';
+import { RootState } from 'store/slices';
 
 describe('Auth async actions', () => {
+    /** Create state for mocking */
+    const MOCK_STATE = {
+        auth: {
+            signUp: {
+                loading: false,
+                errorFields: {
+                    email: false,
+                    password: false,
+                    confPassword: false,
+                },
+                fieldsMessages: {
+                    email: '',
+                    password: '',
+                    confPassword: '',
+                },
+            },
+            signIn: {
+                loading: false,
+                user: null,
+                errorFields: {
+                    email: false,
+                    password: false,
+                },
+                fieldsMessages: {
+                    email: '',
+                    password: '',
+                },
+            },
+            me: {
+                loading: false,
+            },
+            refresh: {
+                loading: false,
+            },
+            logout: {
+                loading: false,
+            },
+        },
+    } as RootState;
+
+    /** Create middlewares array */
+    const middlewares = [thunk, ...applicationsMiddlewares];
+
+    /** Create mocked store */
+    const store = configureMockStore(middlewares)(MOCK_STATE);
+
     // Create mocked axios instance
     let axiosMock = new MockAdapter(api.axiosInstance);
 
@@ -250,6 +299,13 @@ describe('Auth async actions', () => {
             }, {
                 type: 'Me/meLoadingAction',
                 payload: false,
+            }, {
+                type: 'ErrorHandler/setErrorAction',
+                payload: {
+                    message: 'Request failed with status code 403',
+                    status: undefined as any,
+                    statusCode: 403,
+                },
             }];
 
             return store.dispatch(fetchMeAction() as any)
@@ -272,6 +328,13 @@ describe('Auth async actions', () => {
             }, {
                 type: 'Me/meLoadingAction',
                 payload: false,
+            }, {
+                type: 'ErrorHandler/setErrorAction',
+                payload: {
+                    message: 'Request failed with status code 401',
+                    status: undefined as any,
+                    statusCode: 401,
+                },
             }, {
                 type: 'SignIn/setUserDataAction',
                 payload: null,

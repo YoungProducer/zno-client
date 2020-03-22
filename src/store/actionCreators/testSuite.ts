@@ -12,7 +12,13 @@ import { Dispatch } from '@reduxjs/toolkit';
 
 /** Application's imports */
 import api, { ITestSuiteCredentials } from 'api';
-import { testSuiteLoadingAction, setRightAnswersAction, setTasksImagesAction, setExplanationsImagesAction } from 'store/slices';
+import {
+    testSuiteLoadingAction,
+    setRightAnswersAction,
+    setTasksImagesAction,
+    setExplanationsImagesAction,
+} from 'store/slices/testSuite';
+import { setErrorAction } from 'store/slices/errorHandler';
 
 export const fetchTestSuiteAction = (credentials: ITestSuiteCredentials) =>
     async (dispatch: Dispatch<any>) => {
@@ -39,5 +45,6 @@ export const fetchTestSuiteAction = (credentials: ITestSuiteCredentials) =>
             })
             .catch(error => {
                 dispatch(testSuiteLoadingAction(false));
+                dispatch(setErrorAction(error));
             });
     };

@@ -16,6 +16,7 @@ import {
     setSubjectsListAction,
     TSubjectList,
 } from 'store/slices/subjects';
+import { setErrorAction } from 'store/slices/errorHandler';
 
 export const fetchSubjectsAction = () => async (dispatch: Dispatch<any>) => {
     dispatch(subjectsLoadingAction(true));
@@ -29,5 +30,6 @@ export const fetchSubjectsAction = () => async (dispatch: Dispatch<any>) => {
         .then((subjects: TSubjectList) => dispatch(setSubjectsListAction(subjects)))
         .catch(error => {
             dispatch(subjectsLoadingAction(false));
+            dispatch(setErrorAction(error));
         });
 };

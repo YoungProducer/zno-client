@@ -37,7 +37,7 @@ describe('fetchSubjectsAction', () => {
         store.clearActions();
     });
 
-    test('Fetch subjects names with success response', () => {
+    test('Fetch subjects with success response', () => {
         /** Mock subjects endpoint to send success response */
         axiosMock
             .onGet('api/subject')
@@ -61,8 +61,6 @@ describe('fetchSubjectsAction', () => {
             }],
         }];
 
-        console.log(store.getActions());
-
         /** Dispatch action */
         return store.dispatch(fetchSubjectsAction() as any)
             .then(() => {
@@ -71,7 +69,7 @@ describe('fetchSubjectsAction', () => {
             });
     });
 
-    test('Fetch subjects names with error', () => {
+    test('Fetch subjects with error', () => {
         /** Mock subjects endpoint to send success response */
         axiosMock
             .onGet('api/subject')
@@ -84,6 +82,13 @@ describe('fetchSubjectsAction', () => {
         }, {
             type: 'Subjects/subjectsLoadingAction',
             payload: false,
+        }, {
+            type: 'ErrorHandler/setErrorAction',
+            payload: {
+                message: 'Request failed with status code 404',
+                status: undefined as any,
+                statusCode: 404,
+            },
         }];
 
         /** Dispatch action */
@@ -94,10 +99,10 @@ describe('fetchSubjectsAction', () => {
             });
     });
 
-    test('Fetch subjects names with 3xx status', () => {
+    test('Fetch subjects with 3xx status', () => {
         /** Mock subjects endpoint to send 300 status */
         axiosMock
-            .onGet('/subjects/names')
+            .onGet('api/subject')
             .reply(300);
 
         /** Define expected actions */
@@ -107,6 +112,13 @@ describe('fetchSubjectsAction', () => {
         }, {
             type: 'Subjects/subjectsLoadingAction',
             payload: false,
+        }, {
+            type: 'ErrorHandler/setErrorAction',
+            payload: {
+                message: 'Request failed with status code 300',
+                status: undefined as any,
+                statusCode: 300,
+            },
         }];
 
         /** Dispatch action */

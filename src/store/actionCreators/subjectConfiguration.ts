@@ -16,6 +16,7 @@ import {
     setSubjectConfigAction,
     TSubjectConfig,
 } from 'store/slices/subjectConfiguration';
+import { setErrorAction } from 'store/slices/errorHandler';
 
 /** Create async action */
 export const fetchSubjectConfigurationAction = (credentials: ISubjectConfigurationCredentials) =>
@@ -32,5 +33,6 @@ export const fetchSubjectConfigurationAction = (credentials: ISubjectConfigurati
             .then((config: TSubjectConfig) => dispatch(setSubjectConfigAction(config)))
             .catch(error => {
                 dispatch(subjectConfigurationLoadingAction(false));
+                dispatch(setErrorAction(error));
             });
     };

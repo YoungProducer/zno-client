@@ -86,6 +86,13 @@ describe('fetchSubjectConfigurationAction', () => {
         }, {
             type: 'SubjectConfiguration/subjectConfigurationLoadingAction',
             payload: false,
+        }, {
+            type: 'ErrorHandler/setErrorAction',
+            payload: {
+                message: 'Request failed with status code 404',
+                status: undefined as any,
+                statusCode: 404,
+            },
         }];
 
         /** Dispatch action */

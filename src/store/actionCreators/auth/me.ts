@@ -12,17 +12,11 @@ import { Dispatch } from '@reduxjs/toolkit';
 /** Application's imports */
 import api from 'api';
 import {
-    signInLoadingAction,
     setUserDataAction,
-    setSignInErrorFieldsAction,
-    setSignInFieldsMessagesAction,
     TUser,
 } from 'store/slices/auth/signin';
 import { meLoadingAction } from 'store/slices/auth/me';
-import {
-    verifySignInCredentials,
-    IFetchSignInActionCredentials,
-} from 'utils/verify-credentials';
+import { setErrorAction } from 'store/slices/errorHandler';
 import { AxiosError } from 'axios';
 
 export const fetchMeAction = () =>
@@ -40,10 +34,8 @@ export const fetchMeAction = () =>
                 return response.data;
             })
             .then((user: TUser) => dispatch(setUserDataAction(user)))
-            .catch((error: AxiosError) => {
+            .catch((error) => {
                 dispatch(meLoadingAction(false));
-                if (error.response.status === 401) {
-                    dispatch(setUserDataAction(null));
-                }
+                dispatch(setErrorAction(error));
             });
     };
