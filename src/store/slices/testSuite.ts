@@ -32,6 +32,12 @@ interface ISetAnswersActions {
     payload: IAnswer[];
 }
 
+export interface ISetAnswerByIdPreparePayload {
+    id: number;
+    answer?: string;
+    answerIndex?: number;
+}
+
 export interface ISetAnswerByIdPayload {
     answer: string;
     /**
@@ -298,11 +304,7 @@ const testSuite = createSlice({
                                 : answer.gived.map(() => ''),
                         }),
             }),
-            prepare: ({ id, answer, answerIndex }: {
-                answer?: string;
-                id: number;
-                answerIndex?: number;
-            }) => ({
+            prepare: ({ id, answer, answerIndex }: ISetAnswerByIdPreparePayload) => ({
                 payload: ({
                     id,
                     answerIndex: answerIndex || 0,

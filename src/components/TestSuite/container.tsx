@@ -16,15 +16,17 @@ import {
     selectTestSuiteName,
     selectTestSuiteTasksImages,
     selectTestSuiteExplanationsImages,
+    selectAnswers,
 } from 'store/selectors/testSuite';
 import { ITestSuiteCredentials } from 'api';
-import { RootState } from 'store/slices';
+import { RootState, IAnswer } from 'store/slices';
 
 /** Props which component get from the parent */
 interface IOwnProps {}
 
 /** Props which component get from the redux-store */
 interface IStateProps {
+    answers: IAnswer[];
     name: string;
     tasksImages: string[];
     explanationsImages: string[];
@@ -43,6 +45,7 @@ export type TTestSuiteProps =
 
 /** Map variables from the redux-store */
 const mapStateToProps = (state: RootState): IStateProps => ({
+    answers: selectAnswers(state),
     name: selectTestSuiteName(state),
     tasksImages: selectTestSuiteTasksImages(state),
     explanationsImages: selectTestSuiteExplanationsImages(state),

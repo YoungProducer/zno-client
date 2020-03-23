@@ -15,6 +15,8 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /** Application's imports */
 import { TTestSuiteProps } from './container';
 import { ITestSuiteCredentials } from 'api';
+import Answer from './Answer';
+import TaskSelection from './TaskSelection';
 
 /** Define Material classes as hook */
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         },
         tasksSelectionBlock: {
-
+            marginTop: theme.spacing(3),
         },
     }));
 
@@ -95,7 +97,7 @@ const Component = (props: TTestSuiteProps) => {
     const classes = useStyles({});
 
     /** Destruct props */
-    const { name, tasksImages } = props;
+    const { answers, name, tasksImages } = props;
 
     useInitTestSuite(props);
 
@@ -109,8 +111,15 @@ const Component = (props: TTestSuiteProps) => {
                 src={tasksImages[task.current]}
             />
             <div className={classes.answersBlock}>
+                { answers.length !== 0 &&
+                    <Answer
+                        type={answers[task.current].type}
+                        taskIndex={task.current}
+                    />
+                }
             </div>
             <div className={classes.tasksSelectionBlock}>
+                <TaskSelection />
             </div>
         </div>
     );
