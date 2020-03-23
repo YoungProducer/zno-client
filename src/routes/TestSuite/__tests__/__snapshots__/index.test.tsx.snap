@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubjectConfiguration route Is match snapshot 1`] = `
+exports[`TestSuite route Is match snapshot 1`] = `
 <Fragment>
   <CssBaseline />
   <Component
+    content={<Connect(Component) />}
     side={<Connect(Component) />}
   />
 </Fragment>

@@ -17,10 +17,10 @@ import SubjectConfiguration from 'components/TestSuiteSide/SubjectConfiguration'
 const Component = () => (
     <React.Fragment>
         <CssBaseline />
-        <FullPage>
-            <SubjectConfiguration />
-            <TestSuite />
-        </FullPage>
+        <FullPage
+            side={<SubjectConfiguration/>}
+            content={<TestSuite />}
+        />
     </React.Fragment>
 );
 

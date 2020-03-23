@@ -8,6 +8,7 @@
 
 /** External imports */
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
@@ -30,18 +31,20 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface IFullPageProps {
-    children: React.ReactNode;
+    content?: React.ReactNode;
+    side?: React.ReactNode;
 }
 
-const Component = ({ children }: IFullPageProps) => {
+const Component = ({ content, side }: IFullPageProps) => {
     const clasess = useStyles({});
 
     return (
         <div className={clasess.root}>
             <div className={clasess.logo}><Logo /></div>
-            <div className={clasess.container}>
-                {children}
-            </div>
+            <Grid spacing={8} container>
+                { side && <Grid item>{side}</Grid> }
+                { content && <Grid item>{content}</Grid> }
+            </Grid>
         </div>);
 };
 
