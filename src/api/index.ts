@@ -82,6 +82,8 @@ class Api implements IApi {
         /** Generate query string */
         const searchParams = new URLSearchParams(Object.entries(credentials));
 
+        console.log(searchParams, credentials);
+
         return await this.axiosInstance.get(
             `api/test-suite?${searchParams}`,
             { withCredentials: true },

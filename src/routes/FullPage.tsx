@@ -42,8 +42,25 @@ const Component = ({ content, side }: IFullPageProps) => {
         <div className={clasess.root}>
             <div className={clasess.logo}><Logo /></div>
             <Grid spacing={8} container>
-                { side && <Grid item>{side}</Grid> }
-                { content && <Grid item>{content}</Grid> }
+                { side &&
+                    <Grid
+                        item
+                        xs={5}
+                        md={4}
+                        lg={3}
+                    >
+                        {side}
+                    </Grid>
+                }
+                { content &&
+                    <Grid
+                        item
+                        xs={7}
+                        md={8}
+                        lg={9}
+                    >
+                        {content}
+                    </Grid> }
             </Grid>
         </div>);
 };

@@ -11,7 +11,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
-        width: 400,
+        width: '100%',
         height: '100%',
         borderRadius: 40,
         background: '#fff',
