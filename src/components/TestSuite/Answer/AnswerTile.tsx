@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         backgroundColor: '#ffffff',
         color: '#867272',
         transition: theme.transitions.create(['background-color', 'color'], {
-            duration: 500,
+            duration: 300,
             easing: theme.transitions.easing.easeInOut,
         }),
     },
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         backgroundColor: '#5b6ee9',
         color: '#f5f5f5',
         transition: theme.transitions.create(['background-color', 'color'], {
-            duration: 500,
+            duration: 300,
             easing: theme.transitions.easing.easeInOut,
         }),
     },

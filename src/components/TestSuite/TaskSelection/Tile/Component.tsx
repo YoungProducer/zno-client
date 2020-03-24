@@ -55,9 +55,9 @@ const useTileStyles = makeStyles((theme: Theme) =>
             visibility: 'hidden',
         },
         right: {
-            background: theme.palette.primary.main,
-            color: theme.palette.getContrastText(theme.palette.primary.main),
-            transition: theme.transitions.create(['background', 'color', 'height', 'width'], {
+            background: theme.palette.secondary.main,
+            color: theme.palette.getContrastText(theme.palette.secondary.main),
+            transition: theme.transitions.create(['height', 'width', 'background', 'color'], {
                 duration: 200,
                 easing: theme.transitions.easing.easeInOut,
             }),
@@ -65,7 +65,7 @@ const useTileStyles = makeStyles((theme: Theme) =>
         wrong: {
             background: red.A200,
             color: theme.palette.getContrastText(red.A200),
-            transition: theme.transitions.create(['background', 'color', 'height', 'width'], {
+            transition: theme.transitions.create(['height', 'width', 'background', 'color'], {
                 duration: 200,
                 easing: theme.transitions.easing.easeInOut,
             }),

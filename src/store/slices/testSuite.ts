@@ -299,9 +299,7 @@ const testSuite = createSlice({
                                 answerIndex === payload.answerIndex
                                     ? payload.answer
                                     : el),
-                            gived: payload.answer !== ''
-                                ? answer.gived
-                                : answer.gived.map(() => ''),
+                            gived: answer.gived.map(() => ''),
                         }),
             }),
             prepare: ({ id, answer, answerIndex }: ISetAnswerByIdPreparePayload) => ({

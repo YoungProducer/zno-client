@@ -10,7 +10,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
 import { useLocation, useHistory, useParams } from 'react-router-dom';
-import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
@@ -398,7 +397,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
             querystring.append('subjectId', subjectData.id);
 
-            if (subSubjectsData && subSubjectsData !== null && subSubject) {
+            if (subSubjectsData && subSubjectsData !== null && subSubject && testType === ETestTypes.THEMES) {
                 const subSubjectId = subSubjectsData.find(subject => subject.name === subSubject).id;
 
                 querystring.append('subSubjectId', subSubjectId);
