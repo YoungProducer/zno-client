@@ -100,11 +100,19 @@ const useComponentStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-const useCarouselFields = (tilesAmount: number) => {
-    const [activeEl, setActiveEl] = useState<number>(0);
+const useCarouselFields = (props: ITaskSelectionProps) => {
+    /** Destruct props */
+    const {
+        tasksAmount,
+        activeTask,
+        setTaskIndex,
+    } = props;
 
+    /** Offset of the inner container */
     const [offsetX, setOffestX] = useState<number>(0);
+    /** Toggles when mouse down or up */
     const [mouseDown, toggleMouseDown] = useState<boolean>(false);
+    /** Related to animate class in inner container */
     const [animate, toggleAnimate] = useState<boolean>(false);
 
     const rootContainerRef = React.createRef<HTMLDivElement>();
@@ -112,7 +120,7 @@ const useCarouselFields = (tilesAmount: number) => {
     const [buttonsAmount, setButtonsAmount] = useState<number>(0);
 
     const minOffset = 0;
-    const maxOffset = tilesAmount * (tileWidth + tilesSpacing) - tilesSpacing + (activeTileWidth - tileWidth);
+    const maxOffset = tasksAmount * (tileWidth + tilesSpacing) - tilesSpacing + (activeTileWidth - tileWidth);
 
     /**
      * If offset is out of range then
@@ -178,7 +186,7 @@ const useCarouselFields = (tilesAmount: number) => {
      */
     const handleSetActiveEl = useCallback((index: number) => {
         if (!mouseDown) {
-            setActiveEl(index);
+            setTaskIndex(index);
             /**
              * Difference between last tile and new active el.
              * 2 - lastTileIndex offset.
@@ -221,13 +229,29 @@ const useCarouselFields = (tilesAmount: number) => {
         setButtonsAmount(Math.floor(amount));
     }, [rootContainerRef]);
 
+    const tiles = useMemo(() =>
+        [...Array(tasksAmount)].map((_, index) => (
+            <Tile
+                key={index}
+                taskIndex={index + 1}
+                active={index === activeTask}
+                hide={!(index >= firstTileIndex && index <= lastTileIndex)}
+                callback={() => handleSetActiveEl(index)}
+            />
+        )), [
+            activeTask,
+            tasksAmount,
+            firstTileIndex,
+            lastTileIndex,
+            handleSetActiveEl,
+        ]);
+
     return {
         handleOnMouseMove,
         handleOnMouseDown,
         handleOnMouseUp,
-        handleSetActiveEl,
+        tiles,
         animate,
-        activeEl,
         offsetX,
         rootContainerRef,
         buttonsAmount,
@@ -238,40 +262,22 @@ const useCarouselFields = (tilesAmount: number) => {
 
 export interface ITaskSelectionProps {
     tasksAmount: number;
+    setTaskIndex: (index: number) => void;
+    activeTask: number;
 }
 
-const Component = ({ tasksAmount }: ITaskSelectionProps) => {
+const Component = (props: ITaskSelectionProps) => {
     const classes = useComponentStyles({});
 
     const {
         offsetX,
         animate,
-        activeEl,
+        tiles,
+        rootContainerRef,
+        handleOnMouseUp,
         handleOnMouseMove,
         handleOnMouseDown,
-        handleOnMouseUp,
-        handleSetActiveEl,
-        rootContainerRef,
-        firstTileIndex,
-        lastTileIndex,
-    } = useCarouselFields(tasksAmount);
-
-    const tiles = useMemo(() =>
-        [...Array(tasksAmount)].map((_, index) => (
-            <Tile
-                key={index}
-                taskIndex={index + 1}
-                active={index === activeEl}
-                hide={!(index >= firstTileIndex && index <= lastTileIndex)}
-                callback={() => handleSetActiveEl(index)}
-            />
-        )), [
-            activeEl,
-            firstTileIndex,
-            lastTileIndex,
-            handleSetActiveEl,
-            tasksAmount,
-        ]);
+    } = useCarouselFields(props);
 
     return (
         <div

@@ -124,7 +124,11 @@ const Component = (props: TTestSuiteProps) => {
                 }
             </div>
             <div className={classes.tasksSelectionBlock}>
-                <TaskSelection tasksAmount={answers.length}/>
+                <TaskSelection
+                    tasksAmount={answers.length}
+                    activeTask={task.current}
+                    setTaskIndex={task.set}
+                />
             </div>
         </div>
     );
