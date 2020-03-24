@@ -22,6 +22,7 @@ module.exports = {
       modals: path.resolve(__dirname, 'src/modals'),
       api: path.resolve(__dirname, 'src/api'),
       theme: path.resolve(__dirname, 'src/theme'),
+      hooks: path.resolve(__dirname, 'src/hooks'),
       img: path.resolve(__dirname, 'src/img'),
     }
   },

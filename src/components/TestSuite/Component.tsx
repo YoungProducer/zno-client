@@ -8,11 +8,11 @@
 
 /** External imports */
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
+import { useSearchParams } from 'hooks/useSearchParams';
 import { TTestSuiteProps } from './container';
 import { ITestSuiteCredentials } from 'api';
 import Answer from './Answer';
@@ -44,42 +44,15 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-const useSearch = () => {
-    /** Define posible search params array */
-    const searchNames = ['subjectId', 'subSubjectId', 'theme', 'session', 'training'];
-
-    /** Get location */
-    const location = useLocation();
-
-    /** Get search */
-    const search = location.search;
-
-    /** Create search params instance */
-    const searchParams = new URLSearchParams(search);
-
-    /** Extract data from search */
-    const searchData = searchNames.reduce((acc, curr) => {
-        const param = searchParams.get(curr);
-
-        if (param !== null) {
-            return {
-                ...acc,
-                [curr]: param,
-            };
-        }
-
-        return acc;
-    }, {});
-
-    return searchData as ITestSuiteCredentials;
-};
-
 const useInitTestSuite = (props: TTestSuiteProps) => {
     /** Extract props */
     const { fetchTestSuite } = props;
 
+    /** Define posible search params array */
+    const searchNames = ['subjectId', 'subSubjectId', 'theme', 'session', 'training'];
+
     /** Get search data */
-    const searchData = useSearch();
+    const searchData = useSearchParams<ITestSuiteCredentials>({ searchNames });
 
     useEffect(() => {
         fetchTestSuite(searchData);
