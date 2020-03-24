@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: '#b19898',
         },
         img: {
-
+            maxHeight: '50vh',
         },
         answersBlock: {
 

@@ -58,12 +58,22 @@ export type TInputBaseProps =
     & InputBaseProps
     & {
         helperText?: string;
+        /**
+         * Class name for InputBase.
+         */
+        rootClassName?: string;
     };
 
 const Component = (props: TInputBaseProps) => {
     const classes = useStyles({});
 
-    const { helperText, error, ...other } = props;
+    /** Destruct props */
+    const {
+        helperText,
+        error,
+        rootClassName,
+        ...other
+    } = props;
 
     return (
         <InputBase
@@ -85,7 +95,7 @@ const Component = (props: TInputBaseProps) => {
                     />
                 </Tooltip>
             }
-            className={classes.root}
+            className={rootClassName || classes.root}
             inputProps={{
                 className: classes.input,
             }}

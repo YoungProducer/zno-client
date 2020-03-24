@@ -5,15 +5,12 @@
 
 /** External imports */
 import React, { useState } from 'react';
-import classNames from 'classnames';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
-import { TAnswerProps } from './container';
+import { TAnswerType } from 'api';
 import Single from './Single';
 import Relations from './Relations';
-import { TAnswerType } from 'api';
+import Text from './Text';
 
 export const markUp = ['A', 'Б', 'В', 'Г', 'Д'];
 
@@ -27,6 +24,7 @@ const Component = ({ type, taskIndex }: IAnswerProps) => {
         <>
             { type === 'SINGLE' && <Single taskIndex={taskIndex}/>}
             { type === 'RELATIONS' && <Relations taskIndex={taskIndex}/>}
+            { type === 'TEXT' && <Text taskIndex={taskIndex}/>}
         </>
     );
 };
