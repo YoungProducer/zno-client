@@ -82,12 +82,12 @@ const useCarouselFields = (props: ITaskSelectionProps) => {
      * to optimize carousel if tile index is out of range
      * to this tile will be added class with 'visibility: hidden'.
      */
-    const firstTileIndex = useMemo(() => {
+    const getFirstTileIndex = useCallback(() => {
         const index = Math.floor(offsetX / (tileWidth + tilesSpacing)) * -1;
         return 0 > index ? 0 : index - 2;
     }, [offsetX]);
 
-    const lastTileIndex = useMemo(() => {
+    const getLastTileIndex = useCallback(() => {
         const index = buttonsAmount + Math.floor(offsetX / (tileWidth + tilesSpacing)) * -1;
         return buttonsAmount > index ? buttonsAmount : index + 2;
     }, [buttonsAmount, offsetX]);
@@ -125,19 +125,18 @@ const useCarouselFields = (props: ITaskSelectionProps) => {
      * calculate and add offset to move
      * tiles to left or to right.
      */
-    const handleSetActiveEl = useCallback((index: number) => {
-        if (!mouseDown) {
-            setTaskIndex(index);
+    useEffect(() => {
+        if (!mouseDown && activeTask !== 0) {
             /**
              * Difference between last tile and new active el.
              * 2 - lastTileIndex offset.
              */
-            const lastDiff = lastTileIndex - 2 - index;
+            const lastDiff = getLastTileIndex() - 2 - activeTask;
             /**
              * Difference between first tile and new active el.
              * 2 - firstTileIndex offset.
              */
-            const firstDiff = firstTileIndex + 2 - index;
+            const firstDiff = getFirstTileIndex() + 2 - activeTask;
 
             if (lastDiff < 3 && lastDiff >= 0) {
                 toggleAnimate(true);
@@ -149,15 +148,15 @@ const useCarouselFields = (props: ITaskSelectionProps) => {
                 handleSetOffset(Math.floor(offsetX + (buttonsAmount - 2) * (tileWidth + tilesSpacing)));
             }
         }
-    }, [
-        buttonsAmount,
-        setOffestX,
-        toggleAnimate,
-        offsetX,
-        mouseDown,
-        firstTileIndex,
-        lastTileIndex,
-    ]);
+        if (activeTask <= getFirstTileIndex()) {
+            const firstDiff = getFirstTileIndex() + 2;
+
+            if (firstDiff !== 0) {
+                toggleAnimate(true);
+                handleSetOffset(Math.floor(offsetX + (getLastTileIndex() - 2) * (tileWidth + tilesSpacing)));
+            }
+        }
+    }, [activeTask]);
 
     /**
      * Calculate buttons amount per innerContainer width.
@@ -176,15 +175,14 @@ const useCarouselFields = (props: ITaskSelectionProps) => {
                 key={index}
                 taskIndex={index}
                 active={index === activeTask}
-                hide={!(index >= firstTileIndex && index <= lastTileIndex)}
-                callback={() => handleSetActiveEl(index)}
+                hide={!(index >= getFirstTileIndex() && index <= getLastTileIndex())}
+                callback={() => setTaskIndex(index)}
             />
         )), [
             activeTask,
             tasksAmount,
-            firstTileIndex,
-            lastTileIndex,
-            handleSetActiveEl,
+            getFirstTileIndex,
+            getLastTileIndex,
         ]);
 
     return {
@@ -196,8 +194,6 @@ const useCarouselFields = (props: ITaskSelectionProps) => {
         offsetX,
         rootContainerRef,
         buttonsAmount,
-        firstTileIndex,
-        lastTileIndex,
     };
 };
 
