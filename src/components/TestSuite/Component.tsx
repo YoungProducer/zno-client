@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             paddingTop: theme.spacing(4),
+            height: '100%',
+            position: 'relative',
         },
         title: {
             fontSize: '1.4375rem',
@@ -36,6 +38,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         tasksSelectionBlock: {
             marginTop: theme.spacing(3),
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
         },
     }));
 
@@ -119,7 +124,7 @@ const Component = (props: TTestSuiteProps) => {
                 }
             </div>
             <div className={classes.tasksSelectionBlock}>
-                <TaskSelection />
+                <TaskSelection tasksAmount={answers.length}/>
             </div>
         </div>
     );

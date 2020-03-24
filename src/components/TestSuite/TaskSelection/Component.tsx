@@ -92,11 +92,20 @@ const useComponentStyles = makeStyles((theme: Theme) =>
             position: 'absolute',
             height: '100%',
         },
+        animateContainer: {
+            transition: theme.transitions.create('left', {
+                duration: 500,
+                easing: theme.transitions.easing.easeInOut,
+            }),
+        },
     }));
 
 const useCarouselFields = (tilesAmount: number) => {
+    const [activeEl, setActiveEl] = useState<number>(0);
+
     const [offsetX, setOffestX] = useState<number>(0);
     const [mouseDown, toggleMouseDown] = useState<boolean>(false);
+    const [animate, toggleAnimate] = useState<boolean>(false);
 
     const rootContainerRef = React.createRef<HTMLDivElement>();
 
@@ -105,23 +114,105 @@ const useCarouselFields = (tilesAmount: number) => {
     const minOffset = 0;
     const maxOffset = tilesAmount * (tileWidth + tilesSpacing) - tilesSpacing + (activeTileWidth - tileWidth);
 
+    /**
+     * If offset is out of range then
+     * set offset in extreme positions.
+     */
+    const handleSetOffset = (offset: number) => {
+        if (offset > minOffset) {
+            setOffestX(minOffset);
+        } else if (offset < -maxOffset + rootContainerRef.current.clientWidth) {
+            setOffestX(-maxOffset + rootContainerRef.current.clientWidth);
+        } else {
+            setOffestX(offset);
+        }
+    };
+
+    /**
+     * Calculate diapason in which tiles must be displayed
+     * to optimize carousel if tile index is out of range
+     * to this tile will be added class with 'visibility: hidden'.
+     */
+    const firstTileIndex = useMemo(() => {
+        const index = Math.floor(offsetX / (tileWidth + tilesSpacing)) * -1;
+        return 0 > index ? 0 : index - 2;
+    }, [offsetX]);
+
+    const lastTileIndex = useMemo(() => {
+        const index = buttonsAmount + Math.floor(offsetX / (tileWidth + tilesSpacing)) * -1;
+        return buttonsAmount > index ? buttonsAmount : index + 2;
+    }, [buttonsAmount, offsetX]);
+
+    /**
+     * Handle mouse move to drag the carousel
+     * offset divided by 2 to make carousel slower.
+     */
     const handleOnMouseMove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         if (mouseDown) {
             const mouseOffsetX = event.movementX / 2;
             const newOffsetX = offsetX + mouseOffsetX;
 
-            console.log(newOffsetX, -maxOffset);
-
-            if (newOffsetX > 0) {
-                setOffestX(0);
-            } else if (newOffsetX < -maxOffset + rootContainerRef.current.clientWidth) {
-                setOffestX(-maxOffset + rootContainerRef.current.clientWidth);
-            } else {
-                setOffestX(newOffsetX);
-            }
+            handleSetOffset(newOffsetX);
         }
     };
 
+    /**
+     * Toggle animate to 'false' to remove
+     * animation class in innerContainer
+     * to prevent bugs.
+     */
+    const handleOnMouseDown = () => {
+        toggleMouseDown(true);
+        toggleAnimate(false);
+    };
+
+    const handleOnMouseUp = () => toggleMouseDown(false);
+
+    /**
+     * If new active tile has border index
+     * then toggle animate to 'true' to add
+     * class in innerContainer which allows
+     * to animate 'left' property and then
+     * calculate and add offset to move
+     * tiles to left or to right.
+     */
+    const handleSetActiveEl = useCallback((index: number) => {
+        if (!mouseDown) {
+            setActiveEl(index);
+            /**
+             * Difference between last tile and new active el.
+             * 2 - lastTileIndex offset.
+             */
+            const lastDiff = lastTileIndex - 2 - index;
+            /**
+             * Difference between first tile and new active el.
+             * 2 - firstTileIndex offset.
+             */
+            const firstDiff = firstTileIndex + 2 - index;
+
+            if (lastDiff < 3 && lastDiff >= 0) {
+                toggleAnimate(true);
+                handleSetOffset(Math.floor(offsetX - (buttonsAmount - 2) * (tileWidth + tilesSpacing)));
+            }
+
+            if (firstDiff < 3 && firstDiff >= 0) {
+                toggleAnimate(true);
+                handleSetOffset(Math.floor(offsetX + (buttonsAmount - 2) * (tileWidth + tilesSpacing)));
+            }
+        }
+    }, [
+        buttonsAmount,
+        setOffestX,
+        toggleAnimate,
+        offsetX,
+        mouseDown,
+        firstTileIndex,
+        lastTileIndex,
+    ]);
+
+    /**
+     * Calculate buttons amount per innerContainer width.
+     */
     useEffect(() => {
         const containerWidth = rootContainerRef.current.clientWidth;
 
@@ -130,48 +221,57 @@ const useCarouselFields = (tilesAmount: number) => {
         setButtonsAmount(Math.floor(amount));
     }, [rootContainerRef]);
 
-    const handleOnMouseDown = () => toggleMouseDown(true);
-
-    const handleOnMouseUp = () => toggleMouseDown(false);
-
-    const firstButtonIndex = useMemo(() => {
-        const index = Math.floor(offsetX / (tileWidth + tilesSpacing)) * -1;
-        return 0 > index ? 0 : index - 2;
-    }, [offsetX]);
-
-    const lastButtonIndex = useMemo(() => {
-        const index = buttonsAmount + Math.floor(offsetX / (tileWidth + tilesSpacing)) * -1;
-        return buttonsAmount > index ? buttonsAmount : index + 2;
-    }, [buttonsAmount, offsetX]);
-
     return {
         handleOnMouseMove,
         handleOnMouseDown,
         handleOnMouseUp,
+        handleSetActiveEl,
+        animate,
+        activeEl,
         offsetX,
-        mouseDown,
         rootContainerRef,
         buttonsAmount,
-        firstButtonIndex,
-        lastButtonIndex,
+        firstTileIndex,
+        lastTileIndex,
     };
 };
 
-const Component = () => {
-    const classes = useComponentStyles({});
+export interface ITaskSelectionProps {
+    tasksAmount: number;
+}
 
-    const [activeEl, setActiveEl] = React.useState(0);
+const Component = ({ tasksAmount }: ITaskSelectionProps) => {
+    const classes = useComponentStyles({});
 
     const {
         offsetX,
-        mouseDown,
+        animate,
+        activeEl,
         handleOnMouseMove,
         handleOnMouseDown,
         handleOnMouseUp,
+        handleSetActiveEl,
         rootContainerRef,
-        firstButtonIndex,
-        lastButtonIndex,
-    } = useCarouselFields(40);
+        firstTileIndex,
+        lastTileIndex,
+    } = useCarouselFields(tasksAmount);
+
+    const tiles = useMemo(() =>
+        [...Array(tasksAmount)].map((_, index) => (
+            <Tile
+                key={index}
+                taskIndex={index + 1}
+                active={index === activeEl}
+                hide={!(index >= firstTileIndex && index <= lastTileIndex)}
+                callback={() => handleSetActiveEl(index)}
+            />
+        )), [
+            activeEl,
+            firstTileIndex,
+            lastTileIndex,
+            handleSetActiveEl,
+            tasksAmount,
+        ]);
 
     return (
         <div
@@ -182,22 +282,12 @@ const Component = () => {
             ref={rootContainerRef}
         >
             <Box
-                className={classes.innerContainer}
+                className={classNames(classes.innerContainer, {
+                    [classes.animateContainer]: animate,
+                })}
                 left={offsetX}
             >
-                {[...Array(40)].map((_, index) => (
-                    <Tile
-                        key={index}
-                        taskIndex={index}
-                        active={index === activeEl}
-                        hide={!(index >= firstButtonIndex && index <= lastButtonIndex)}
-                        callback={() => {
-                            if (!mouseDown) {
-                                setActiveEl(index);
-                            }
-                        }}
-                    />
-                ))}
+                {tiles}
             </Box>
         </div>
     );

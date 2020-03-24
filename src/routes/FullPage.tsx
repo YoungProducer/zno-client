@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         padding: theme.spacing(6),
     },
     container: {
-        display: 'flex',
+        height: '100%',
     },
     logo: {
         paddingBottom: theme.spacing(1),
@@ -41,7 +41,11 @@ const Component = ({ content, side }: IFullPageProps) => {
     return (
         <div className={clasess.root}>
             <div className={clasess.logo}><Logo /></div>
-            <Grid spacing={8} container>
+            <Grid
+                spacing={8}
+                container
+                className={clasess.container}
+            >
                 { side &&
                     <Grid
                         item
