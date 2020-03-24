@@ -39,22 +39,28 @@ export const selectIsAnswerSelected = createSelector(
     selectAnswers,
     selectTaskIndexFromProps,
     (answers, taskIndex) =>
-        answers[taskIndex].selected.some(answer => answer !== ''),
+        answers.length !== 0
+            ? answers[taskIndex].selected.some(answer => answer !== '')
+            : false,
 );
 
 export const selectIsAnswerGived = createSelector(
     selectAnswers,
     selectTaskIndexFromProps,
     (answers, taskIndex) =>
-        answers[taskIndex].gived.every(answer => answer !== ''),
+        answers.length !== 0
+            ? answers[taskIndex].gived.every(answer => answer !== '')
+            : false,
 );
 
 export const selectIsAnswerRight = createSelector(
     selectAnswers,
     selectTaskIndexFromProps,
     (answers, taskIndex) =>
-        answers[taskIndex].gived.every((answer, index) =>
-            answer === answers[taskIndex].right[index]),
+        answers.length !== 0
+            ? answers[taskIndex].gived.every((answer, index) =>
+                answer === answers[taskIndex].right[index])
+            : false,
 );
 
 export const selectAnswerByTaskIndex = createSelector(

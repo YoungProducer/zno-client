@@ -9,73 +9,14 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import Box from '@material-ui/core/Box';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-const tileWidth = 65;
-const activeTileWidth = 93;
-/** Distance between tiles */
-const tilesSpacing = 16;
-
-const useTileStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        tile: {
-            minWidth: tileWidth,
-            width: tileWidth,
-            height: 92,
-            borderRadius: 16,
-            background: '#edeff3',
-            fontSize: '1.25rem',
-            color: '#b19898',
-            lineHeight: '40px',
-            display: 'block',
-            transition: theme.transitions.create(['height', 'width', 'background'], {
-                duration: 200,
-                easing: theme.transitions.easing.easeInOut,
-            }),
-            marginRight: tilesSpacing,
-            '&:last-child': {
-                marginRight: 0,
-            },
-        },
-        tileActive: {
-            height: 116,
-            width: activeTileWidth,
-            minWidth: activeTileWidth,
-            background: '#fff',
-            transition: theme.transitions.create(['height', 'width', 'background'], {
-                duration: 200,
-                easing: theme.transitions.easing.easeInOut,
-            }),
-        },
-        tileHide: {
-            visibility: 'hidden',
-        },
-    }));
-
-interface ITileProps {
-    taskIndex: number;
-    active: boolean;
-    callback: any;
-    hide: boolean;
-}
-
-const Tile = ({ taskIndex, active, callback, hide }: ITileProps) => {
-    const classes = useTileStyles({});
-
-    return (
-        <ButtonBase
-            className={classNames(classes.tile, {
-                [classes.tileActive]: active,
-                [classes.tileHide]: hide,
-            })}
-            onClick={callback}
-        >
-            <p>Зав</p>
-            <p>{taskIndex}</p>
-        </ButtonBase>
-    );
-};
+/** Application's imports */
+import Tile, {
+    tileWidth,
+    activeTileWidth,
+    tilesSpacing,
+} from './Tile';
 
 const useComponentStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -233,7 +174,7 @@ const useCarouselFields = (props: ITaskSelectionProps) => {
         [...Array(tasksAmount)].map((_, index) => (
             <Tile
                 key={index}
-                taskIndex={index + 1}
+                taskIndex={index}
                 active={index === activeTask}
                 hide={!(index >= firstTileIndex && index <= lastTileIndex)}
                 callback={() => handleSetActiveEl(index)}
