@@ -7,27 +7,22 @@
 
 /** External imports */
 import React, { useCallback, useState, useEffect } from 'react';
-import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import CheckBox from '@material-ui/core/Checkbox';
-import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
-import { makeStyles, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 /** Application's imports */
 import { TSignInProps } from './container';
 import NavigationLink from 'components/NavigationLink';
-import Input from 'components/Input';
+import Input from 'components/custom/Input';
+import Checkbox from 'components/custom/Checkbox';
 import Logo from 'img/logo';
-import Check from 'public/images/check.svg';
 
 /** Define classes as hook */
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -85,48 +80,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     icon: {
         color: '#555',
     },
-    checkBoxIcon: {
-        marginLeft: 2,
-        borderRadius: 3,
-        width: 20,
-        height: 20,
-        filter: `drop-shadow(2.828px 2.828px 3.5px rgba(227,207,207,0.9))`,
-        backgroundColor: '#fff',
-        backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
-        '$root.Mui-focusVisible &': {
-            outline: '2px auto rgba(19,124,189,.6)',
-            outlineOffset: 2,
-        },
-        'input:hover ~ &': {
-            backgroundColor: '#ebf1f5',
-        },
-        'input:disabled ~ &': {
-            boxShadow: 'none',
-            background: 'rgba(206,217,224,.5)',
-        },
-    },
-    checkBoxСheckedIcon: {
-        backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
-        position: 'relative',
-        '&:before': {
-            position: 'absolute',
-            top: 2,
-            left: 2,
-            backgroundImage: `url(${Check})`,
-            width: 20,
-            height: 20,
-            backgroundSize: '16px, 16px',
-            display: 'block',
-            content: '""',
-            backgroundRepeat: 'no-repeat',
-        },
-        'input:hover ~ &': {
-            // backgroundColor: '#106ba3',
-        },
-    },
-    checkBox: {
-        width: 400,
-    },
 }));
 
 /**
@@ -151,7 +104,7 @@ const useSignInElements = (props: TSignInProps) => {
             const next = history.location.state
                 ? `${(history.location.state as any).from.pathname}${(history.location.state as any).from.search}`
                 : undefined;
-            // const next: string = new URLSearchParams(history.location.state.).get('next');
+
             history.push(next || '/');
         }
     }, [isLoggedIn]);
@@ -270,22 +223,10 @@ const Component = (props: TSignInProps) => {
                                 />
                             </Grid>
                             <Grid item>
-                                <FormControl component='fieldset' className={classes.checkBox}>
-                                    <FormControlLabel
-                                        control={
-                                            <CheckBox
-                                                disableRipple
-                                                disableTouchRipple
-                                                disableFocusRipple
-                                                color='primary'
-                                                checkedIcon={<span className={classNames(classes.checkBoxIcon, classes.checkBoxСheckedIcon)} />}
-                                                icon={<span className={classes.checkBoxIcon}/>}
-                                                {...rememberCheckbox}
-                                            />
-                                        }
-                                        label={`Запам'ятати мене`}
-                                    />
-                                </FormControl>
+                                <Checkbox
+                                    {...rememberCheckbox}
+                                    label={`Запам'ятати мене`}
+                                />
                             </Grid>
                             <Grid item>
                                 <Button

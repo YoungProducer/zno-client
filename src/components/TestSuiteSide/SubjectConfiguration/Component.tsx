@@ -34,6 +34,7 @@ import {
     TSubjectConfigurationModalProps,
 } from './container';
 import Wrapper from '../Wrapper';
+import Checkbox from 'components/custom/Checkbox';
 
 /** Define Material UI styles as hook */
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -84,6 +85,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     homeIcon: {
         marginLeft: -12,
+    },
+    checkBoxRoot: {
+        width: '100%',
+    },
+    checkBoxLabel: {
+        color: '#333',
     },
 }));
 
@@ -598,29 +605,52 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     )}
 
                     { displayExamSelection && (
-                        <FormControl component='div' className={classes.block}>
-                            <FormLabel
-                                component='legend'
-                                data-testid='select-exam-title'
-                            >
-                                { selectExamTypeField.value === EExamTypes.TRAININGS
-                                    ? 'Виберіть тренувальний варіант'
-                                    : 'Виберіть варіант ЗНО'
-                                }
-                            </FormLabel>
-                            <TextField
-                                id='standard-select-currency'
-                                className={classes.textField}
-                                select={true}
-                                {...selectExamField}
-                                margin='none'
-                                variant='outlined'
-                                {...{ 'data-testid': 'select-exam' }}
-                                color='secondary'
-                            >
-                                {exams}
-                            </TextField>
-                        </FormControl>
+                        <>
+                            <FormControl component='div' className={classes.block}>
+                                <FormLabel
+                                    component='legend'
+                                    data-testid='select-exam-title'
+                                >
+                                    { selectExamTypeField.value === EExamTypes.TRAININGS
+                                        ? 'Виберіть тренувальний варіант'
+                                        : 'Виберіть варіант ЗНО'
+                                    }
+                                </FormLabel>
+                                <TextField
+                                    id='standard-select-currency'
+                                    className={classes.textField}
+                                    select={true}
+                                    {...selectExamField}
+                                    margin='none'
+                                    variant='outlined'
+                                    {...{ 'data-testid': 'select-exam' }}
+                                    color='secondary'
+                                >
+                                    {exams}
+                                </TextField>
+                            </FormControl>
+                            <Checkbox
+                                formControl={{
+                                    className: classes.checkBoxRoot,
+                                }}
+                                formControlLabel={{
+                                    label: 'Обмежувати час',
+                                    className: classes.checkBoxLabel,
+                                }}
+                                label='Обмежувати час'
+                            />
+                        </>
+                    )}
+                    { !displayExamSelection && (
+                        <Checkbox
+                            formControl={{
+                                className: classes.checkBoxRoot,
+                            }}
+                            formControlLabel={{
+                                label: 'Показувати правильну відповідь під час тесту',
+                                className: classes.checkBoxLabel,
+                            }}
+                        />
                     )}
                 </DialogContent>
 

@@ -10,7 +10,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 /** Application's imports */
-import Input from 'components/Input';
+import Input from 'components/custom/Input';
 import { IAnswer, ISetAnswerByIdPreparePayload, RootState } from 'store/slices';
 import { selectAnswerByIndexAction } from 'store/slices/testSuite';
 import { selectAnswerByTaskIndex } from 'store/selectors/testSuite';

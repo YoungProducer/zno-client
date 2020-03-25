@@ -19,7 +19,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // Application's imports
 import { TSignUpProps } from './container';
 import NavigationLink from 'components/NavigationLink';
-import Input from 'components/Input';
+import Input from 'components/custom/Input';
 import Logo from 'img/logo';
 
 // Define classes as hook
