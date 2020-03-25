@@ -9,11 +9,8 @@
 import testSuite, {
     testSuiteLoadingAction,
     setTestSuiteNameAction,
-    showRightDuringTestAction,
-    limitTestSuiteTimeAction,
     setTasksImagesAction,
     setExplanationsImagesAction,
-    // setRightAnswersAction,
     setAnswersAction,
     selectAnswerByIndexAction,
     giveAnswerByIndexAction,

@@ -195,6 +195,15 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
     /** Respobsible for exam selection */
     const [exam, setExam] = useState<string>('');
 
+    const [limitTime, toggleLimitTime] = useState<boolean>(false);
+    const [showRightDuringTest, toggleShowRightDuringTest] = useState<boolean>(false);
+
+    const handleToggleLimitTime = (event: React.ChangeEvent<HTMLInputElement>) =>
+        toggleLimitTime(event.target.checked);
+
+    const handleToggleShowRightDuringTest = (event: React.ChangeEvent<HTMLInputElement>) =>
+        toggleShowRightDuringTest(event.target.checked);
+
     /**
      * Handle onChange event of test-type field.
      * If value equals THEMES
@@ -412,6 +421,7 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
             if (testType === ETestTypes.THEMES && theme !== '') {
                 querystring.append('theme', theme);
+                querystring.append('showRightDuringTest', showRightDuringTest ? 'true' : 'false');
             }
 
             if (testType === ETestTypes.EXAMS && exam !== '') {
@@ -422,11 +432,22 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
                 if (examType === EExamTypes.SESSIONS) {
                     querystring.append('session', exam);
                 }
+
+                querystring.append('limitTime', limitTime ? 'true' : 'false');
             }
 
             history.push(`/test-suite?${querystring.toString()}`);
         }
-    }, [allowGoToTest, subSubjectsData, subSubject, subjectData, theme, exam]);
+    }, [
+        allowGoToTest,
+        subSubjectsData,
+        subSubject,
+        subjectData,
+        theme,
+        exam,
+        limitTime,
+        showRightDuringTest,
+    ]);
 
     const redirectToHome = () => history.push('/');
 
@@ -465,6 +486,14 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
             value: exam || '',
             onChange: handleChangeExam,
         },
+        limitTimeField: {
+            value: limitTime,
+            onChange: handleToggleLimitTime,
+        },
+        showRightDuringTestField: {
+            value: showRightDuringTest,
+            onChange: handleToggleShowRightDuringTest,
+        },
     };
 };
 
@@ -485,6 +514,8 @@ const Component = (props: TSubjectConfigurationModalProps) => {
         selectSubSubjectField,
         selectExamTypeField,
         selectExamField,
+        limitTimeField,
+        showRightDuringTestField,
         displayThemeSelection,
         displaySubSubjectSelection,
         displayExamTypeSelection,
@@ -637,7 +668,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                                     label: 'Обмежувати час',
                                     className: classes.checkBoxLabel,
                                 }}
-                                label='Обмежувати час'
+                                {...limitTimeField}
                             />
                         </>
                     )}
@@ -650,6 +681,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                                 label: 'Показувати правильну відповідь під час тесту',
                                 className: classes.checkBoxLabel,
                             }}
+                            {...showRightDuringTestField}
                         />
                     )}
                 </DialogContent>

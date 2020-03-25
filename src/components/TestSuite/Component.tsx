@@ -24,7 +24,6 @@ import TaskActions from './TaskActions';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            // paddingTop: theme.spacing(4),
             height: '100%',
             position: 'relative',
         },
@@ -57,6 +56,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
+export interface IAdditionalTestSettings {
+    limitTime: string | boolean;
+    showRightDuringTest: string | boolean;
+}
+
 const useInitTestSuite = (props: TTestSuiteProps) => {
     /** Extract props */
     const { fetchTestSuite } = props;
@@ -64,8 +68,14 @@ const useInitTestSuite = (props: TTestSuiteProps) => {
     /** Define posible search params array */
     const searchNames = ['subjectId', 'subSubjectId', 'theme', 'session', 'training'];
 
+    const testSettingsNames = ['limitTime', 'showRightDuringTest'];
+
     /** Get search data */
     const searchData = useSearchParams<ITestSuiteCredentials>({ searchNames });
+    const testSettings = useSearchParams<IAdditionalTestSettings>({ searchNames: testSettingsNames });
+
+    testSettings.limitTime = testSettings.limitTime === 'true' && Boolean(searchData.session || searchData.training);
+    testSettings.showRightDuringTest = testSettings.showRightDuringTest === 'true' && Boolean(searchData.theme);
 
     useEffect(() => {
         fetchTestSuite(searchData);

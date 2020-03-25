@@ -107,13 +107,6 @@ export interface ITestSuiteInitialState {
      */
     explanationImages: string[];
     answers: IAnswer[];
-    showRightDuringTest: boolean;
-    /**
-     * Limit time for test.
-     * Avalaible only for sessions (exams).
-     * By default: 180 minutes(3 hours).
-     */
-    limitTime: boolean;
     /**
      * It could be name of theme, session or training variant.
      */
@@ -123,8 +116,6 @@ export interface ITestSuiteInitialState {
 /** Create initial state */
 const initialState: ITestSuiteInitialState = {
     loading: false,
-    showRightDuringTest: false,
-    limitTime: false,
     tasksImages: [],
     explanationImages: [],
     answers: [],
@@ -182,27 +173,6 @@ const testSuite = createSlice({
                 }
             },
         },
-        /**
-         * Toggles value related to display right answers
-         * during the test or after completion.
-         */
-        showRightDuringTestAction: (
-            state: ITestSuiteInitialState,
-            { payload }: IShowRightDuringTestAction,
-        ) => ({
-            ...state,
-            showRightDuringTest: payload,
-        }),
-        /**
-         * Toggles value related to time limit for test.
-         */
-        limitTestSuiteTimeAction: (
-            state: ITestSuiteInitialState,
-            { payload }: ILimitTestSuiteTimeAction,
-        ) => ({
-            ...state,
-            limitTime: payload,
-        }),
         /**
          * Set tasks images.
          * If payload is undefined it will set tasks images
@@ -333,11 +303,8 @@ const testSuite = createSlice({
 export const {
     testSuiteLoadingAction,
     setTestSuiteNameAction,
-    showRightDuringTestAction,
-    limitTestSuiteTimeAction,
     setTasksImagesAction,
     setExplanationsImagesAction,
-    // setRightAnswersAction,
     setAnswersAction,
     selectAnswerByIndexAction,
     giveAnswerByIndexAction,
