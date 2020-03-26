@@ -14,9 +14,14 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /** Application's imports */
 import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import Input from 'components/custom/Input';
+
 import { IAnswer, ISetAnswerByIdPreparePayload, RootState } from 'store/slices';
 import { selectAnswerByIndexAction } from 'store/slices/testSuite';
-import { selectAnswerByTaskIndex, selectIsAnswerGived } from 'store/selectors/testSuite';
+import {
+    selectAnswerByTaskIndex,
+    selectIsAnswerGived,
+    selectTestSuiteFinished,
+} from 'store/selectors/testSuite';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,6 +63,7 @@ interface IOwnProps {
 interface IStateProps {
     answer: IAnswer;
     gived: boolean;
+    finished: boolean;
 }
 
 /** Props which component can dispatch to redux-store */
@@ -75,6 +81,7 @@ const Component = ({
     answer,
     gived,
     taskIndex,
+    finished,
     selectAnswer,
 }: TTextAnswerProps) => {
     const classes = useStyles({});
@@ -86,15 +93,17 @@ const Component = ({
 
                 return answer.selected.map((el, index) => {
                     const right =
-                        showRightDuringTest
+                        ((showRightDuringTest && gived)
+                        || finished)
                         && gived
                         && el === answer.right[index];
 
                     const wrong =
-                        showRightDuringTest
-                        && gived
-                        && el !== answer.right[index]
-                        && el === answer.gived[index];
+                        ((showRightDuringTest && gived)
+                        || finished)
+                        && (el !== answer.right[index]
+                        && el === answer.gived[index]
+                        || (finished && el === ''));
 
                     return (
                         <Input
@@ -121,6 +130,7 @@ const Component = ({
 const mapStateToProps = (state: RootState, props: IOwnProps): IStateProps => ({
     answer: selectAnswerByTaskIndex(state, props),
     gived: selectIsAnswerGived(state, props),
+    finished: selectTestSuiteFinished(state),
 });
 
 /** Wrap function into dispatch */

@@ -46,7 +46,7 @@ export const selectIsAnswerGived = createSelector(
     selectTaskIndexFromProps,
     (answers, taskIndex) =>
         answers.length !== 0
-            ? answers[taskIndex].gived.every(answer => answer !== '')
+            ? answers[taskIndex].gived.some(answer => answer !== '')
             : false,
 );
 

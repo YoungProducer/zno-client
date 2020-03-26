@@ -19,6 +19,7 @@ import {
     selectIsAnswerSelected,
     selectIsAnswerGived,
     selectIsAnswerRight,
+    selectTestSuiteFinished,
 } from 'store/selectors/testSuite';
 import {
     selectAnswerByIndexAction,
@@ -76,6 +77,7 @@ interface IOwnProps {
 interface IStateProps {
     answer: IAnswer;
     gived: boolean;
+    finished: boolean;
 }
 
 interface IDispatchProps {
@@ -97,6 +99,7 @@ const AnswerTile = ({
     title,
     value,
     gived,
+    finished,
 }: TAnswerTileProps) => {
     const classes = useStyles({});
 
@@ -122,13 +125,15 @@ const AnswerTile = ({
                 const { showRightDuringTest } = contextValue;
 
                 const wrong =
-                    showRightDuringTest
-                    && gived
-                    && value !== answer.right[answerIndex]
-                    && value === answer.gived[answerIndex];
+                    ((showRightDuringTest && gived)
+                    || finished)
+                    && (value !== answer.right[answerIndex]
+                    && value === answer.gived[answerIndex]
+                    || (finished && answer.selected[answerIndex] === ''));
 
                 const right =
-                    showRightDuringTest
+                    ((showRightDuringTest && gived)
+                    || finished)
                     && gived
                     && value === answer.right[answerIndex];
 
@@ -152,6 +157,7 @@ const AnswerTile = ({
 const mapStateToProps = (state: RootState, props: IOwnProps): IStateProps => ({
     answer: selectAnswerByTaskIndex(state, props),
     gived: selectIsAnswerGived(state, props),
+    finished: selectTestSuiteFinished(state),
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

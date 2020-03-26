@@ -16,6 +16,7 @@ import {
     selectIsAnswerSelected,
     selectIsAnswerGived,
     selectIsAnswerRight,
+    selectTestSuiteFinished,
 } from 'store/selectors/testSuite';
 
 /** Props which component get from the parent */
@@ -38,6 +39,7 @@ interface IStateProps {
     selected: boolean;
     gived: boolean;
     right: boolean;
+    finished: boolean;
 }
 
 /** Props(actions) which component can dispatch to the redux-store */
@@ -54,6 +56,7 @@ const mapStateToProps = (state: RootState, props: IOwnProps): IStateProps => ({
     selected: selectIsAnswerSelected(state, props),
     gived: selectIsAnswerGived(state, props),
     right: selectIsAnswerRight(state, props),
+    finished: selectTestSuiteFinished(state),
 });
 
 /** Export function which configure component */

@@ -89,6 +89,7 @@ const Tile = ({
     selected,
     gived,
     right,
+    finished,
 }: TTileProps) => {
     const classes = useTileStyles({});
 
@@ -100,7 +101,8 @@ const Tile = ({
                 /** Variables which related for additional classes  for ButtonBase*/
                 const applySelected =
                     selected
-                    && !gived;
+                    && !gived
+                    && !finished;
 
                 const applyRight =
                     showRightDuringTest
@@ -108,8 +110,8 @@ const Tile = ({
                     && right;
 
                 const applyWrong =
-                    showRightDuringTest
-                    && gived
+                    (showRightDuringTest
+                    && gived || finished)
                     && !right;
 
                 const applyGived =

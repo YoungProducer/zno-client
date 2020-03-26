@@ -273,7 +273,9 @@ const testSuite = createSlice({
                 { payload }: ISetAnswerByIdAction,
             ) => ({
                 ...state,
-                answers: state.answers.map((answer, index) =>
+                answers: state.finished
+                    ? state.answers
+                    : state.answers.map((answer, index) =>
                     index !== payload.id
                         ? answer
                         : {
