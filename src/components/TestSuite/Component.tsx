@@ -19,6 +19,7 @@ import { ITestSuiteCredentials } from 'api';
 import Answer from './Answer';
 import TaskSelection from './TaskSelection';
 import TaskActions from './TaskActions';
+import Timer from 'components/Timer';
 
 /** Define Material classes as hook */
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,12 +28,16 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             position: 'relative',
         },
-        title: {
-            fontSize: '1.5375rem',
-            color: '#b19898',
+        header: {
             padding: theme.spacing(2),
             background: '#fff',
             borderRadius: 16,
+            display: 'flex',
+            justifyContent: 'space-between',
+        },
+        title: {
+            fontSize: '1.5375rem',
+            color: '#b19898',
         },
         img: {
             maxHeight: '40vh',
@@ -80,6 +85,8 @@ const useInitTestSuite = (props: TTestSuiteProps) => {
     useEffect(() => {
         fetchTestSuite(searchData);
     }, []);
+
+    return testSettings;
 };
 
 const useTestSuiteFileds = (props: TTestSuiteProps) => {
@@ -100,13 +107,16 @@ const Component = (props: TTestSuiteProps) => {
     /** Destruct props */
     const { answers, name, tasksImages, explanationsImages } = props;
 
-    useInitTestSuite(props);
+    const { limitTime, showRightDuringTest } = useInitTestSuite(props);
 
     const { task } = useTestSuiteFileds(props);
 
     return (
         <div className={classes.root}>
-            <Typography className={classes.title}>{name}</Typography>
+            <div className={classes.header}>
+                <Typography className={classes.title}>{name}</Typography>
+                { limitTime && <Timer hours={3} />}
+            </div>
             <img
                 className={classes.img}
                 src={tasksImages[task.current]}
