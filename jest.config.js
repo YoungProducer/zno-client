@@ -36,5 +36,8 @@ module.exports = {
     '^modals(.*)$': '<rootDir>/src/modals$1',
     '^api(.*)$': '<rootDir>/src/api$1',
     '^img(.*)$': '<rootDir>/src/img$1',
+    '^constatns(.*)$': '<rootDir>/src/constants$1',
+    '^hooks(.*)$': '<rootDir>/src/hooks$1',
+    '^context(.*)$': '<rootDir>/src/context$1',
   }
 };

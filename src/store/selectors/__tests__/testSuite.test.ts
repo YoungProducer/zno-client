@@ -10,8 +10,6 @@ import { RootState } from "store/slices";
 import {
     selectTestSuiteLoading,
     selectTestSuiteName,
-    selectTestSuiteLimitTime,
-    selectShowRightDuringTest,
     selectTestSuiteTasksImages,
     selectTestSuiteExplanationsImages,
     selectAnswers,
@@ -19,6 +17,9 @@ import {
     selectIsAnswerSelected,
     selectIsAnswerGived,
     selectIsAnswerRight,
+    selectAmountOfSelectedAnswers,
+    selectAmountOfGivedAnswers,
+    selectAmountOfRightAnswers,
 } from "../testSuite";
 
 describe('TestSuite selectors', () => {
@@ -50,36 +51,6 @@ describe('TestSuite selectors', () => {
 
         /** Assert result of selector has right value */
         expect(result).toBe('foo');
-    });
-
-    test('selectTestSuiteLimitTime', () => {
-        /** Define state */
-        const state = {
-            testSuite: {
-                limitTime: false,
-            },
-        } as RootState;
-
-        /** Get selector's result */
-        const result = selectTestSuiteLimitTime(state);
-
-        /** Assert result of selector has right value */
-        expect(result).toBeFalsy();
-    });
-
-    test('selectShowRightDuringTest', () => {
-        /** Define mocked state */
-        const state  = {
-            testSuite: {
-                showRightDuringTest: false,
-            },
-        } as RootState;
-
-        /** Get selector's result */
-        const result = selectShowRightDuringTest(state);
-
-        /** Assert result of selector has right value */
-        expect(result).toBeFalsy();
     });
 
     test('selectTestSuiteTasksImages', () => {
@@ -321,5 +292,64 @@ describe('TestSuite selectors', () => {
 
         /** Assert selector returns right value */
         expect(result).toBeFalsy();
+    });
+
+    test('selectAmountOfSelectedAnswers', () => {
+        /** Define mocked state */
+        const state = {
+            testSuite: {
+                answers: [{
+                    selected: ['2', '1'],
+                }, {
+                    selected: ['3', ''],
+                }],
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectAmountOfSelectedAnswers(state);
+
+        /** Assert result has right value */
+        expect(result).toBe(2);
+    });
+
+    test('selectAmountOfGivedAnswers', () => {
+        /** Define mocked state */
+        const state = {
+            testSuite: {
+                answers: [{
+                    gived: ['2', '1'],
+                }, {
+                    gived: ['3', ''],
+                }],
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectAmountOfGivedAnswers(state);
+
+        /** Assert result has right value */
+        expect(result).toBe(1);
+    });
+
+    test('selectAmountOfRightAnswers', () => {
+        /** Define mocked state */
+        const state = {
+            testSuite: {
+                answers: [{
+                    gived: ['2', '1'],
+                    right: ['2', '1'],
+                }, {
+                    gived: ['3', ''],
+                    right: ['3', '0'],
+                }],
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectAmountOfRightAnswers(state);
+
+        /** Assert result has right value */
+        expect(result).toBe(1);
     });
 });

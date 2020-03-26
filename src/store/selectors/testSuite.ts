@@ -10,7 +10,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { ParametricSelector } from 'reselect';
 
 /** Application's imports */
-import { RootState } from 'store/slices';
+import { RootState, IAnswer } from 'store/slices';
 
 const selectTaskIndexFromProps: ParametricSelector<RootState, any, number> = (_, props) => props.taskIndex;
 
@@ -32,32 +32,38 @@ export const selectTestSuiteExplanationsImages = (state: RootState) =>
 export const selectAnswers = (state: RootState) =>
     state.testSuite.answers;
 
+const isAnswerSelectedByTaskIndex = (answers: IAnswer[], taskIndex: number) =>
+    answers.length !== 0
+        ? answers[taskIndex].selected.some(answer => answer !== '')
+        : false;
+
 export const selectIsAnswerSelected = createSelector(
     selectAnswers,
     selectTaskIndexFromProps,
-    (answers, taskIndex) =>
-        answers.length !== 0
-            ? answers[taskIndex].selected.some(answer => answer !== '')
-            : false,
+    isAnswerSelectedByTaskIndex,
 );
+
+const isAnswerGivedByTaskIndex = (answers: IAnswer[], taskIndex: number) =>
+    answers.length !== 0
+        ? answers[taskIndex].gived.every(answer => answer !== '')
+        : false;
 
 export const selectIsAnswerGived = createSelector(
     selectAnswers,
     selectTaskIndexFromProps,
-    (answers, taskIndex) =>
-        answers.length !== 0
-            ? answers[taskIndex].gived.some(answer => answer !== '')
-            : false,
+    isAnswerGivedByTaskIndex,
 );
+
+const isAnswerRightByTaskIndex = (answers: IAnswer[], taskIndex: number) =>
+    answers.length !== 0
+        ? answers[taskIndex].gived.every((answer, index) =>
+            answer === answers[taskIndex].right[index])
+        : false;
 
 export const selectIsAnswerRight = createSelector(
     selectAnswers,
     selectTaskIndexFromProps,
-    (answers, taskIndex) =>
-        answers.length !== 0
-            ? answers[taskIndex].gived.every((answer, index) =>
-                answer === answers[taskIndex].right[index])
-            : false,
+    isAnswerRightByTaskIndex,
 );
 
 export const selectAnswerByTaskIndex = createSelector(
@@ -65,4 +71,28 @@ export const selectAnswerByTaskIndex = createSelector(
     selectTaskIndexFromProps,
     (answers, taskIndex) =>
         answers[taskIndex],
+);
+
+export const selectAmountOfSelectedAnswers = createSelector(
+    selectAnswers,
+    (answers) => answers.reduce((acc, _, index) =>
+        isAnswerSelectedByTaskIndex(answers, index)
+            ? acc + 1
+            : acc, 0),
+);
+
+export const selectAmountOfGivedAnswers = createSelector(
+    selectAnswers,
+    (answers) => answers.reduce((acc, _, index) =>
+        isAnswerGivedByTaskIndex(answers, index)
+            ? acc + 1
+            : acc, 0),
+);
+
+export const selectAmountOfRightAnswers = createSelector(
+    selectAnswers,
+    (answers) => answers.reduce((acc, _, index) =>
+        isAnswerRightByTaskIndex(answers, index)
+            ? acc + 1
+            : acc, 0),
 );
