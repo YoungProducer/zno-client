@@ -24,6 +24,7 @@ module.exports = {
       theme: path.resolve(__dirname, 'src/theme'),
       hooks: path.resolve(__dirname, 'src/hooks'),
       context: path.resolve(__dirname, 'src/context'),
+      constants: path.resolve(__dirname, 'src/constants'),
       img: path.resolve(__dirname, 'src/img'),
     }
   },
