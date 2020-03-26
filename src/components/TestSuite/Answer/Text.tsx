@@ -8,12 +8,46 @@
 /** Extrnal imports */
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
+import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import Input from 'components/custom/Input';
 import { IAnswer, ISetAnswerByIdPreparePayload, RootState } from 'store/slices';
 import { selectAnswerByIndexAction } from 'store/slices/testSuite';
-import { selectAnswerByTaskIndex } from 'store/selectors/testSuite';
+import { selectAnswerByTaskIndex, selectIsAnswerGived } from 'store/selectors/testSuite';
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            width: 400,
+            height: 60,
+            borderRadius: 4,
+            background: `#fff`,
+            filter: `drop-shadow(0px 3px 2.5px rgba(0,0,0,0.16))`,
+            transtion: theme.transitions.create('filter', {
+                duration: 200,
+                easing: theme.transitions.easing.easeInOut,
+            }),
+        },
+        right: {
+            background: `#fff`,
+            filter: `drop-shadow(0px 3px 2.5px rgba(105, 222, 172, 0.8))`,
+            transtion: theme.transitions.create('filter', {
+                duration: 200,
+                easing: theme.transitions.easing.easeInOut,
+            }),
+        },
+        wrong: {
+            background: `#fff`,
+            filter: `drop-shadow(0px 3px 2.5px rgba(255, 82, 82, 0.8))`,
+            transtion: theme.transitions.create('filter', {
+                duration: 200,
+                easing: theme.transitions.easing.easeInOut,
+            }),
+        },
+    }));
 
 /** Props which component get from the parent */
 interface IOwnProps {
@@ -23,6 +57,7 @@ interface IOwnProps {
 /** Props which component select from the redux-store */
 interface IStateProps {
     answer: IAnswer;
+    gived: boolean;
 }
 
 /** Props which component can dispatch to redux-store */
@@ -38,29 +73,54 @@ export type TTextAnswerProps =
 
 const Component = ({
     answer,
+    gived,
     taskIndex,
     selectAnswer,
 }: TTextAnswerProps) => {
+    const classes = useStyles({});
+
     return (
-        <>
-            { answer.selected.map((answer, index) => (
-                <Input
-                    key={index}
-                    value={answer}
-                    onChange={(event) => selectAnswer({
-                        id: taskIndex,
-                        answerIndex: index,
-                        answer: event.target.value,
-                    })}
-                />
-            ))}
-        </>
+        <AdditionalAnswerPropertiesContext.Consumer>
+            { contextValue => {
+                const { showRightDuringTest } = contextValue;
+
+                return answer.selected.map((el, index) => {
+                    const right =
+                        showRightDuringTest
+                        && gived
+                        && el === answer.right[index];
+
+                    const wrong =
+                        showRightDuringTest
+                        && gived
+                        && el !== answer.right[index]
+                        && el === answer.gived[index];
+
+                    return (
+                        <Input
+                            rootClassName={classNames(classes.root, {
+                                [classes.right]: right,
+                                [classes.wrong]: wrong,
+                            })}
+                            key={index}
+                            value={el}
+                            onChange={(event) => selectAnswer({
+                                id: taskIndex,
+                                answerIndex: index,
+                                answer: event.target.value,
+                            })}
+                        />
+                    );
+                });
+            }}
+        </AdditionalAnswerPropertiesContext.Consumer>
     );
 };
 
 /** Select variables from the redux-store */
 const mapStateToProps = (state: RootState, props: IOwnProps): IStateProps => ({
     answer: selectAnswerByTaskIndex(state, props),
+    gived: selectIsAnswerGived(state, props),
 });
 
 /** Wrap function into dispatch */

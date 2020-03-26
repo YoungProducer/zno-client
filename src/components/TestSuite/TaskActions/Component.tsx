@@ -7,11 +7,12 @@
  */
 
 /** External imports */
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
+import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import { TTaskActionsProps } from './container';
 import { useSearchParams } from 'hooks/useSearchParams';
 
@@ -43,11 +44,7 @@ const useTaskActions = (props: TTaskActionsProps) => {
         setTaskIndex,
     } = props;
 
-    let { showRightDuringTest } = useSearchParams<{ showRightDuringTest: string | boolean }>({
-        searchNames: ['showRightDuringTest'],
-    });
-
-    showRightDuringTest = showRightDuringTest === 'true';
+    const { showRightDuringTest } = useContext(AdditionalAnswerPropertiesContext);
 
     const setNextTask = useCallback(() => {
         let nextTask: number = -1;
@@ -82,11 +79,12 @@ const useTaskActions = (props: TTaskActionsProps) => {
     }, [showRightDuringTest, gived, selected]);
 
     const handleButtonClick = useCallback(() => {
-        if (selected && !gived) {
+        if (selected && !gived && showRightDuringTest) {
             giveAnswer(taskIndex);
             return;
         }
-        if (gived && showRightDuringTest) {
+        if (selected && !gived && !showRightDuringTest) {
+            giveAnswer(taskIndex);
             setNextTask();
             return;
         }

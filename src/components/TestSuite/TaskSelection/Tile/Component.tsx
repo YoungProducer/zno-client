@@ -13,6 +13,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { yellow, red } from '@material-ui/core/colors';
 
 /** Application's imports */
+import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import { TTileProps } from './container';
 
 export const tileWidth = 65;
@@ -92,19 +93,46 @@ const Tile = ({
     const classes = useTileStyles({});
 
     return (
-        <ButtonBase
-            className={classNames(classes.tile, {
-                [classes.tileActive]: active,
-                [classes.tileHide]: hide,
-                [classes.selected]: selected && !gived,
-                [classes.right]: gived && right,
-                [classes.wrong]: gived && !right,
-            })}
-            onClick={callback}
-        >
-            <p>Зав</p>
-            <p>{taskIndex + 1}</p>
-        </ButtonBase>
+        <AdditionalAnswerPropertiesContext.Consumer>
+            { contextValue => {
+                const { showRightDuringTest } = contextValue;
+
+                /** Variables which related for additional classes  for ButtonBase*/
+                const applySelected =
+                    selected
+                    && !gived;
+
+                const applyRight =
+                    showRightDuringTest
+                    && gived
+                    && right;
+
+                const applyWrong =
+                    showRightDuringTest
+                    && gived
+                    && !right;
+
+                const applyGived =
+                    !showRightDuringTest
+                    && gived;
+
+                return (
+                    <ButtonBase
+                        className={classNames(classes.tile, {
+                            [classes.tileActive]: active,
+                            [classes.tileHide]: hide,
+                            [classes.selected]: applySelected,
+                            [classes.right]: applyRight || applyGived,
+                            [classes.wrong]: applyWrong,
+                        })}
+                        onClick={callback}
+                    >
+                        <p>Зав</p>
+                        <p>{taskIndex + 1}</p>
+                    </ButtonBase>
+                );
+            }}
+        </AdditionalAnswerPropertiesContext.Consumer>
     );
 };
 

@@ -23,6 +23,7 @@ module.exports = {
       api: path.resolve(__dirname, 'src/api'),
       theme: path.resolve(__dirname, 'src/theme'),
       hooks: path.resolve(__dirname, 'src/hooks'),
+      context: path.resolve(__dirname, 'src/context'),
       img: path.resolve(__dirname, 'src/img'),
     }
   },

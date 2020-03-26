@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
+import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import { useSearchParams } from 'hooks/useSearchParams';
 import { TTestSuiteProps } from './container';
 import { ITestSuiteCredentials } from 'api';
@@ -66,6 +67,11 @@ export interface IAdditionalTestSettings {
     showRightDuringTest: string | boolean;
 }
 
+export interface IAdditionalTestSettingsReturn {
+    limitTime: boolean;
+    showRightDuringTest: boolean;
+}
+
 const useInitTestSuite = (props: TTestSuiteProps) => {
     /** Extract props */
     const { fetchTestSuite } = props;
@@ -86,7 +92,7 @@ const useInitTestSuite = (props: TTestSuiteProps) => {
         fetchTestSuite(searchData);
     }, []);
 
-    return testSettings;
+    return testSettings as IAdditionalTestSettingsReturn;
 };
 
 const useTestSuiteFileds = (props: TTestSuiteProps) => {
@@ -139,10 +145,14 @@ const Component = (props: TTestSuiteProps) => {
                 { answers.length !== 0 &&
                     <>
                         <Grid item>
-                            <Answer
-                                type={answers[task.current].type}
-                                taskIndex={task.current}
-                            />
+                            <AdditionalAnswerPropertiesContext.Provider value={{
+                                showRightDuringTest,
+                            }}>
+                                <Answer
+                                    type={answers[task.current].type}
+                                    taskIndex={task.current}
+                                />
+                            </AdditionalAnswerPropertiesContext.Provider>
                         </Grid>
                         <Grid item>
                             <TaskActions

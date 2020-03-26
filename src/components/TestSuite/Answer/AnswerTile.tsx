@@ -9,8 +9,10 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { red, yellow } from '@material-ui/core/colors';
 
 /** Application's imports */
+import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import { RootState, IAnswer } from 'store/slices';
 import {
     selectAnswerByTaskIndex,
@@ -46,6 +48,22 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             easing: theme.transitions.easing.easeInOut,
         }),
     },
+    right: {
+        background: theme.palette.secondary.main,
+        color: theme.palette.getContrastText(theme.palette.secondary.main),
+        transition: theme.transitions.create(['height', 'width', 'background', 'color'], {
+            duration: 200,
+            easing: theme.transitions.easing.easeInOut,
+        }),
+    },
+    wrong: {
+        background: red.A200,
+        color: theme.palette.getContrastText(red.A200),
+        transition: theme.transitions.create(['height', 'width', 'background', 'color'], {
+            duration: 200,
+            easing: theme.transitions.easing.easeInOut,
+        }),
+    },
 }));
 
 interface IOwnProps {
@@ -57,6 +75,7 @@ interface IOwnProps {
 
 interface IStateProps {
     answer: IAnswer;
+    gived: boolean;
 }
 
 interface IDispatchProps {
@@ -77,6 +96,7 @@ const AnswerTile = ({
     taskIndex,
     title,
     value,
+    gived,
 }: TAnswerTileProps) => {
     const classes = useStyles({});
 
@@ -97,19 +117,41 @@ const AnswerTile = ({
     }, [answer, value]);
 
     return (
-        <ButtonBase
-            className={classNames(classes.tile, {
-                [classes.activeTile]: active,
-            })}
-            onClick={handleOnClick}
-        >
-            {title}
-        </ButtonBase>
+        <AdditionalAnswerPropertiesContext.Consumer>
+            {contextValue => {
+                const { showRightDuringTest } = contextValue;
+
+                const wrong =
+                    showRightDuringTest
+                    && gived
+                    && value !== answer.right[answerIndex]
+                    && value === answer.gived[answerIndex];
+
+                const right =
+                    showRightDuringTest
+                    && gived
+                    && value === answer.right[answerIndex];
+
+                return (
+                    <ButtonBase
+                        className={classNames(classes.tile, {
+                            [classes.activeTile]: active && !gived,
+                            [classes.wrong]: wrong,
+                            [classes.right]: right,
+                        })}
+                        onClick={handleOnClick}
+                    >
+                        {title}
+                    </ButtonBase>
+                );
+            }}
+        </AdditionalAnswerPropertiesContext.Consumer>
     );
 };
 
 const mapStateToProps = (state: RootState, props: IOwnProps): IStateProps => ({
     answer: selectAnswerByTaskIndex(state, props),
+    gived: selectIsAnswerGived(state, props),
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
