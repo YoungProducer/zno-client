@@ -14,7 +14,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: 365,
+            width: 370,
             '& span': {
                 marginRight: theme.spacing(0.5),
                 color: '#b19898',
@@ -28,17 +28,29 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ITimerProps {
     hours: number;
+    /**
+     * Funtction which launches when
+     * the time for the test suite is up.
+     */
+    callback: () => void;
+    active: boolean;
+    setActive: (value: boolean) => void;
 }
 
-const Component = ({ hours }: ITimerProps) => {
+const Component = ({ hours, callback, active, setActive }: ITimerProps) => {
     const classes = useStyles({});
 
     const [currSeconds, setSeconds] = useState<number>(60);
     const [currMinutes, setMinutes] = useState<number>(60 - 1);
     const [currHours, setHours] = useState<number>(hours - 1);
-    const [active, setActive] = useState<boolean>(true);
 
-    const toggleActive = () => setActive(!active);
+    useEffect(() => {
+        if (!active) {
+            setSeconds(0);
+            setMinutes(0);
+            setHours(0);
+        }
+    }, [active]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout = undefined;
@@ -47,17 +59,17 @@ const Component = ({ hours }: ITimerProps) => {
             interval = setInterval(() => {
                 setSeconds(seconds => seconds - 1);
             }, 1000);
-        } else if (currHours === 0) {
-            setActive(false);
         }
 
-        if (currSeconds === 0) {
+        if (currSeconds === 0 && active) {
             setSeconds(60);
             setMinutes(minutes => minutes - 1);
-        } else if (currMinutes === 0) {
+        } else if (currMinutes === 0 && active) {
             setMinutes(60);
             setHours(hours => hours - 1);
-        } else if (hours === 0) setActive(false);
+        } else if (currHours === 0) {
+            callback();
+        }
 
         return () => clearInterval(interval);
     }, [active, currSeconds, currMinutes, currHours]);

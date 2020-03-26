@@ -12,11 +12,13 @@ import { connect } from 'react-redux';
 
 /** Application's imports */
 import { fetchTestSuiteAction } from 'store/actionCreators/testSuite';
+import { setTestSuiteFinishedAction } from 'store/slices/testSuite';
 import {
     selectTestSuiteName,
     selectTestSuiteTasksImages,
     selectTestSuiteExplanationsImages,
     selectAnswers,
+    selectTestSuiteFinished,
 } from 'store/selectors/testSuite';
 import { ITestSuiteCredentials } from 'api';
 import { RootState, IAnswer } from 'store/slices';
@@ -30,11 +32,13 @@ interface IStateProps {
     name: string;
     tasksImages: string[];
     explanationsImages: string[];
+    finished: boolean;
 }
 
 /** Props which component can dispatch to redux-store */
 interface IDispatchProps {
     fetchTestSuite: (credentials: ITestSuiteCredentials) => void;
+    setTestSuiteFinished: (finished: boolean) => void;
 }
 
 /** Merged props into root type for current component */
@@ -49,12 +53,16 @@ const mapStateToProps = (state: RootState): IStateProps => ({
     name: selectTestSuiteName(state),
     tasksImages: selectTestSuiteTasksImages(state),
     explanationsImages: selectTestSuiteExplanationsImages(state),
+    finished: selectTestSuiteFinished(state),
 });
 
 /** Map actions which component can dispatch */
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     fetchTestSuite: (params: ITestSuiteCredentials) =>
         dispatch(fetchTestSuiteAction(params)),
+
+    setTestSuiteFinished: (finisihed: boolean) =>
+        dispatch(setTestSuiteFinishedAction(finisihed)),
 });
 
 /**

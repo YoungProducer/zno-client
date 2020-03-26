@@ -20,11 +20,8 @@ export const selectTestSuiteLoading = (state: RootState) =>
 export const selectTestSuiteName = (state: RootState) =>
     state.testSuite.name;
 
-export const selectTestSuiteLimitTime = (state: RootState) =>
-    state.testSuite.limitTime;
-
-export const selectShowRightDuringTest = (state: RootState) =>
-    state.testSuite.showRightDuringTest;
+export const selectTestSuiteFinished = (state: RootState) =>
+    state.testSuite.finished;
 
 export const selectTestSuiteTasksImages = (state: RootState) =>
     state.testSuite.tasksImages;

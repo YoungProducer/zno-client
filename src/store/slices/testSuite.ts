@@ -70,6 +70,10 @@ export interface ISetTestSuiteNamePreparePayload {
     training?: string;
 }
 
+interface ISetTestSuiteFinishedAction {
+    payload: boolean;
+}
+
 /**  */
 export interface IAnswer {
     type: TAnswerType;
@@ -111,6 +115,7 @@ export interface ITestSuiteInitialState {
      * It could be name of theme, session or training variant.
      */
     name: string;
+    finished: boolean;
 }
 
 /** Create initial state */
@@ -120,6 +125,7 @@ const initialState: ITestSuiteInitialState = {
     explanationImages: [],
     answers: [],
     name: '',
+    finished: false,
 };
 
 /** Create slice */
@@ -136,6 +142,13 @@ const testSuite = createSlice({
         ) => ({
             ...state,
             loading: payload,
+        }),
+        setTestSuiteFinishedAction: (
+            state: ITestSuiteInitialState,
+            { payload }: ISetTestSuiteFinishedAction,
+        ) => ({
+            ...state,
+            finished: payload,
         }),
         /**
          * Set name of current test suite.
@@ -302,6 +315,7 @@ const testSuite = createSlice({
 /** Export actions */
 export const {
     testSuiteLoadingAction,
+    setTestSuiteFinishedAction,
     setTestSuiteNameAction,
     setTasksImagesAction,
     setExplanationsImagesAction,

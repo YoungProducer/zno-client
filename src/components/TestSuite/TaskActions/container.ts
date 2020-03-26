@@ -32,6 +32,7 @@ interface IOwnProps {
      */
     explanationExists: boolean;
     setTaskIndex: (index: number) => void;
+    finishTest: () => void;
 }
 
 /** Props which component select from the redux-store */

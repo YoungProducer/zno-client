@@ -105,7 +105,14 @@ const Component = (props: TTestSuiteProps) => {
     const classes = useStyles({});
 
     /** Destruct props */
-    const { answers, name, tasksImages, explanationsImages } = props;
+    const {
+        answers,
+        name,
+        tasksImages,
+        explanationsImages,
+        finished,
+        setTestSuiteFinished,
+    } = props;
 
     const { limitTime, showRightDuringTest } = useInitTestSuite(props);
 
@@ -115,7 +122,14 @@ const Component = (props: TTestSuiteProps) => {
         <div className={classes.root}>
             <div className={classes.header}>
                 <Typography className={classes.title}>{name}</Typography>
-                { limitTime && <Timer hours={3} />}
+                { limitTime && (
+                    <Timer
+                        hours={3}
+                        callback={() => setTestSuiteFinished(true)}
+                        active={!finished}
+                        setActive={setTestSuiteFinished}
+                    />
+                )}
             </div>
             <img
                 className={classes.img}
@@ -135,6 +149,7 @@ const Component = (props: TTestSuiteProps) => {
                                 taskIndex={task.current}
                                 explanationExists={Boolean(explanationsImages[task.current])}
                                 setTaskIndex={task.set}
+                                finishTest={() => setTestSuiteFinished(true)}
                             />
                         </Grid>
                     </>

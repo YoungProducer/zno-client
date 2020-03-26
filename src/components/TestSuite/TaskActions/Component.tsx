@@ -109,7 +109,7 @@ const Component = (props: TTaskActionsProps) => {
     /** Create classes */
     const classes = useStyles({});
 
-    const { explanationExists, selected, gived } = props;
+    const { explanationExists, selected, gived, finishTest } = props;
 
     const {
         handleButtonClick,
@@ -135,6 +135,15 @@ const Component = (props: TTaskActionsProps) => {
                 disabled={!explanationExists}
             >
                 Показати пояснення
+            </Button>
+            <Button
+                className={classes.button}
+                disableElevation
+                color='primary'
+                variant='contained'
+                onClick={finishTest}
+            >
+                Закінчити тест
             </Button>
         </>
     );
