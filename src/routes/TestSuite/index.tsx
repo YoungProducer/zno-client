@@ -12,13 +12,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 /** Application's imports */
 import FullPage from '../FullPage';
 import TestSuite from 'components/TestSuite';
-import SubjectConfiguration from 'components/TestSuiteSide/SubjectConfiguration';
+import TestSuiteStats from 'components/TestSuiteSide/TestSuiteStats';
 
 const Component = () => (
     <React.Fragment>
         <CssBaseline />
         <FullPage
-            side={<SubjectConfiguration/>}
+            side={<TestSuiteStats/>}
             content={<TestSuite />}
         />
     </React.Fragment>

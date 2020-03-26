@@ -32,6 +32,9 @@ export const selectTestSuiteExplanationsImages = (state: RootState) =>
 export const selectAnswers = (state: RootState) =>
     state.testSuite.answers;
 
+export const selectAnswersAmount = (state: RootState) =>
+    state.testSuite.answers.length;
+
 const isAnswerSelectedByTaskIndex = (answers: IAnswer[], taskIndex: number) =>
     answers.length !== 0
         ? answers[taskIndex].selected.some(answer => answer !== '')
