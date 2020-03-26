@@ -628,7 +628,7 @@ describe('SubjectConfigurationModal component', () => {
             .simulate('click');
 
         /** Assert push method called with right args */
-        expect(push).toBeCalledWith('/test-suite?subjectId=123&theme=foo');
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&theme=foo&showRightDuringTest=false');
     });
 
     test('Go to test button with sub-subjects and themes', () => {
@@ -659,7 +659,7 @@ describe('SubjectConfigurationModal component', () => {
             .simulate('click');
 
         /** Assert push method called with right args */
-        expect(push).toBeCalledWith('/test-suite?subjectId=123&subSubjectId=123&theme=bar123');
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&subSubjectId=123&theme=bar123&showRightDuringTest=false');
     });
 
     test('Go to test button with exams', () => {
@@ -687,7 +687,7 @@ describe('SubjectConfigurationModal component', () => {
             .simulate('click');
 
         /** Assert push method called with right args */
-        expect(push).toBeCalledWith('/test-suite?subjectId=123&session=bar');
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&session=bar&limitTime=false');
 
         /** Select exam type */
         tree.find(`[data-testid='select-exam-type']`)
@@ -698,6 +698,6 @@ describe('SubjectConfigurationModal component', () => {
             .simulate('click');
 
         /** Assert push method called with right args */
-        expect(push).toBeCalledWith('/test-suite?subjectId=123&training=foo');
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&training=foo&limitTime=false');
     });
 });

@@ -70,6 +70,21 @@ exports[`SubjectConfigurationModal component Is match snapshot 1`] = `
           />
         </ForwardRef(RadioGroup)>
       </WithStyles(ForwardRef(FormControl))>
+      <Component
+        formControl={
+          Object {
+            "className": "makeStyles-checkBoxRoot-11",
+          }
+        }
+        formControlLabel={
+          Object {
+            "className": "makeStyles-checkBoxLabel-12",
+            "label": "Показувати правильну відповідь під час тесту",
+          }
+        }
+        onChange={[Function]}
+        value={false}
+      />
     </WithStyles(WithStyles(ForwardRef(DialogContent)))>
     <WithStyles(WithStyles(ForwardRef(DialogActions)))>
       <WithStyles(ForwardRef(Button))

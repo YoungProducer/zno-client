@@ -71,34 +71,11 @@ exports[`SignIn component Is match snapshot 1`] = `
           <WithStyles(ForwardRef(Grid))
             item={true}
           >
-            <WithStyles(ForwardRef(FormControl))
-              className="makeStyles-checkBox-16"
-              component="fieldset"
-            >
-              <WithStyles(ForwardRef(FormControlLabel))
-                control={
-                  <WithStyles(ForwardRef(Checkbox))
-                    checkedIcon={
-                      <span
-                        className="makeStyles-checkBoxIcon-14 makeStyles-checkBoxСheckedIcon-15"
-                      />
-                    }
-                    color="primary"
-                    disableFocusRipple={true}
-                    disableRipple={true}
-                    disableTouchRipple={true}
-                    icon={
-                      <span
-                        className="makeStyles-checkBoxIcon-14"
-                      />
-                    }
-                    onChange={[Function]}
-                    value={false}
-                  />
-                }
-                label="Запам'ятати мене"
-              />
-            </WithStyles(ForwardRef(FormControl))>
+            <Component
+              label="Запам'ятати мене"
+              onChange={[Function]}
+              value={false}
+            />
           </WithStyles(ForwardRef(Grid))>
           <WithStyles(ForwardRef(Grid))
             item={true}
