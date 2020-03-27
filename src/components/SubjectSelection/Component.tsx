@@ -125,7 +125,6 @@ const Component = (props: TSubjectSelectionProps) => {
     const history = useHistory();
 
     const {
-        // classes,
         subjectsList,
         loggedIn,
         fetchSubjectsNames,

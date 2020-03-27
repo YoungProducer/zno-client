@@ -6,15 +6,13 @@
  */
 
 /** External imports */
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     Stage,
     Layer,
     Circle,
     Image,
-    Label,
-    Rect,
 } from 'react-konva';
 import useImage from 'use-image';
 
@@ -26,8 +24,6 @@ import 'konva/lib/shapes/Rect';
 /** Application's imports */
 import { getCirclesData, getIconsData, IIconData, ICircle } from './process';
 import { TSubjectList } from 'store/slices';
-
-import math from 'public/images/mathematics.svg';
 
 const CustomCircle = ({
     x,

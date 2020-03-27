@@ -7,7 +7,7 @@
 
 // External imports
 import { Dispatch } from '@reduxjs/toolkit';
-import _ from 'lodash';
+// import pick from 'lodash/pick';
 
 // Application's imports
 import api from 'api';
@@ -27,7 +27,10 @@ export const fetchSignUpAction = (credentials: IFetchSignUpActionCredentials) =>
     const invalidData = verifySignUpCredentials(credentials);
 
     if (!invalidData) {
-        return await api.signup(_.pick(credentials, ['email', 'password']))
+        return await api.signup({
+            email: credentials.email,
+            password: credentials.password,
+        })
             .then(response => {
                 dispatch(signUpLoadingAction(false));
 

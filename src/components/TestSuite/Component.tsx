@@ -18,10 +18,12 @@ import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import { useSearchParams } from 'hooks/useSearchParams';
 import { TTestSuiteProps } from './container';
 import { ITestSuiteCredentials } from 'api';
-import Answer from './Answer';
 import TaskSelection from './TaskSelection';
 import TaskActions from './TaskActions';
-import Timer from 'components/Timer';
+
+/** Lazy loaded components */
+const Answer = React.lazy(() => import('./Answer'));
+const Timer = React.lazy(() => import('components/Timer'));
 
 /** Define Material classes as hook */
 const useStyles = makeStyles((theme: Theme) =>
@@ -170,14 +172,10 @@ const Component = (props: TTestSuiteProps) => {
                     <Grid container direction='row'>
                         <Grid container item direction='column' md={4} spacing={2}>
                             <Grid item>
-                                {/* <AdditionalAnswerPropertiesContext.Provider value={{
-                                    showRightDuringTest,
-                                }}> */}
-                                    <Answer
-                                        type={answers[task.current].type}
-                                        taskIndex={task.current}
-                                    />
-                                {/* </AdditionalAnswerPropertiesContext.Provider> */}
+                                <Answer
+                                    type={answers[task.current].type}
+                                    taskIndex={task.current}
+                                />
                             </Grid>
                             <Grid item>
                                 <TaskActions

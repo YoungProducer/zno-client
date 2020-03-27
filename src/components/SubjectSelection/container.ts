@@ -9,8 +9,6 @@
 
 /** External imports */
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 /** Application's imports */
 import { fetchLogoutAction } from 'store/actionCreators/auth';
@@ -22,17 +20,8 @@ import {
 import { selectIsLoggedIn } from 'store/selectors/auth';
 import { RootState, TSubjectList } from 'store/slices';
 
-/** Define styles as hook */
-const styles = (theme: Theme) => createStyles({
-    root: {
-        width: '100%',
-        height: '100vh',
-        // padding: theme.spacing(1),
-    },
-});
-
 /** Props which component get from the parent */
-interface IOwnProps extends WithStyles<typeof styles> {}
+interface IOwnProps {}
 
 /** Props which component select from the redux-store */
 interface IStateProps {
@@ -70,10 +59,7 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
  * Export function which connect actions
  * and/or variables from the redux-store to component.
  */
-export default compose(
-    withStyles(styles, { withTheme: true }),
-    connect<IStateProps, IDispatchProps, IOwnProps>(
-        mapStateProps,
-        mapDispatchToProps,
-    ),
+export default connect<IStateProps, IDispatchProps, IOwnProps>(
+    mapStateProps,
+    mapDispatchToProps,
 );
