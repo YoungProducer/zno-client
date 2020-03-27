@@ -39,5 +39,6 @@ module.exports = {
     '^constatns(.*)$': '<rootDir>/src/constants$1',
     '^hooks(.*)$': '<rootDir>/src/hooks$1',
     '^context(.*)$': '<rootDir>/src/context$1',
+    '^constants(.*)$': '<rootDir>/src/constants$1',
   }
 };

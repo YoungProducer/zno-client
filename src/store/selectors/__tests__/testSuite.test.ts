@@ -6,7 +6,7 @@
  */
 
 /** Application's imports */
-import { RootState } from "store/slices";
+import { RootState, IAnswer } from "store/slices";
 import {
     selectTestSuiteLoading,
     selectTestSuiteName,
@@ -20,6 +20,11 @@ import {
     selectAmountOfSelectedAnswers,
     selectAmountOfGivedAnswers,
     selectAmountOfRightAnswers,
+    selectTotalAmountOfPoints,
+    selectCurrentAmountOfPoints,
+    getAmountOfPointsSingle,
+    getAmountOfPointsRelations,
+    getAmountOfPointsText,
 } from "../testSuite";
 
 describe('TestSuite selectors', () => {
@@ -369,5 +374,206 @@ describe('TestSuite selectors', () => {
 
         /** Assert result has right value */
         expect(result).toBe(1);
+    });
+
+    test('getAmountOfPointsSingle if all selected answers are also gived if test is not finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['1'],
+            right: ['1'],
+            selected: ['1'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsSingle(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(1);
+    });
+
+    test('getAmountOfPointsSingle if not all selected answers are also gived if test is not finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: [''],
+            right: ['1'],
+            selected: ['1'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsSingle(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(0);
+    });
+
+    test('getAmountOfPointsSingle if not all selected answers are also gived if test is finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: [''],
+            right: ['1'],
+            selected: ['1'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsSingle(answer, true);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(1);
+    });
+
+    test('getAmountOfPointsRelations if all selected answers are also gived and right and test is not finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['0', '1', '2', '3'],
+            right: ['0', '1', '2', '3'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsRelations(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(4);
+    });
+
+    test('getAmountOfPointsRelations if all selected answers are also gived but all answer are right and test is not finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['0', '1', '2', '3'],
+            right: ['0', '4', '2', '1'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsRelations(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(2);
+    });
+
+    test('getAmountOfPointsRelations if not all selected answers are also gived and right and test is not finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['', '', '', ''],
+            selected: ['0', '1', '2', '3'],
+            right: ['0', '1', '2', '3'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsRelations(answer, false);
+
+        /** Assert selector return sright value */
+        expect(result).toBe(0);
+    });
+
+    test('getAmountOfPointsRelations if not all selected answers are also gived and right and test is finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['', '', '', ''],
+            selected: ['0', '1', '2', '3'],
+            right: ['0', '1', '2', '3'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsRelations(answer, true);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(4);
+    });
+
+    test('getAmountOfPointsRelations if all selected answers are also gived but all answer are right and test is finished', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['', '', '', ''],
+            selected: ['0', '1', '2', '3'],
+            right: ['0', '4', '2', '1'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsRelations(answer, true);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(2);
+    });
+
+    test('getAmountOfPointsText with all gived and right answers should return 2', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['1'],
+            selected: ['1'],
+            right: ['1'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsText(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(2);
+    });
+
+    test('getAmountOfPointsText when one of two answers is wrong should return 1', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['1', '2'],
+            selected: ['1', ''],
+            right: ['1', '3'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsText(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(1);
+    });
+
+    test('getAmountOfPointsText when amount of answers more than 2 should return correct value', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['1', '2', '3'],
+            selected: ['1', '2', '3'],
+            right: ['1', '2', '3'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsText(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(2);
+    });
+
+    test('getAmountOfPointsText should replace dots to commas before comparison', () => {
+        /** Define answer */
+        const answer = {
+            gived: ['7.3'],
+            selected: [''],
+            right: ['7,3'],
+        } as IAnswer;
+
+        /** Get selector's result */
+        const result = getAmountOfPointsText(answer, false);
+
+        /** Assert selector returns right value */
+        expect(result).toBe(2);
+    });
+
+    test('selectTotalAmountOfPoints', () => {
+        /** Define initial state */
+        const state = {
+            testSuite: {
+                answers: [{
+                    type: 'SINGLE',
+                }, {
+                    type: 'SINGLE',
+                }, {
+                    type: 'RELATIONS',
+                }, {
+                    type: 'TEXT',
+                }],
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectTotalAmountOfPoints(state);
+
+        /** Assert selector returns correct value */
+        expect(result).toBe(8);
     });
 });

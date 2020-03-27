@@ -11,6 +11,7 @@ import { ParametricSelector } from 'reselect';
 
 /** Application's imports */
 import { RootState, IAnswer } from 'store/slices';
+import { TestSuite } from 'constants/testSuite';
 
 const selectTaskIndexFromProps: ParametricSelector<RootState, any, number> = (_, props) => props.taskIndex;
 
@@ -98,4 +99,66 @@ export const selectAmountOfRightAnswers = createSelector(
         isAnswerRightByTaskIndex(answers, index)
             ? acc + 1
             : acc, 0),
+);
+
+export const getAmountOfPointsSingle = (answer: IAnswer, finished: boolean) =>
+    (answer.gived[0] === answer.right[0]
+    || (finished && answer.selected[0] === answer.right[0]))
+        ? TestSuite.PointsPerSingle
+        : 0;
+
+export const getAmountOfPointsRelations = (answer: IAnswer, finished: boolean) =>
+    answer.right.reduce((acc, curr, index) =>
+        (curr === answer.gived[index]
+        || (finished && curr === answer.selected[index])
+            ? acc + TestSuite.PointsPerEachSingleInRelations
+            : acc),
+        0);
+
+export const getAmountOfPointsText = (answer: IAnswer, finished: boolean) => {
+    const amountOfRight = answer.right.reduce((acc, curr, index) => {
+        const currFixed = curr.replace('.', ',');
+        const selectedFixed = answer.selected[index].replace('.', ',');
+        const givedFixed = answer.gived[index].replace('.', ',');
+
+        return (currFixed === givedFixed
+            || (finished && currFixed === selectedFixed)
+                ? acc + TestSuite.PointsPerEachSingleInRelations
+                : acc);
+    }, 0);
+
+    const totalAmount = answer.right.length;
+
+    return (amountOfRight / totalAmount) * TestSuite.PointsPerText;
+};
+
+export const selectCurrentAmountOfPoints = createSelector(
+    selectAnswers,
+    selectTestSuiteFinished,
+    (answers, finished) => answers.reduce((points, answer) => {
+        if (answer.type === 'SINGLE') {
+            return points + getAmountOfPointsSingle(answer, finished);
+        }
+
+        if (answer.type === 'RELATIONS') {
+            return points + getAmountOfPointsRelations(answer, finished);
+        }
+
+        if (answer.type === 'TEXT') {
+            return points + getAmountOfPointsText(answer, finished);
+        }
+
+        return points;
+    }, 0),
+);
+
+export const selectTotalAmountOfPoints = createSelector(
+    selectAnswers,
+    (answers) => answers.reduce((acc, curr) => {
+        if (curr.type === 'SINGLE') return acc + TestSuite.PointsPerSingle;
+        if (curr.type === 'RELATIONS') return acc + TestSuite.PointsPerRelations;
+        if (curr.type === 'TEXT') return acc + TestSuite.PointsPerText;
+
+        return acc;
+    }, 0),
 );
