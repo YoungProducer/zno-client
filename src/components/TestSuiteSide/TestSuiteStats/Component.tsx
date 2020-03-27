@@ -19,6 +19,7 @@ import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import Wrapper from '../Wrapper';
 import { TTestSuiteStatsProps } from './container';
 import Progress from 'components/custom/LinearProgress';
+import Actions from './Actions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,6 +32,12 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: theme.spacing(2),
             height: 48,
             position: 'relative',
+        },
+        progressBlock: {
+            marginTop: theme.spacing(2),
+        },
+        actions: {
+            marginTop: theme.spacing(2),
         },
         icon: {
             color: '#333',
@@ -50,6 +57,7 @@ const Component = (props: TTestSuiteStatsProps) => {
         amountOfSelected,
         answersAmount,
         finished,
+        setTestSuiteFinished,
     } = props;
 
     const history = useHistory();
@@ -57,6 +65,8 @@ const Component = (props: TTestSuiteStatsProps) => {
     const { showRightDuringTest } = useContext(AdditionalAnswerPropertiesContext);
 
     const redirectToHome = () => history.push('/');
+
+    const finishTestSuiteHandler = () => setTestSuiteFinished(true);
 
     return (
         <Wrapper>
@@ -75,22 +85,27 @@ const Component = (props: TTestSuiteStatsProps) => {
                     Статистика тесту
                 </Typography>
             </div>
-            <Progress
-                current={amountOfSelected}
-                total={answersAmount}
-                label='Кількість завдань у яких вибрана відповідь'
-            />
-            <Progress
-                current={amountOfGived}
-                total={answersAmount}
-                label='Кількість завдань на які дана відповідь'
-            />
-            <Progress
-                current={amountOfRight}
-                total={answersAmount}
-                label='Кількість завдань на які дана правильна відповідь'
-                hide={!showRightDuringTest ? !finished : false}
-            />
+            <div className={classes.progressBlock}>
+                <Progress
+                    current={amountOfSelected}
+                    total={answersAmount}
+                    label='Кількість завдань у яких вибрана відповідь'
+                />
+                <Progress
+                    current={amountOfGived}
+                    total={answersAmount}
+                    label='Кількість завдань на які дана відповідь'
+                />
+                <Progress
+                    current={amountOfRight}
+                    total={answersAmount}
+                    label='Кількість завдань на які дана правильна відповідь'
+                    hide={!showRightDuringTest ? !finished : false}
+                />
+            </div>
+            <div className={classes.actions}>
+                <Actions finishTest={finishTestSuiteHandler}/>
+            </div>
         </Wrapper>
     );
 };

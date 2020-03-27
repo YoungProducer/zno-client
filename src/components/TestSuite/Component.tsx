@@ -159,7 +159,6 @@ const Component = (props: TTestSuiteProps) => {
                                 taskIndex={task.current}
                                 explanationExists={Boolean(explanationsImages[task.current])}
                                 setTaskIndex={task.set}
-                                finishTest={() => setTestSuiteFinished(true)}
                             />
                         </Grid>
                     </>
