@@ -60,7 +60,7 @@ export const selectIsAnswerGived = createSelector(
 const isAnswerRightByTaskIndex = (answers: IAnswer[], taskIndex: number) =>
     answers.length !== 0
         ? answers[taskIndex].gived.every((answer, index) =>
-            answer === answers[taskIndex].right[index])
+            answer.replace('.', ',') === answers[taskIndex].right[index].replace('.', ','))
         : false;
 
 export const selectIsAnswerRight = createSelector(

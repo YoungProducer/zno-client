@@ -60,4 +60,62 @@ export default {
             },
         },
     },
+    testSuite: {
+        answers: [{
+            gived: [''],
+            selected: [''],
+            right: ['1'],
+            type: 'SINGLE',
+        }, {
+            gived: [''],
+            selected: [''],
+            right: ['3'],
+            type: 'SINGLE',
+        }, {
+            gived: [''],
+            selected: [''],
+            right: ['2'],
+            type: 'SINGLE',
+        }, {
+            gived: [''],
+            selected: [''],
+            right: ['0'],
+            type: 'SINGLE',
+        }, {
+            gived: ['', '', '', ''],
+            selected: ['', '', '', ''],
+            right: ['1', '2', '0', '3'],
+            type: 'RELATIONS',
+        }, {
+            gived: ['', '', '', ''],
+            selected: ['', '', '', ''],
+            right: ['0', '3', '2', '1'],
+            type: 'RELATIONS',
+        }, {
+            gived: ['', '', '', ''],
+            selected: ['', '', '', ''],
+            right: ['1', '0', '3', '2'],
+            type: 'RELATIONS',
+        }, {
+            gived: ['', '', '', ''],
+            selected: ['', '', '', ''],
+            right: ['3', '2', '1', '4'],
+            type: 'RELATIONS',
+        }, {
+            gived: [''],
+            selected: [''],
+            right: ['3,2'],
+            type: 'TEXT',
+        }, {
+            gived: [''],
+            selected: [''],
+            right: ['-7'],
+            type: 'TEXT',
+        }],
+        finished: false,
+        name: 'Тема 1',
+        loading: false,
+        tasksImages: [],
+        explanationImages: [],
+    },
 } as RootState;

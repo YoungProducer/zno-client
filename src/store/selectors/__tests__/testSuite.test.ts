@@ -294,6 +294,24 @@ describe('TestSuite selectors', () => {
         expect(result).toBeFalsy();
     });
 
+    test(`selectIsAnswerRight if gived and right answers have different dividers: '.', ','`, () => {
+        /** Define mocked state */
+        const state = {
+            testSuite: {
+                answers: [{
+                    gived: ['3.7'],
+                    right: ['3,7'],
+                }],
+            },
+        } as RootState;
+
+        /** Get selector's result */
+        const result = selectIsAnswerRight(state, { taskIndex: 0 });
+
+        /** Assert result has correct value */
+        expect(result).toBeTruthy();
+    });
+
     test('selectAmountOfSelectedAnswers', () => {
         /** Define mocked state */
         const state = {
