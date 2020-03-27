@@ -8,4 +8,7 @@
 /** External imports */
 import { createContext } from 'react';
 
-export const AdditionalAnswerPropertiesContext = createContext<{ showRightDuringTest: boolean }>({ showRightDuringTest: false });
+export const AdditionalAnswerPropertiesContext = createContext<{
+    showRightDuringTest: boolean,
+    setShowRightDuringTest?: (show: boolean) => void,
+}>({ showRightDuringTest: false });

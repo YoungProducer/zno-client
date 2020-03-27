@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         button: {
             filter: `drop-shadow(0px 3px 2.5px rgba(0,0,0,0.16))`,
-            width: 200,
+            width: '45%',
             color: '#fff',
             background: '#5b6ee9',
             '&:hover': {
@@ -42,6 +42,7 @@ const Component = ({ finishTest }: ITestSuiteStatsActionProps) => {
                 className={classes.button}
                 variant='contained'
                 onClick={finishTest}
+                disableElevation
             >
                 Закінчити тест
             </Button>

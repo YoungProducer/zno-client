@@ -7,7 +7,7 @@
  */
 
 /** External imports */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
@@ -91,7 +91,7 @@ const useInitTestSuite = (props: TTestSuiteProps) => {
     const testSettings = useSearchParams<IAdditionalTestSettings>({ searchNames: testSettingsNames });
 
     testSettings.limitTime = testSettings.limitTime === 'true' && Boolean(searchData.session || searchData.training);
-    testSettings.showRightDuringTest = testSettings.showRightDuringTest === 'true' && Boolean(searchData.theme);
+    testSettings.showRightDuringTest = testSettings.showRightDuringTest === 'true' && Boolean(searchData.theme || searchData.training);
 
     useEffect(() => {
         fetchTestSuite(searchData);
@@ -140,6 +140,12 @@ const Component = (props: TTestSuiteProps) => {
 
     const { limitTime, showRightDuringTest } = useInitTestSuite(props);
 
+    const { setShowRightDuringTest } = useContext(AdditionalAnswerPropertiesContext);
+
+    useEffect(() => {
+        setShowRightDuringTest(showRightDuringTest);
+    }, [showRightDuringTest]);
+
     const { task, explanation } = useTestSuiteFileds(props);
 
     return (
@@ -164,14 +170,14 @@ const Component = (props: TTestSuiteProps) => {
                     <Grid container direction='row'>
                         <Grid container item direction='column' md={4} spacing={2}>
                             <Grid item>
-                                <AdditionalAnswerPropertiesContext.Provider value={{
+                                {/* <AdditionalAnswerPropertiesContext.Provider value={{
                                     showRightDuringTest,
-                                }}>
+                                }}> */}
                                     <Answer
                                         type={answers[task.current].type}
                                         taskIndex={task.current}
                                     />
-                                </AdditionalAnswerPropertiesContext.Provider>
+                                {/* </AdditionalAnswerPropertiesContext.Provider> */}
                             </Grid>
                             <Grid item>
                                 <TaskActions

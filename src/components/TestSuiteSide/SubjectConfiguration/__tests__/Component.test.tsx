@@ -698,6 +698,6 @@ describe('SubjectConfigurationModal component', () => {
             .simulate('click');
 
         /** Assert push method called with right args */
-        expect(push).toBeCalledWith('/test-suite?subjectId=123&training=foo&limitTime=false');
+        expect(push).toBeCalledWith('/test-suite?subjectId=123&showRightDuringTest=false&training=foo&limitTime=false');
     });
 });

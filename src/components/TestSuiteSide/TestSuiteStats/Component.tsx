@@ -7,7 +7,7 @@
  */
 
 /** External imports */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
@@ -56,6 +56,8 @@ const Component = (props: TTestSuiteStatsProps) => {
         amountOfRight,
         amountOfSelected,
         answersAmount,
+        currentAmountOfPoints,
+        maxAmountOfPoints,
         finished,
         setTestSuiteFinished,
     } = props;
@@ -100,6 +102,12 @@ const Component = (props: TTestSuiteStatsProps) => {
                     current={amountOfRight}
                     total={answersAmount}
                     label='Кількість завдань на які дана правильна відповідь'
+                    hide={!showRightDuringTest ? !finished : false}
+                />
+                <Progress
+                    current={currentAmountOfPoints}
+                    total={maxAmountOfPoints}
+                    label='Кількість набраних балів'
                     hide={!showRightDuringTest ? !finished : false}
                 />
             </div>

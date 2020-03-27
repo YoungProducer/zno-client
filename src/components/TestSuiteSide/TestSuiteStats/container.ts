@@ -18,6 +18,8 @@ import {
     selectAmountOfRightAnswers,
     selectAnswersAmount,
     selectTestSuiteFinished,
+    selectMaxAmountOfPoints,
+    selectCurrentAmountOfPoints,
 } from 'store/selectors/testSuite';
 import { RootState } from 'store/slices';
 
@@ -31,6 +33,8 @@ interface IStateProps {
     amountOfGived: number;
     amountOfRight: number;
     answersAmount: number;
+    currentAmountOfPoints: number;
+    maxAmountOfPoints: number;
 }
 
 /** Props which component can dispatch to the redux-store */
@@ -51,6 +55,8 @@ const mapStateToProps = (state: RootState): IStateProps => ({
     amountOfGived: selectAmountOfGivedAnswers(state),
     amountOfRight: selectAmountOfRightAnswers(state),
     answersAmount: selectAnswersAmount(state),
+    currentAmountOfPoints: selectCurrentAmountOfPoints(state),
+    maxAmountOfPoints: selectMaxAmountOfPoints(state),
 });
 
 /** Return functions wrapped into dispatch */

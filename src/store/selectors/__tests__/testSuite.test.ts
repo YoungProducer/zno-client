@@ -20,7 +20,7 @@ import {
     selectAmountOfSelectedAnswers,
     selectAmountOfGivedAnswers,
     selectAmountOfRightAnswers,
-    selectTotalAmountOfPoints,
+    selectMaxAmountOfPoints,
     selectCurrentAmountOfPoints,
     getAmountOfPointsSingle,
     getAmountOfPointsRelations,
@@ -554,7 +554,7 @@ describe('TestSuite selectors', () => {
         expect(result).toBe(2);
     });
 
-    test('selectTotalAmountOfPoints', () => {
+    test('selectMaxAmountOfPoints', () => {
         /** Define initial state */
         const state = {
             testSuite: {
@@ -571,7 +571,7 @@ describe('TestSuite selectors', () => {
         } as RootState;
 
         /** Get selector's result */
-        const result = selectTotalAmountOfPoints(state);
+        const result = selectMaxAmountOfPoints(state);
 
         /** Assert selector returns correct value */
         expect(result).toBe(8);

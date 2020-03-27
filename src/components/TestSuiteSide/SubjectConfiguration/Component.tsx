@@ -421,6 +421,10 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
             if (testType === ETestTypes.THEMES && theme !== '') {
                 querystring.append('theme', theme);
+                // querystring.append('showRightDuringTest', showRightDuringTest ? 'true' : 'false');
+            }
+
+            if (testType === ETestTypes.THEMES || examType === EExamTypes.TRAININGS) {
                 querystring.append('showRightDuringTest', showRightDuringTest ? 'true' : 'false');
             }
 

@@ -152,7 +152,7 @@ export const selectCurrentAmountOfPoints = createSelector(
     }, 0),
 );
 
-export const selectTotalAmountOfPoints = createSelector(
+export const selectMaxAmountOfPoints = createSelector(
     selectAnswers,
     (answers) => answers.reduce((acc, curr) => {
         if (curr.type === 'SINGLE') return acc + TestSuite.PointsPerSingle;
