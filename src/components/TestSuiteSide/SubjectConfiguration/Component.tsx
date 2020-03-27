@@ -527,10 +527,8 @@ const Component = (props: TSubjectConfigurationModalProps) => {
 
     return (
         <Wrapper
-            // {...dialog}
             aria-labelledby='subject-config-title'
             aria-describedby=''
-            // className={classes.dialog}
         >
             <div className={classes.dialogHeader}>
                 <IconButton
@@ -672,7 +670,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                             />
                         </>
                     )}
-                    { !displayExamSelection && (
+                    { selectExamTypeField.value !== EExamTypes.SESSIONS && (
                         <Checkbox
                             formControl={{
                                 className: classes.checkBoxRoot,
