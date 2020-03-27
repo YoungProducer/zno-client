@@ -7,14 +7,15 @@
  */
 
 /** External imports */
-import React, { useCallback, useMemo, useContext } from 'react';
+import React, { useCallback, useMemo, useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Collapse from '@material-ui/core/Grow';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /** Application's imports */
 import { AdditionalAnswerPropertiesContext } from 'context/TestSuiteContext';
 import { TTaskActionsProps } from './container';
-import { useSearchParams } from 'hooks/useSearchParams';
 
 /** Define Material UI classes */
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:hover': {
                 background: '#5b6ee9',
             },
+        },
+        img: {
+            height: '100%',
+            maxWidth: '100%',
         },
     }));
 
@@ -107,7 +112,7 @@ const Component = (props: TTaskActionsProps) => {
     /** Create classes */
     const classes = useStyles({});
 
-    const { explanationExists, selected, gived } = props;
+    const { explanationExists, selected, gived, toggleExplanation, showExplanation } = props;
 
     const {
         handleButtonClick,
@@ -131,6 +136,7 @@ const Component = (props: TTaskActionsProps) => {
                 color='primary'
                 variant='contained'
                 disabled={!explanationExists}
+                onClick={() => toggleExplanation(!showExplanation)}
             >
                 Показати пояснення
             </Button>

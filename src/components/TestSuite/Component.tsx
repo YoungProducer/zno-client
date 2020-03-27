@@ -9,6 +9,7 @@
 /** External imports */
 import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
@@ -45,6 +46,10 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: 16,
             background: '#fff',
             marginTop: theme.spacing(1.5),
+        },
+        explImg: {
+            height: '100%',
+            maxWidth: '100%',
         },
         answersBlock: {
             padding: theme.spacing(1),
@@ -98,10 +103,23 @@ const useInitTestSuite = (props: TTestSuiteProps) => {
 const useTestSuiteFileds = (props: TTestSuiteProps) => {
     const [currentTask, setCurrentTask] = useState<number>(0);
 
+    const [showExplanation, setShowExplanation] = useState<boolean>(false);
+
+    const toggleShowExplanation = () => setShowExplanation(!showExplanation);
+
+    const handleSetCurrentTask = (index: number) => {
+        setCurrentTask(index);
+        setShowExplanation(false);
+    };
+
     return {
         task: {
             current: currentTask,
-            set: setCurrentTask,
+            set: handleSetCurrentTask,
+        },
+        explanation: {
+            show: showExplanation,
+            toggle: toggleShowExplanation,
         },
     };
 };
@@ -122,7 +140,7 @@ const Component = (props: TTestSuiteProps) => {
 
     const { limitTime, showRightDuringTest } = useInitTestSuite(props);
 
-    const { task } = useTestSuiteFileds(props);
+    const { task, explanation } = useTestSuiteFileds(props);
 
     return (
         <div className={classes.root}>
@@ -143,25 +161,34 @@ const Component = (props: TTestSuiteProps) => {
             />
             <Grid container spacing={2} direction='column' className={classes.answersBlock}>
                 { answers.length !== 0 &&
-                    <>
-                        <Grid item>
-                            <AdditionalAnswerPropertiesContext.Provider value={{
-                                showRightDuringTest,
-                            }}>
-                                <Answer
-                                    type={answers[task.current].type}
+                    <Grid container direction='row'>
+                        <Grid container item direction='column' md={4} spacing={2}>
+                            <Grid item>
+                                <AdditionalAnswerPropertiesContext.Provider value={{
+                                    showRightDuringTest,
+                                }}>
+                                    <Answer
+                                        type={answers[task.current].type}
+                                        taskIndex={task.current}
+                                    />
+                                </AdditionalAnswerPropertiesContext.Provider>
+                            </Grid>
+                            <Grid item>
+                                <TaskActions
                                     taskIndex={task.current}
+                                    explanationExists={Boolean(explanationsImages[task.current])}
+                                    showExplanation={explanation.show}
+                                    toggleExplanation={explanation.toggle}
+                                    setTaskIndex={task.set}
                                 />
-                            </AdditionalAnswerPropertiesContext.Provider>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <TaskActions
-                                taskIndex={task.current}
-                                explanationExists={Boolean(explanationsImages[task.current])}
-                                setTaskIndex={task.set}
-                            />
+                        <Grid item md={8}>
+                            <Collapse in={explanation.show}>
+                                <img src={explanationsImages[task.current]} className={classes.explImg}/>
+                            </Collapse>
                         </Grid>
-                    </>
+                    </Grid>
                 }
             </Grid>
             <div className={classes.tasksSelectionBlock}>

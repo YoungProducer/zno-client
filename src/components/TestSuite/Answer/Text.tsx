@@ -26,7 +26,7 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: 400,
+            width: '100%',
             height: 60,
             borderRadius: 4,
             background: `#fff`,
@@ -35,6 +35,16 @@ const useStyles = makeStyles((theme: Theme) =>
                 duration: 200,
                 easing: theme.transitions.easing.easeInOut,
             }),
+        },
+        inputWrapper: {
+            marginBottom: theme.spacing(1),
+            '&:last-child': {
+                marginBottom: 0,
+            },
+            '& p': {
+                color: '#867272',
+                fontSize: '1.1rem',
+            },
         },
         right: {
             background: `#fff`,
@@ -106,19 +116,22 @@ const Component = ({
                         || (finished && el === ''));
 
                     return (
-                        <Input
-                            rootClassName={classNames(classes.root, {
-                                [classes.right]: right,
-                                [classes.wrong]: wrong,
-                            })}
-                            key={index}
-                            value={el}
-                            onChange={(event) => selectAnswer({
-                                id: taskIndex,
-                                answerIndex: index,
-                                answer: event.target.value,
-                            })}
-                        />
+                        <div className={classes.inputWrapper}>
+                            <p>Відповідь {index + 1}</p>
+                            <Input
+                                rootClassName={classNames(classes.root, {
+                                    [classes.right]: right,
+                                    [classes.wrong]: wrong,
+                                })}
+                                key={index}
+                                value={el}
+                                onChange={(event) => selectAnswer({
+                                    id: taskIndex,
+                                    answerIndex: index,
+                                    answer: event.target.value,
+                                })}
+                            />
+                        </div>
                     );
                 });
             }}

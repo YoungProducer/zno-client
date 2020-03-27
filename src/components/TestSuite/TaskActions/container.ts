@@ -31,6 +31,8 @@ interface IOwnProps {
      * If explanation image exists should be true.
      */
     explanationExists: boolean;
+    showExplanation: boolean;
+    toggleExplanation: (show: boolean) => void;
     setTaskIndex: (index: number) => void;
 }
 
