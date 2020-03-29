@@ -11,11 +11,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 /** Application's imports */
 import SubjectSelection from 'components/SubjectSelection';
+import TopMessage from 'containers/TopMessage';
 
 /** Create component */
 const Component = () => (
     <React.Fragment>
         <CssBaseline />
+        <TopMessage />
         <SubjectSelection />
     </React.Fragment>
 );

@@ -103,8 +103,10 @@ const useSignInElements = (props: TSignInProps) => {
     const searchParams = useSearchParams<{ email: string }>({ searchNames: ['email'] });
 
     useEffect(() => {
-        setEmail(searchParams.email || '');
-    }, [searchParams]);
+        if (searchParams.email !== null) {
+            setEmail(searchParams.email || '');
+        }
+    }, []);
 
     useEffect(() => {
         if (isLoggedIn) {

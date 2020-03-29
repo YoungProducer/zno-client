@@ -10,14 +10,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 /**Application's imports */
 import { ILoadingAction } from 'store/types';
+import { IUser } from 'api';
 
 /** Declare user interface */
-export type TUser = {
-    /**
-     * User email.
-     */
-    email: string;
-} | null;
+export type TUser = IUser | null;
 
 /** Declare interface for setUserDataAction */
 interface ISetUserDataAction {
