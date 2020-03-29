@@ -87,12 +87,28 @@ export interface ITestSuiteImagesCredentials {
 
 export type TTestSuiteImagesResponseData = string[];
 
+/** Auth types */
+export type TUserRole = 'DEFAULT_USER' | 'ADMIN';
+
+export interface IUser {
+    id: string;
+    email: string;
+    name: string;
+    lastName: string;
+    role: TUserRole;
+    emailConfirmed: boolean;
+}
+
+export type ISignUpResponseData = IUser;
+export type ISignInResponseData = IUser;
+export type IMeReponseData = IUser;
+
 export interface IApi {
     axiosInstance: AxiosInstance;
     /** Methods related to auth */
-    signup(credentials: ISignUpCredentials): Promise<AxiosResponse>;
-    signin(credentials: ISignInCredentials): Promise<AxiosResponse>;
-    me(): Promise<AxiosResponse>;
+    signup(credentials: ISignUpCredentials): Promise<AxiosResponse<ISignUpResponseData>>;
+    signin(credentials: ISignInCredentials): Promise<AxiosResponse<ISignInResponseData>>;
+    me(): Promise<AxiosResponse<IMeReponseData>>;
     logout(): Promise<AxiosResponse>;
 
     /** Methods related to subjects and subject configuration */
