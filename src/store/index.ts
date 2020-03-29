@@ -15,6 +15,7 @@ import {
 import rootReducer from './slices';
 import middlewares from './middlewares';
 import testState from './testState';
+import history from 'routes/history';
 
 const createStore = () => {
     /** Extract env variable */
@@ -25,7 +26,9 @@ const createStore = () => {
 
     /** Define middlewares */
     const defaultMiddleware = getDefaultMiddleware({
-        thunk: true,
+        thunk: {
+            extraArgument: history,
+        },
         serializableCheck: true,
         immutableCheck: true,
     });
