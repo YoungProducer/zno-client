@@ -55,7 +55,7 @@ export interface ISignInFieldsMessages {
 
 /** Define default variant of sign in fields message */
 const defaultFieldsMessages: ISignInFieldsMessages = {
-    email: 'Email адреса, яку ви використовували про реєстрації',
+    email: 'Email адреса, яку ви використовували при реєстрації',
     password: 'Пароль, який ви використували при реєстрації.',
 };
 
