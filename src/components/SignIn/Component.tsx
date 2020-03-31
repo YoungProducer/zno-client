@@ -81,6 +81,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     icon: {
         color: '#555',
     },
+    descBlock: {
+        maxWidth: '50%',
+        width: '100%',
+        marginTop: theme.spacing(-8),
+    },
+    descTitle: {
+        color: '#fff',
+        fontSize: '1.675rem',
+        paddingBottom: theme.spacing(1),
+    },
+    descText: {
+        color: '#fff',
+        lineHeight: '40px',
+        fontSize: '1.375rem',
+    },
 }));
 
 /**
@@ -193,6 +208,17 @@ const Component = (props: TSignInProps) => {
             className='auth-background'
         >
             <Container maxWidth='lg' className={classes.container}>
+                <div className={classes.descBlock}>
+                    <Typography variant='h4' className={classes.descTitle}>
+                        Видавництво "Підручники і посібники"
+                    </Typography>
+                    <Typography
+                        variant='h6'
+                        className={classes.descText}
+                    >
+                        Цей сайт представляє з себе онлайн тестування з можливістю тематичного вибору завдань та їх формування, а також містить в собі оцифровані версії тренажерів для підготовки до ЗНО(зовнішнього незалежного оцінювання).
+                    </Typography>
+                </div>
                 <Paper
                     className={classes.root}
                     elevation={0}

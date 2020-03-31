@@ -55,8 +55,8 @@ export interface ISignInFieldsMessages {
 
 /** Define default variant of sign in fields message */
 const defaultFieldsMessages: ISignInFieldsMessages = {
-    email: '',
-    password: 'Пароль який ви використували при реєстрації',
+    email: 'Email адреса, яку ви використовували про реєстрації',
+    password: 'Пароль, який ви використували при реєстрації.',
 };
 
 /** Declare initial state interface */
@@ -92,9 +92,6 @@ const initialState: ISignInInitialState = {
         password: false,
     },
     fieldsMessages: defaultFieldsMessages,
-    // user: {
-    //     email: 'foo@gmail.com',
-    // },
     user: null,
 };
 
