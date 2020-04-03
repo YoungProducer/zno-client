@@ -21,6 +21,7 @@ jest.mock('react-router-dom', () => ({
     useHistory: jest.fn(() => ({
         push,
     })),
+    useLocation: jest.fn(),
 }));
 
 describe('SignIn component', () => {

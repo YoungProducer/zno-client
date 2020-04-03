@@ -8,6 +8,22 @@ exports[`SignUp component Is matches snapshot 1`] = `
     className="makeStyles-container-2"
     maxWidth="lg"
   >
+    <div
+      className="makeStyles-descBlock-13"
+    >
+      <WithStyles(ForwardRef(Typography))
+        className="makeStyles-descTitle-14"
+        variant="h4"
+      >
+        Видавництво "Підручники і посібники"
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        className="makeStyles-descText-15"
+        variant="h6"
+      >
+        Цей сайт представляє з себе онлайн тестування з можливістю тематичного вибору завдань та їх формування, а також містить в собі оцифровані версії тренажерів для підготовки до ЗНО(зовнішнього незалежного оцінювання).
+      </WithStyles(ForwardRef(Typography))>
+    </div>
     <WithStyles(ForwardRef(Paper))
       className="makeStyles-root-3"
       elevation={0}
