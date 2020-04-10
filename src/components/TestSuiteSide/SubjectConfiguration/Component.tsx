@@ -545,7 +545,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     variant='h6'
                     className={classes.subjectName}
                 >
-                    {subjectData.name}
+                    {subjectData ? subjectData.name : ''}
                 </Typography>
             </div>
             <div className={classes.selectionBlock}>
