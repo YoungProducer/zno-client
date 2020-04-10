@@ -17,7 +17,7 @@ import TopMessage from 'containers/TopMessage';
 const Component = () => (
     <React.Fragment>
         <CssBaseline />
-        <TopMessage />
+        {/* <TopMessage /> */}
         <SubjectSelection />
     </React.Fragment>
 );
