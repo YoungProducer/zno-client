@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         explImg: {
             height: '100%',
             maxWidth: '100%',
+            maxHeight: '30vh',
         },
         answersBlock: {
             padding: theme.spacing(1),
