@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     button: {
         filter: `drop-shadow(0px 3px 2.5px rgba(0,0,0,0.16))`,
+        background: '#5b6ee9',
+        '&:hover': {
+            background: '#5b6ee9',
+        },
     },
     declineButton: {
         backgroundColor: red[500],
@@ -691,6 +695,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                 <DialogActions>
                     <Button
                         disabled={!allowGoToTest}
+                        disableElevation
                         variant='contained'
                         color='primary'
                         className={classes.button}
@@ -702,6 +707,7 @@ const Component = (props: TSubjectConfigurationModalProps) => {
                     <Button
                         variant='text'
                         color='primary'
+                        disableElevation
                         className={classNames(classes.button, classes.declineButton)}
                         onClick={dialog.onClose}
                         data-testid='close-subject-conf-button'
