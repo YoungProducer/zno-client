@@ -12,6 +12,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 // Application's imports
 import { TAppProps } from 'containers/App';
+import AdaptiveWatcher from './components/AdaptiveWatcher';
 import Routes from 'routes';
 import history from 'routes/history';
 import theme from 'theme';
@@ -25,6 +26,7 @@ const Component = ({ fetchMe }: TAppProps) => {
     return (
         <ThemeProvider theme={theme}>
             <Router history={history}>
+                <AdaptiveWatcher />
                 <Routes />
             </Router>
         </ThemeProvider>
