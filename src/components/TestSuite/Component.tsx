@@ -8,6 +8,7 @@
 
 /** External imports */
 import React, { useEffect, useState, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import Grid from '@material-ui/core/Grid';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
@@ -153,6 +154,10 @@ const Component = (props: TTestSuiteProps) => {
 
     return (
         <div className={classes.root}>
+            <Helmet
+                titleTemplate='Видавництво "Підручники і посібники" - %s'
+                title={`${name}`}
+            />
             <div className={classes.header}>
                 <Typography className={classes.title}>{name}</Typography>
                 { limitTime && (

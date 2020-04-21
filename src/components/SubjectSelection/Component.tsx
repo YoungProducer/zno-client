@@ -20,7 +20,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core';
 
 /** Application's imports */
 import { TSubjectSelectionProps } from './container';
-import SubjectTile from './SubjectTile';
 import SubjectPresentation from './SubjectsPresentation';
 import Logo from 'img/logo';
 
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         height: 85,
         width: 'max-content',
         position: 'absolute',
-        // bottom: '1%',
         bottom: '1%',
         right: 0,
         left: 0,
@@ -209,14 +207,6 @@ const Component = (props: TSubjectSelectionProps) => {
                     </div>
                 </Container>
             </div>
-            {/* <div className={classes.popularBlock}>
-                <SubjectTile
-                    subject={subjectsList[0]}
-                />
-                <SubjectTile
-                    subject={subjectsList[1]}
-                />
-            </div> */}
         </>
     );
 };
