@@ -15,10 +15,10 @@ on different subjects, such as Math, etc.
 
 *env setup*
 There are just 4 env variables:
-    - REACT_USE_TEST_STATE - if true use mocked state as default when redux create store;
-    - PORT - port of application;
-    - API_ENDPOINT - endpoint of backend.
-    - ANALYZE_BUNDLE - if true open in new tab bundle analyzer to check size of different packages and total size of bundle.
+ - REACT_USE_TEST_STATE - if true use mocked state as default when redux create store;
+ - PORT - port of application;
+ - API_ENDPOINT - endpoint of backend.
+ - ANALYZE_BUNDLE - if true open in new tab bundle analyzer to check size of different packages and total size of bundle.
 
 *Instructions*
 Before starting the app you should install the packages via ```yarn``` or ```npm``` i(ci). For this project I used ```yarn```.
