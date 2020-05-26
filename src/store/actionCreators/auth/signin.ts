@@ -22,6 +22,7 @@ import {
     verifySignInCredentials,
     IFetchSignInActionCredentials,
 } from 'utils/verify-credentials';
+import { AxiosError } from 'axios';
 
 export const fetchSignInAction = (credentials: IFetchSignInActionCredentials) =>
     async (dispatch: Dispatch<any>) => {
@@ -41,7 +42,12 @@ export const fetchSignInAction = (credentials: IFetchSignInActionCredentials) =>
                     return response.data;
                 })
                 .then((user: TUser) => dispatch(setUserDataAction(user)))
-                .catch(error => {
+                .catch((error: AxiosError) => {
+                    if (error.response.data.errors) {
+                        const errorData = error.response.data.errors;
+                        dispatch(setSignInErrorFieldsAction(errorData.errorFields));
+                        dispatch(setSignInFieldsMessagesAction(errorData.errorMessages));
+                    }
                     dispatch(signInLoadingAction(false));
                 });
         }
