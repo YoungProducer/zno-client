@@ -16,9 +16,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const Component = (): null => {
     const mathces = useMediaQuery('(orientation: portrait) and (max-width: 800px)');
 
+    const mode = process.env.NODE_ENV || 'production';
+    const url = mode === 'production'
+        ? `${process.env.MOBILE_ENDPOINT}`
+        : 'http://localhost:8081';
+
     useEffect(() => {
         if (mathces) {
-            window.location.assign('http://localhost:8081');
+            window.location.assign(url);
         }
     }, [mathces]);
 
