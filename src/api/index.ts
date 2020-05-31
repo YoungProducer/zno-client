@@ -25,7 +25,6 @@ class Api implements IApi {
 
     constructor() {
         const mode = process.env.NODE_ENV || 'production';
-
         const baseURL = mode === 'production'
             ? `${process.env.API_ENDPOINT}`
             : 'http://localhost:4000';
