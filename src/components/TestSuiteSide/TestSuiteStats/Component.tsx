@@ -66,7 +66,10 @@ const Component = (props: TTestSuiteStatsProps) => {
 
     const { showRightDuringTest } = useContext(AdditionalAnswerPropertiesContext);
 
-    const redirectToHome = () => history.push('/');
+    const redirectToHome = () => {
+        history.push('/');
+        setTestSuiteFinished(false);
+    };
 
     const finishTestSuiteHandler = () => setTestSuiteFinished(true);
 
