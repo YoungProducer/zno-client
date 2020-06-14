@@ -8,9 +8,14 @@
 /** External imports */
 import { createBrowserHistory } from 'history';
 
+const mode = process.env.NODE_ENV;
+const basename = mode === 'development'
+    ? '/'
+    : '/zno';
+
 /** Create browser history */
 const history = createBrowserHistory({
-    basename: '/zno',
+    basename,
 });
 
 /** Export history */
