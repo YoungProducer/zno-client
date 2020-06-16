@@ -11,7 +11,7 @@ import { createBrowserHistory } from 'history';
 const mode = process.env.NODE_ENV;
 const basename = mode === 'development'
     ? '/'
-    : '/zno';
+    : '/zno/pc';
 
 /** Create browser history */
 const history = createBrowserHistory({
