@@ -250,6 +250,7 @@ const Component = (props: TSubjectSelectionProps) => {
                                     <div className={classes.collapseInner}>
                                         {filteredSubjects.map(subject => (
                                             <Typography
+                                                key={subject.id}
                                                 onClick={() => setSearchValue(subject.name)}
                                             >
                                                 {subject.name}
