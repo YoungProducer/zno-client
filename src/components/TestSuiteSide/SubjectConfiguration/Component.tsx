@@ -329,9 +329,9 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     /** Responsible for displaying of theme selection */
     const displayThemeSelection = useMemo(() =>
-        (subSubjectsThemes !== null
-        || subjectThemes !== null)
-        && testType === ETestTypes.THEMES,
+        ((subSubjectsThemes !== null) ||
+        (subjectThemes !== null && subjectThemes.length !== 0)) &&
+        testType === ETestTypes.THEMES,
     [testType, subjectThemes, subSubjectsThemes]);
 
     /**
