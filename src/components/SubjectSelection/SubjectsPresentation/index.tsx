@@ -42,7 +42,6 @@ const SubjectCircle = ({
 
     return (
         <Tooltip
-            key={id}
             title={name}
             placement='top'
             classes={{
@@ -157,8 +156,8 @@ const Component = ({
                     />
                 ))}
             </svg>
-            { icons.map((subject) => (
-                <SubjectCircle {...subject} />
+            { icons.map((subject, index) => (
+                <SubjectCircle key={index }{...subject} />
             ))}
         </div>
     );
