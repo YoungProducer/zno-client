@@ -10,6 +10,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { useSearchParams } from 'hooks/useSearchParams';
 
 /** Application's imports */
 
@@ -40,9 +41,13 @@ const Component = ({ setTestSuiteFinished, finished }: ITestSuiteStatsActionProp
 
     const history = useHistory();
 
+    const { subjectId } = useSearchParams<{ subjectId: string }>({ searchNames: ['subjectId'] });
+
     const goBack = () => {
-        history.goBack();
-        setTestSuiteFinished(false);
+        if (subjectId) {
+            history.push(`/subject-configuration/${subjectId}`);
+            setTestSuiteFinished(false);
+        }
     };
 
     const finish = () => setTestSuiteFinished(true);
