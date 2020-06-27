@@ -297,9 +297,9 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
          * and testType equals 'THEMES'
          * then this function will returns themes list for selected subSubject.
          */
-        if (subSubjectsThemes !== null
-            && subSubject !== ''
-            && testType === ETestTypes.THEMES) {
+        if (subSubjectsThemes !== null &&
+            subSubject !== '' &&
+            testType === ETestTypes.THEMES) {
             return subSubjectsThemes[subSubject]
                 ? subSubjectsThemes[subSubject].map(theme => (
                     <MenuItem key={theme} value={theme}>
@@ -314,9 +314,9 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
          * and testType equals 'THEMES'
          * then this function will returns themes list for current subject.
          */
-        if (subjectThemes !== null
-            && subSubjectsThemes === null
-            && testType === ETestTypes.THEMES) {
+        if (subjectThemes !== null &&
+            subSubjectsThemes === null &&
+            testType === ETestTypes.THEMES) {
             return subjectThemes.map(theme => (
                 <MenuItem key={theme} value={theme}>
                     {theme}
@@ -348,15 +348,15 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
      * which allows to select exam.
      */
     const displayExamSelection = useMemo(() =>
-        testType === ETestTypes.EXAMS
-        && subjectExams !== null
-        && examType !== '' as EExamTypes
-        && ((examType === EExamTypes.SESSIONS
-            && subjectExams.sessions !== null
-            && subjectExams.sessions)
-        || (examType === EExamTypes.TRAININGS
-            && subjectExams.trainings !== null
-            && subjectExams.trainings)),
+        testType === ETestTypes.EXAMS &&
+        subjectExams !== null &&
+        examType !== '' as EExamTypes &&
+        ((examType === EExamTypes.SESSIONS &&
+            subjectExams.sessions !== null &&
+            subjectExams.sessions) ||
+        (examType === EExamTypes.TRAININGS &&
+            subjectExams.trainings !== null &&
+            subjectExams.trainings)),
     [testType, subjectExams, exam]);
 
     /**
@@ -398,9 +398,9 @@ const useSubjectConfigurationElements = (props: TSubjectConfigurationModalProps)
 
     /** */
     const allowGoToTest = useMemo(() =>
-        testType !== '' as ETestTypes
-        && ((theme && theme !== '' && displayThemeSelection)
-        || (exam && exam !== '' && displayExamTypeSelection)),
+        testType !== '' as ETestTypes &&
+        ((theme && theme !== '' && displayThemeSelection) ||
+        (exam && exam !== '' && displayExamTypeSelection)),
     [testType, exam, theme]);
 
     /** Handler for dialog onClose event */
