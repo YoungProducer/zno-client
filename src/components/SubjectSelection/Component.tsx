@@ -16,7 +16,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Collapse } from '@material-ui/core';
 
 /** Application's imports */
 import { TSubjectSelectionProps } from './container';
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         height: 'inherit',
         width: '100%',
     },
+    searchWrapper: {
+        position: 'relative',
+    },
     searchInput: {
         width: '100%',
         height: 67,
@@ -62,6 +65,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         color: '#fff',
         fontSize: '1.3rem',
         marginTop: theme.spacing(8),
+        zIndex: 1000,
+        boxShadow: `0px 4px 2px -2px rgba(0, 0, 0, 0.1)`,
     },
     iconButton: {
         width: 55,
@@ -114,6 +119,34 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             background: 'none',
         },
     },
+    collapse: {
+        position: 'absolute',
+        marginTop: -34,
+        width: '100%',
+    },
+    collapseInner: {
+        padding: theme.spacing(2, 0),
+        paddingTop: 50,
+        background: '#4d8fcb',
+        width: '100%',
+        overflow: 'hidden',
+        borderBottomRightRadius: 34,
+        borderBottomLeftRadius: 34,
+        boxShadow: `0px 4px 2px -2px rgba(0, 0, 0, 0.1)`,
+        '& p': {
+            color: '#fff',
+            fontSize: '1.2rem',
+            padding: theme.spacing(0.5, 1),
+            cursor: 'pointer',
+            transition: theme.transitions.create('background', {
+                easing: theme.transitions.easing.easeInOut,
+                duration: 300,
+            }),
+        },
+        '& p:hover': {
+            background: 'rgba(0, 0, 0, 0.1)',
+        },
+    },
 }));
 
 /** Create component */
@@ -129,6 +162,7 @@ const Component = (props: TSubjectSelectionProps) => {
         fetchLogout,
     } = props;
 
+    const [displayList, setDisplayList] = useState<boolean>(false);
     const [seachValue, setSearchValue] = useState<string>('');
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
         setSearchValue(event.target.value);
@@ -136,6 +170,13 @@ const Component = (props: TSubjectSelectionProps) => {
     useEffect(() => {
         fetchSubjectsNames();
     }, []);
+
+    const filteredSubjects = subjectsList.filter(subject =>
+        subject.name.toLowerCase().includes(seachValue.toLowerCase()));
+
+    const displayFilteredSubjects =
+        filteredSubjects.length !== 0 &&
+        displayList;
 
     return (
         <>
@@ -183,22 +224,40 @@ const Component = (props: TSubjectSelectionProps) => {
                                 Для того щоб розпочати тест почніть вводити назву предмету у пошуку, після цього ви одразу побачите цей предмет
                                 у правому блоці, просто натисніть на нього і ви будете направлені на сторінку тесту.
                             </Typography>
-                            <InputBase
-                                className={classes.searchInput}
-                                placeholder='Знайти предмет'
-                                value={seachValue}
-                                onChange={handleSearchChange}
-                                endAdornment={
-                                    <IconButton
-                                        size='small'
-                                        className={classes.iconButton}
-                                    >
-                                        <SearchIcon
-                                            className={classes.icon}
-                                        />
-                                    </IconButton>
-                                }
-                            />
+                            <div className={classes.searchWrapper}>
+                                <InputBase
+                                    className={classes.searchInput}
+                                    placeholder='Знайти предмет'
+                                    value={seachValue}
+                                    onChange={handleSearchChange}
+                                    endAdornment={
+                                        <IconButton
+                                            size='small'
+                                            className={classes.iconButton}
+                                        >
+                                            <SearchIcon
+                                                className={classes.icon}
+                                            />
+                                        </IconButton>
+                                    }
+                                    onFocus={() => setDisplayList(true)}
+                                    onBlur={() => setDisplayList(false)}
+                                />
+                                <Collapse
+                                    in={displayFilteredSubjects}
+                                    className={classes.collapse}
+                                >
+                                    <div className={classes.collapseInner}>
+                                        {filteredSubjects.map(subject => (
+                                            <Typography
+                                                onClick={() => setSearchValue(subject.name)}
+                                            >
+                                                {subject.name}
+                                            </Typography>
+                                        ))}
+                                    </div>
+                                </Collapse>
+                            </div>
                         </div>
                         <SubjectPresentation
                             subjectsList={subjectsList}
