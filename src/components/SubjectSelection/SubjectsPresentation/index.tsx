@@ -6,7 +6,7 @@
  */
 
 /** External imports */
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -15,6 +15,63 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { getCirclesData, getIconsData, IIconData, ICircle } from './process';
 import { TSubjectList } from 'store/slices';
 import styles from './styles.module.css';
+
+interface SubjectCircleProps {
+    id: string;
+    x: number;
+    y: number;
+    hidden: boolean;
+    image: string;
+    name: string;
+}
+
+const SubjectCircle = ({
+    hidden,
+    id,
+    image,
+    x,
+    y,
+    name,
+}: SubjectCircleProps) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const time = Math.random() * (2 - 0) + 0;
+        ref.current.style.setProperty('--animation-time', `${-time}s`);
+    }, []);
+
+    return (
+        <Tooltip
+            key={id}
+            title={name}
+            placement='top'
+            classes={{
+                tooltip: styles.toolTip,
+            }}
+            aria-label='subject-name'
+        >
+            <div
+                className={
+                    classNames(styles.subjectCircle, {
+                        [styles.subjectCircleHidden]: hidden,
+                    })
+                }
+                style={{
+                    top: y - 25,
+                    left: x - 25,
+                }}
+                ref={ref}
+            >
+                <NavLink
+                    to={`subject-configuration/${id}`}
+                    onClick={() => {}}
+                >
+                    <img src={image} alt={name}/>
+                </NavLink>
+            </div>
+        </Tooltip>
+    );
+};
 
 export type TSubjectPresentationProps = {
     subjectsList: TSubjectList;
@@ -100,30 +157,8 @@ const Component = ({
                     />
                 ))}
             </svg>
-            { icons.map(({ x, y, radius, hidden, name, image, id }) => (
-                <Tooltip
-                    key={id}
-                    title={name}
-                    placement='top'
-                    classes={{
-                        tooltip: styles.toolTip,
-                    }}
-                    aria-label='subject-name'
-                >
-                    <NavLink
-                        style={{
-                            top: y - 25,
-                            left: x - 25,
-                        }}
-                        to={`subject-configuration/${id}`}
-                        onClick={() => {}}
-                        className={classNames(styles.subjectCircle, {
-                            [styles.subjectCircleHidden]: hidden,
-                        })}
-                    >
-                        <img src={image} alt={name}/>
-                    </NavLink>
-                </Tooltip>
+            { icons.map((subject) => (
+                <SubjectCircle {...subject} />
             ))}
         </div>
     );

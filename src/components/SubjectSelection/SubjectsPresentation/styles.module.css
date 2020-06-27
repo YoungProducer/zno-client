@@ -18,6 +18,8 @@
     cursor: pointer;
     transform: scale(1);
     transition: transform .2s ease-in-out;
+    animation: pulse 2s infinite;
+    animation-delay: var(--animation-time);
 }
 
 .subjectCircle img {
@@ -26,15 +28,29 @@
 }
 
 .subjectCircle:hover {
-    transform: scale(1.1);
+    animation-play-state: paused;
 }
 
 .subjectCircleHidden {
-    transition: .4s ease-in-out;
+    transition: transform .4s ease-in-out;
     transform: scale(0);
 }
 
 .toolTip {
     font-size: 1.0rem;
     background-color: #343434;
+}
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
 }
