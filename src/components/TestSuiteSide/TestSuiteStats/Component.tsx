@@ -71,8 +71,6 @@ const Component = (props: TTestSuiteStatsProps) => {
         setTestSuiteFinished(false);
     };
 
-    const finishTestSuiteHandler = () => setTestSuiteFinished(true);
-
     return (
         <Wrapper>
             <div className={classes.dialogHeader}>
@@ -115,7 +113,10 @@ const Component = (props: TTestSuiteStatsProps) => {
                 />
             </div>
             <div className={classes.actions}>
-                <Actions finishTest={finishTestSuiteHandler}/>
+                <Actions
+                    setTestSuiteFinished={setTestSuiteFinished}
+                    finished={finished}
+                />
             </div>
         </Wrapper>
     );

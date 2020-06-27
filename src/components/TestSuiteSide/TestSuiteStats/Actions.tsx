@@ -7,6 +7,7 @@
 
 /** External imports */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
@@ -30,22 +31,46 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 interface ITestSuiteStatsActionProps {
-    finishTest: () => void;
+    setTestSuiteFinished: (finished: boolean) => void;
+    finished: boolean;
 }
 
-const Component = ({ finishTest }: ITestSuiteStatsActionProps) => {
+const Component = ({ setTestSuiteFinished, finished }: ITestSuiteStatsActionProps) => {
     const classes = useStyles({});
+
+    const history = useHistory();
+
+    const goBack = () => {
+        history.goBack();
+        setTestSuiteFinished(false);
+    };
+
+    const finish = () => setTestSuiteFinished(true);
 
     return (
         <div className={classes.root}>
-            <Button
-                className={classes.button}
-                variant='contained'
-                onClick={finishTest}
-                disableElevation
-            >
-                Закінчити тест
-            </Button>
+            { finished
+                ? (
+                    <Button
+                        className={classes.button}
+                        variant='contained'
+                        onClick={goBack}
+                        disableElevation
+                    >
+                        Конфігурація тесту
+                    </Button>
+                )
+                : (
+                    <Button
+                        className={classes.button}
+                        variant='contained'
+                        onClick={finish}
+                        disableElevation
+                    >
+                        Закінчити тест
+                    </Button>
+                )
+            }
         </div>
     );
 };
