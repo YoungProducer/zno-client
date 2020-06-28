@@ -7,7 +7,7 @@
 
 /** External imports */
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
@@ -101,20 +101,29 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     appBarActions: {
 
     },
-    signUpButton: {
+    signInButton: {
         borderRadius: 25,
         background: '#fff',
         color: theme.palette.primary.main,
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
+        lineHeight: '50px',
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        fontSize: '0.875rem',
         '&:hover': {
             background: '#f1f1f1',
         },
         minWidth: 100,
     },
-    signInButton: {
+    signUpButton: {
         minWidth: 100,
+        lineHeight: '50px',
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        fontSize: '0.875rem',
         color: '#fff',
+        marginRight: theme.spacing(2),
         '&:hover': {
             background: 'none',
         },
@@ -187,25 +196,24 @@ const Component = (props: TSubjectSelectionProps) => {
                         <div className={classes.appBarContainer}>
                             { !loggedIn && (
                                 <>
-                                    <Button
-                                        className={classes.signInButton}
-                                        onClick={() => history.push('/auth/signin')}
-                                    >
-                                        Увійти
-                                    </Button>
-                                    <Button
-                                        variant='text'
+                                    <NavLink
+                                        to='/auth/signup'
                                         className={classes.signUpButton}
-                                        onClick={() => history.push('/auth/signup')}
                                     >
                                         Зареєструватися
-                                    </Button>
+                                    </NavLink>
+                                    <NavLink
+                                        to='/auth/signin'
+                                        className={classes.signInButton}
+                                    >
+                                        Увійти
+                                    </NavLink>
                                 </>
                             )}
                             { loggedIn && (
                                 <Button
                                     variant='text'
-                                    className={classes.signUpButton}
+                                    className={classes.signInButton}
                                     onClick={fetchLogout}
                                 >
                                     Вийти
