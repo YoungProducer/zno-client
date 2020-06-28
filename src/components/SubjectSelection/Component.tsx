@@ -128,6 +128,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             background: 'none',
         },
     },
+    logoutButton: {
+        borderRadius: 25,
+        background: '#fff',
+        color: theme.palette.primary.main,
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        '&:hover': {
+            background: '#f1f1f1',
+        },
+        minWidth: 100,
+    },
     collapse: {
         position: 'absolute',
         marginTop: -34,
@@ -213,7 +224,7 @@ const Component = (props: TSubjectSelectionProps) => {
                             { loggedIn && (
                                 <Button
                                     variant='text'
-                                    className={classes.signInButton}
+                                    className={classes.logoutButton}
                                     onClick={fetchLogout}
                                 >
                                     Вийти
