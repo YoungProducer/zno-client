@@ -7,14 +7,22 @@
 
 /** External imports */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useHistory, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 /** Application's imports */
 import { getCirclesData, getIconsData, IIconData, ICircle } from './process';
 import { TSubjectList } from 'store/slices';
 import styles from './styles.module.css';
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    tooltip: {
+        fontSize: '1.0rem',
+        backgroundColor: '#343434',
+    },
+}));
 
 interface SubjectCircleProps {
     id: string;
@@ -35,6 +43,8 @@ const SubjectCircle = ({
 }: SubjectCircleProps) => {
     const ref = useRef<HTMLDivElement>(null);
 
+    const classes = useStyles();
+
     useEffect(() => {
         const time = Math.random() * (2 - 0) + 0;
         ref.current.style.setProperty('--animation-time', `${-time}s`);
@@ -45,7 +55,7 @@ const SubjectCircle = ({
             title={name}
             placement='top'
             classes={{
-                tooltip: styles.toolTip,
+                tooltip: classes.tooltip,
             }}
             aria-label='subject-name'
         >
