@@ -7,7 +7,7 @@
 
 /** External imports */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -46,9 +46,13 @@ const SubjectCircle = ({
     const classes = useStyles();
 
     useEffect(() => {
-        const time = Math.random() * (2 - 0) + 0;
-        ref.current.style.setProperty('--animation-time', `${-time}s`);
-    }, []);
+        if (ref.current) {
+            const time = Math.random() * (2 - 0) + 0;
+            ref.current.style.setProperty('--animation-time', `${-time}s`);
+        }
+
+        console.log(ref);
+    }, [ref.current]);
 
     return (
         <Tooltip
@@ -59,25 +63,25 @@ const SubjectCircle = ({
             }}
             aria-label='subject-name'
         >
-            <div
-                className={
-                    classNames(styles.subjectCircle, {
-                        [styles.subjectCircleHidden]: hidden,
-                    })
-                }
+            <Link
+                to={`subject-configuration/${id}`}
                 style={{
                     top: y - 25,
                     left: x - 25,
                 }}
-                ref={ref}
+                className={styles.subjectCircleLink}
             >
-                <NavLink
-                    to={`subject-configuration/${id}`}
-                    onClick={() => {}}
+                <div
+                    className={
+                        classNames(styles.subjectCircle, {
+                            [styles.subjectCircleHidden]: hidden,
+                        })
+                    }
+                    ref={ref}
                 >
                     <img src={image} alt={name}/>
-                </NavLink>
-            </div>
+                </div>
+            </Link>
         </Tooltip>
     );
 };

@@ -7,7 +7,6 @@
 }
 
 .subjectCircle {
-    position: absolute;
     width: 50px;
     height: 50px;
     background-color: #fff;
@@ -34,6 +33,10 @@
 .subjectCircleHidden {
     transition: transform .4s ease-in-out;
     transform: scale(0);
+}
+
+.subjectCircleLink {
+    position: absolute;
 }
 
 @keyframes pulse {
