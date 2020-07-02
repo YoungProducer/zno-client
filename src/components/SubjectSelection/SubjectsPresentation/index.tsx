@@ -21,6 +21,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     tooltip: {
         fontSize: '1.0rem',
         backgroundColor: '#343434',
+        right: 100,
+    },
+    hint: {
+        background: '#343434',
+        transform: 'translateX(50%)',
+        borderRadius: 4,
+        padding: '0 8px',
+        color: '#fff',
     },
 }));
 
@@ -50,39 +58,29 @@ const SubjectCircle = ({
             const time = Math.random() * (2 - 0) + 0;
             ref.current.style.setProperty('--animation-time', `${-time}s`);
         }
-
-        console.log(ref);
     }, [ref.current]);
 
     return (
-        <Tooltip
-            title={name}
-            placement='top'
-            classes={{
-                tooltip: classes.tooltip,
+        <Link
+            to={`subject-configuration/${id}`}
+            style={{
+                top: y - 25,
+                left: x - 25,
             }}
-            aria-label='subject-name'
+            className={styles.subjectCircleLink}
         >
-            <Link
-                to={`subject-configuration/${id}`}
-                style={{
-                    top: y - 25,
-                    left: x - 25,
-                }}
-                className={styles.subjectCircleLink}
+            <div
+                className={
+                    classNames(styles.subjectCircle, {
+                        [styles.subjectCircleHidden]: hidden,
+                    })
+                }
+                ref={ref}
             >
-                <div
-                    className={
-                        classNames(styles.subjectCircle, {
-                            [styles.subjectCircleHidden]: hidden,
-                        })
-                    }
-                    ref={ref}
-                >
-                    <img src={image} alt={name}/>
-                </div>
-            </Link>
-        </Tooltip>
+                <img src={image} alt={name}/>
+            </div>
+            <div className={classes.hint}>{name}</div>
+        </Link>
     );
 };
 

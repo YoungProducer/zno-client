@@ -235,7 +235,7 @@ const Component = (props: TSubjectSelectionProps) => {
                 </AppBar>
                 <Container maxWidth='lg' className={classes.container}>
                     <div className={classes.actionsBlock}>
-                        <div className={classes.searchBlock}>
+                        {/* <div className={classes.searchBlock}>
                             <Typography
                                 variant='h6'
                                 className={classes.typography}
@@ -278,7 +278,7 @@ const Component = (props: TSubjectSelectionProps) => {
                                     </div>
                                 </Collapse>
                             </div>
-                        </div>
+                        </div> */}
                         <SubjectPresentation
                             subjectsList={subjectsList}
                             searchValue={seachValue}
