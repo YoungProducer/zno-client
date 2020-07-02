@@ -17,7 +17,7 @@ import Logo from 'img/logo';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         width: '100%',
-        maxHeight: '100vh',
+        // maxHeight: '100vh',
         height: '100vh',
         background: '#f4f6f9',
         padding: theme.spacing(6),

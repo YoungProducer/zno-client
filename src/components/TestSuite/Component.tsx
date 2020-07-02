@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             height: '100%',
             position: 'relative',
+            paddingBottom: 125,
         },
         header: {
             padding: theme.spacing(2),
