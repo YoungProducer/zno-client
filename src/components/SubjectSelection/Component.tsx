@@ -235,15 +235,14 @@ const Component = (props: TSubjectSelectionProps) => {
                 </AppBar>
                 <Container maxWidth='lg' className={classes.container}>
                     <div className={classes.actionsBlock}>
-                        {/* <div className={classes.searchBlock}>
+                        <div className={classes.searchBlock}>
                             <Typography
-                                variant='h6'
+                                variant='h4'
                                 className={classes.typography}
                             >
-                                Для того, щоб розпочати тест, почніть вводити назву предмету у пошуку. Після цього ви одразу побачите цей предмет
-                                у правому блоці. Просто натисніть на нього, і ви будете направлені на сторінку тесту.
+                                Виберіть навчальний предмет.
                             </Typography>
-                            <div className={classes.searchWrapper}>
+                            {/* <div className={classes.searchWrapper}>
                                 <InputBase
                                     className={classes.searchInput}
                                     placeholder='Знайти предмет'
@@ -277,8 +276,8 @@ const Component = (props: TSubjectSelectionProps) => {
                                         ))}
                                     </div>
                                 </Collapse>
-                            </div>
-                        </div> */}
+                            </div> */}
+                        </div>
                         <SubjectPresentation
                             subjectsList={subjectsList}
                             searchValue={seachValue}
