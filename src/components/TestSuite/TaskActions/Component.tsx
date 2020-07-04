@@ -70,7 +70,7 @@ const useTaskActions = (props: TTaskActionsProps) => {
             }
         }
 
-        setTaskIndex(nextTask);
+        setTaskIndex(nextTask !== -1 ? nextTask : 0);
     }, [
         taskIndex,
         answers,
