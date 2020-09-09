@@ -15,6 +15,9 @@
     line-height: 50px;
     padding: 6px 0;
     cursor: pointer;
+}
+
+.subjectCircleAnimate {
     transform: scale(1);
     transition: transform .2s ease-in-out;
     animation: pulse 2s infinite;
@@ -33,6 +36,12 @@
 .subjectCircleHidden {
     transition: transform .4s ease-in-out;
     transform: scale(0);
+}
+
+.subjectCircleDisabled {
+    opacity: 0.3;
+    cursor: initial;
+    pointer-events: none;
 }
 
 .subjectCircleLink {

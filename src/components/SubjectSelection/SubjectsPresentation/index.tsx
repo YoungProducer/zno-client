@@ -68,11 +68,19 @@ const SubjectCircle = ({
                 left: x - 25,
             }}
             className={styles.subjectCircleLink}
+            onClick={(e) => {
+                // hard code
+                if (name !== 'Математика') {
+                    e.preventDefault();
+                }
+            }}
         >
             <div
                 className={
                     classNames(styles.subjectCircle, {
                         [styles.subjectCircleHidden]: hidden,
+                        [styles.subjectCircleAnimate]: name === 'Математика',
+                        [styles.subjectCircleDisabled]: name !== 'Математика',
                     })
                 }
                 ref={ref}
